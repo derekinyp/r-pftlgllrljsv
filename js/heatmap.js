@@ -41,21 +41,19 @@
     html.push('<div class="hm-legend">');
     html.push('<span class="hm-scale"><span>低於基準</span><span class="hm-ramp" title="負到正"><i></i><i></i><i></i><i></i><i></i></span><span>高於基準</span></span>');
     html.push('<span class="hm-chip">缺</span><span class="hm-chip">沿用（底線）</span><span class="hm-chip">部分</span><span class="hm-chip">暫定</span><span class="hm-chip">不立尺</span><span class="hm-chip">矛盾（點）</span>');
-    html.push('<span class="hm-keyhint">點列展開指標。色彩不是判定燈號。</span>');
+    html.push('<span class="hm-keyhint">點列展開指標。時間軸可左右滑動，層名欄固定。色彩不是判定燈號。</span>');
     html.push('</div>');
     html.push('<div class="hm-scroll"><table class="hm-grid" role="grid">');
     html.push('<thead><tr><th class="hm-lab">層</th>');
     for (var i = 0; i < months.length; i++) {
-      var mon = String(parseInt(months[i].slice(5), 10));
-      var lab = mon;
-      if (mon === "11" || mon === "1") lab = months[i].slice(2, 4) + "/" + mon;
+      var lab = months[i].slice(2).replace("-", "/");
       html.push('<th>' + lab + '</th>');
     }
     html.push('</tr></thead><tbody>');
     for (var r = 0; r < layers.length; r++) {
       var L = layers[r];
       html.push('<tr class="hm-layer" data-row="' + r + '" tabindex="0" role="button" aria-expanded="false">');
-      html.push('<th scope="row" class="hm-lab">' + L.name + '</th>');
+      html.push('<th scope="row" class="hm-lab" title="' + L.name + '">' + L.name + '</th>');
       for (var c = 0; c < months.length; c++) {
         var v = L.scores[c];
         var flag = L.flags[c];
@@ -118,6 +116,7 @@
         var th = document.createElement("th");
         th.className = "hm-lab";
         th.textContent = ind.name;
+        th.title = ind.name;
         tr.appendChild(th);
         for (var c = 0; c < months.length; c++) {
           var cell = (ind.values && ind.values[c]) || { v: null, flag: "缺" };

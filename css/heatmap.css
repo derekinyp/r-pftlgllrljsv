@@ -1,11 +1,9 @@
-/* Heatmap on o.html. Distinct from judgment-light colors. No external fonts/CDN. */
+/* Heatmap on o.html: full-width block below the page body, not beside the lights.
+   Distinct from judgment-light colors. No external fonts/CDN. No decorative gradients. */
 .wrap.wrap-o{max-width:1280px}
-.o-duo{display:flex;flex-direction:column;gap:28px;margin:18px 0 8px}
-@media (min-width:1100px){
-  .o-duo{display:grid;grid-template-columns:minmax(280px,0.9fr) minmax(420px,1.2fr);gap:24px;align-items:start}
-}
+.hm-block{margin:28px 0 8px}
 .hm-disclaimer{margin:0 0 10px}
-#hm-root{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:12px;color:#1f2933}
+#hm-root{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:13px;color:#1f2933}
 .hm-legend{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 10px;color:#4d5666}
 .hm-legend .hm-scale{display:inline-flex;align-items:center;gap:6px}
 .hm-ramp{display:inline-flex;height:10px;border:1px solid #cfd4dc;overflow:hidden}
@@ -16,17 +14,19 @@
 .hm-ramp i:nth-child(4){background:#d49a66}
 .hm-ramp i:nth-child(5){background:#b86a2a}
 .hm-chip{display:inline-block;padding:0 5px;border:1px solid #cfd4dc;border-radius:3px;background:#f7f7f5;font-size:11px;color:#4d5666}
-.hm-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid #d5dae0;background:#fff}
-.hm-grid{border-collapse:collapse;table-layout:fixed;width:100%;min-width:0}
+/* Horizontal scroll; sticky first column must sit inside this scroller. */
+.hm-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;border:1px solid #d5dae0;background:#fff}
+.hm-grid{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;table-layout:auto}
 .hm-grid th,.hm-grid td{padding:0;text-align:center;vertical-align:middle}
-.hm-grid thead th{position:sticky;top:0;background:#f3f5f8;color:#4d5666;font-weight:600;font-size:10px;line-height:1.2;padding:6px 0 5px;border-bottom:1px solid #d5dae0;white-space:nowrap}
-.hm-lab{text-align:left !important;padding:4px 6px !important;white-space:nowrap;font-weight:600;color:#1f2933;background:#f8f9fb;border-right:1px solid #e5e8ed;position:sticky;left:0;z-index:1;width:7.6em;min-width:7.6em}
+.hm-grid thead th{background:#f3f5f8;color:#4d5666;font-weight:600;font-size:11px;line-height:1.25;padding:8px 2px 7px;border-bottom:1px solid #d5dae0;white-space:nowrap}
+.hm-lab{text-align:left !important;padding:6px 10px !important;white-space:normal;overflow:hidden;line-height:1.3;font-weight:600;color:#1f2933;background:#f8f9fb;border-right:1px solid #d5dae0;position:-webkit-sticky;position:sticky;left:0;z-index:2;width:11.5em;min-width:11.5em;max-width:11.5em;box-shadow:1px 0 0 #d5dae0;box-sizing:border-box}
+.hm-grid thead th.hm-lab{z-index:3;background:#f3f5f8}
 .hm-grid tbody tr.hm-layer{cursor:pointer}
 .hm-grid tbody tr.hm-layer:hover .hm-lab{background:#eef2f6}
 .hm-grid tbody tr.hm-open .hm-lab{background:#e8eef5}
-.hm-grid tbody tr.hm-ind .hm-lab{font-weight:500;color:#4d5666;background:#fbfbfc;padding-left:18px !important}
-.hm-cell{width:3.2%;height:26px;min-width:16px;position:relative;border-right:1px solid rgba(0,0,0,.04);border-bottom:1px solid rgba(0,0,0,.04)}
-.hm-cell .m{display:block;font-size:9px;line-height:28px;color:rgba(20,24,30,.78)}
+.hm-grid tbody tr.hm-ind .hm-lab{font-weight:500;color:#4d5666;background:#fbfbfc;padding-left:18px !important;z-index:2}
+.hm-cell{width:48px;min-width:48px;max-width:48px;height:34px;position:relative;border-right:1px solid rgba(0,0,0,.05);border-bottom:1px solid rgba(0,0,0,.05);box-sizing:border-box}
+.hm-cell .m{display:block;font-size:11px;line-height:34px;color:rgba(20,24,30,.86)}
 .hm-cell.hm-miss{background:#ececec}
 .hm-cell.hm-miss .m{color:#8b919a}
 .hm-cell.hm-hold{background:#d9d4c8}
@@ -43,7 +43,8 @@
 .hm-asof{margin:8px 0 0}
 .hm-keyhint{color:#686f7d;font-size:11px}
 @media (max-width:640px){
-  .hm-cell{width:18px;height:26px;min-width:18px}
-  .hm-cell .m{line-height:26px;font-size:8px}
-  .hm-lab{min-width:7.2em;font-size:11px;padding:4px 6px !important}
+  .hm-cell{width:42px;min-width:42px;max-width:42px;height:32px}
+  .hm-cell .m{line-height:32px;font-size:11px}
+  .hm-lab{width:9.8em;min-width:9.8em;max-width:9.8em;font-size:12px;padding:5px 8px !important;white-space:normal}
+  .hm-grid thead th{font-size:10px}
 }

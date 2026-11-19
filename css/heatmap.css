@@ -17,15 +17,15 @@
 .hm-ramp i:nth-child(5){background:#b86a2a}
 .hm-chip{display:inline-block;padding:0 5px;border:1px solid #cfd4dc;border-radius:3px;background:#f7f7f5;font-size:11px;color:#4d5666}
 .hm-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid #d5dae0;background:#fff}
-.hm-grid{border-collapse:separate;border-spacing:0;min-width:720px;width:100%}
+.hm-grid{border-collapse:collapse;table-layout:fixed;width:100%;min-width:0}
 .hm-grid th,.hm-grid td{padding:0;text-align:center;vertical-align:middle}
 .hm-grid thead th{position:sticky;top:0;background:#f3f5f8;color:#4d5666;font-weight:600;font-size:10px;line-height:1.2;padding:6px 0 5px;border-bottom:1px solid #d5dae0;white-space:nowrap}
-.hm-lab{text-align:left !important;padding:4px 8px !important;white-space:nowrap;font-weight:600;color:#1f2933;background:#f8f9fb;border-right:1px solid #e5e8ed;position:sticky;left:0;z-index:1;min-width:9.5em}
+.hm-lab{text-align:left !important;padding:4px 6px !important;white-space:nowrap;font-weight:600;color:#1f2933;background:#f8f9fb;border-right:1px solid #e5e8ed;position:sticky;left:0;z-index:1;width:7.6em;min-width:7.6em}
 .hm-grid tbody tr.hm-layer{cursor:pointer}
 .hm-grid tbody tr.hm-layer:hover .hm-lab{background:#eef2f6}
 .hm-grid tbody tr.hm-open .hm-lab{background:#e8eef5}
 .hm-grid tbody tr.hm-ind .hm-lab{font-weight:500;color:#4d5666;background:#fbfbfc;padding-left:18px !important}
-.hm-cell{width:22px;height:28px;min-width:22px;position:relative;border-right:1px solid rgba(0,0,0,.04);border-bottom:1px solid rgba(0,0,0,.04)}
+.hm-cell{width:3.2%;height:26px;min-width:16px;position:relative;border-right:1px solid rgba(0,0,0,.04);border-bottom:1px solid rgba(0,0,0,.04)}
 .hm-cell .m{display:block;font-size:9px;line-height:28px;color:rgba(20,24,30,.78)}
 .hm-cell.hm-miss{background:#ececec}
 .hm-cell.hm-miss .m{color:#8b919a}

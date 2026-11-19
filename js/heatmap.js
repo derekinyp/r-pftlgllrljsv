@@ -18,7 +18,7 @@
   function cellLabel(flag, v) {
     if (flag === "缺") return "缺";
     if (flag === "暫定") return "暫定";
-    if (flag === "不立尺") return "不立尺";
+    if (flag === "不立尺") return "無尺";
     if (v == null) return flag || "缺";
     var n = Math.abs(v) >= 10 ? v.toFixed(0) : v.toFixed(1);
     return n;
@@ -46,7 +46,9 @@
     html.push('<div class="hm-scroll"><table class="hm-grid" role="grid">');
     html.push('<thead><tr><th class="hm-lab">層</th>');
     for (var i = 0; i < months.length; i++) {
-      var lab = months[i].slice(2).replace("-", "/");
+      var mon = String(parseInt(months[i].slice(5), 10));
+      var lab = mon;
+      if (mon === "11" || mon === "1") lab = months[i].slice(2, 4) + "/" + mon;
       html.push('<th>' + lab + '</th>');
     }
     html.push('</tr></thead><tbody>');

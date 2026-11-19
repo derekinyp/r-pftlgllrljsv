@@ -49,10 +49,10 @@
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
   @media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
 
-  /* ERP 類比條 */
-  .erp{border-left:4px solid var(--purple);background:#f6f3fb;border-radius:0 6px 6px 0;padding:13px 18px;margin:18px 0}
-  .erp .t{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--purple);text-transform:uppercase}
-  .erp .b{font-size:14px;color:#3d2d5c;margin-top:4px}
+  /* 章節銜接條：上一層看不到什麼 */
+  .bridge{border-left:4px solid var(--purple);background:#f6f3fb;border-radius:0 6px 6px 0;padding:13px 18px;margin:18px 0}
+  .bridge .t{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--purple);text-transform:uppercase}
+  .bridge .b{font-size:14px;color:#3d2d5c;margin-top:4px}
 
   /* 加了什麼 / 還缺什麼 */
   .add{border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-top:18px}
@@ -99,7 +99,7 @@
   .disc{margin-top:14px;padding:12px 14px;background:var(--graybg);border:1px solid var(--line);border-radius:4px;font-size:12.5px;color:var(--ink2)}
   b.hl{background:#fff3bf;padding:0 3px;border-radius:2px}
 </style>
-<meta name="robots" content="noindex,nofollow"><title>從 ERP 到產業鏈｜方法入門</title><style>
+<meta name="robots" content="noindex,nofollow"><title>從財報到產業鏈｜方法入門</title><style>
 #sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;
   font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
@@ -119,8 +119,8 @@
 <div class="wrap">
 <div class="hero">
 <div class="kicker">入門教學 · 給大一新鮮人 · 繁體中文</div>
-<h1>從 ERP 到產業鏈：<br/>AI 與半導體盡職調查是怎麼長出來的</h1>
-<p class="sub">這份教材不直接丟一個「八層框架」叫你背。我們從最原始的狀態出發——就像 ERP 系統一開始只是為了管物料——<b>看每一次撞到什麼問題，才不得不往上加一層</b>。你會看到這套研究方法為什麼長成現在這個樣子，而不只是長成什麼樣子。</p>
+<h1>從財報到產業鏈：<br/>為什麼要一層一層看</h1>
+<p class="sub">這份教材不直接丟一個「八層框架」叫你背。先用一小段比喻說明「為什麼要一層一層看」，後面各章改用產業本身的理由往上加層。你會看到這套方法為什麼長成現在這個樣子，而不只是長成什麼樣子。</p>
 <div class="herometa">
 <span class="pill">閱讀時間約 25 分鐘</span>
 <span class="pill">不需要財會背景</span>
@@ -130,7 +130,7 @@
 </div>
 <section id="why">
 <h2><span class="lv">0</span>先講目的：我們到底在解決什麼問題</h2>
-<p class="stage">對應 ERP 的起源：一切都從「我倉庫裡還剩多少東西」開始</p>
+<p class="stage">從最容易拿到、也可對帳的數字開始：一家公司的財報</p>
 <p class="lead">投資最常見的三個錯誤，都很合理、很人性，但都會讓你賠錢：</p>
 <div class="grid3">
 <div class="card">
@@ -147,91 +147,86 @@
 </div>
 </div>
 <div class="note key"><b>這套方法的目的，一句話：</b>把「我覺得這家公司不錯」，換成「<b>我知道這家公司賺的錢，是從哪一條鏈的哪一個環節流出來的，而這個環節什麼時候會停</b>」。</div>
-<h3>為什麼拿 ERP 來比喻</h3>
-<p>ERP（企業資源規劃）不是一開始就叫 ERP。它的演進史，幾乎就是「每次撞牆就加一層」的標準示範：</p>
-<table>
-<thead><tr><th style="width:82px">年代</th><th style="width:150px">系統</th><th>本來想解決什麼</th><th>為什麼不夠，所以要再長</th></tr></thead>
-<tbody>
-<tr><td>1960s</td><td><b>庫存管理／訂購點</b></td><td>料快用完時自動提醒採購</td><td>它不知道「要生產什麼」，所以補的料常常不對</td></tr>
-<tr><td>1970s</td><td><b>MRP</b> 物料需求計畫</td><td>從最終產品的 BOM 往回展開，算出該買什麼、買多少</td><td>它假設產能無限，算出來的排程做不出來</td></tr>
-<tr><td>1980s</td><td><b>MRP II</b> 製造資源規劃</td><td>加入產能、車間排程、成本與財務</td><td>各部門各用一套系統，資料對不起來</td></tr>
-<tr><td>1990s</td><td><b>ERP</b> 企業資源規劃</td><td>全公司共用單一資料庫，財務／生產／採購打通</td><td>公司外面呢？供應商、客戶、市場都還在外面</td></tr>
-<tr><td>2000s</td><td><b>ERP II</b>／延伸企業</td><td>往外接到供應鏈、客戶關係、電子商務</td><td>資料都有了，但沒人規定「多少算正常」</td></tr>
-<tr><td>2010s</td><td>即時分析／商業智慧</td><td>即時儀表板、預測分析</td><td>儀表板會騙人——你只看你設的指標，就會只看見你想看的</td></tr>
-<tr><td>現在</td><td><b>治理與稽核</b></td><td>誰改了什麼、什麼時候改、依據是什麼</td><td>（這一層我們自己也還在蓋）</td></tr>
-</tbody>
-</table>
-<div class="note"><b>看懂了嗎：</b>每一層都不是「變複雜」，而是<b>上一層有個具體的洞，非補不可</b>。接下來的七層也是這樣長出來的。你只要記得每一層「補了哪個洞」，整套框架就記住了。</div>
+<h3>為什麼要一層一層看</h3>
+<p>先用一個短比喻說明這個動作，後面各章就不再用它。企業資源規劃（ERP）不是一開始就有完整系統：最早往往只是為了看倉庫還剩多少料；後來每撞上一層「系統裡看不到」的問題，才再加一層——從物料清單、產能約束，一路加到公司外部與稽核。重點不是去學那套系統，而是記住<b>每一層都因為「上一層看不到什麼」，才有必要存在</b>。</p>
+<div class="note"><b>下面各章不再使用這個比喻。</b>改用產業本身的理由，依序加上：財報 → 供應鏈清單 → 產能 → 八層鏈 → 外生變數 → 反射性 → 治理。你只要記得每一層「補了哪個洞」，整套框架就記住了。</div>
 <h3>整張地圖：七層堆疊</h3>
 <div class="svgbox">
-<svg aria-label="七層堆疊圖：從單一公司一路疊到治理層，對應 ERP 演進" role="img" style="min-width:920px" viewbox="0 0 980 470" width="100%">
+<svg aria-label="七層堆疊圖：從單一公司的財報一路加到治理層，左側是上一層看不到的東西" role="img" style="min-width:920px" viewbox="0 0 980 470" width="100%">
 <defs><marker id="up" markerheight="9" markerwidth="9" orient="auto" refx="4.5" refy="7">
 <path d="M0,9 L4.5,0 L9,9 Z" fill="#7b8494"></path></marker></defs>
-<text fill="#7b8494" font-size="12" font-weight="700" x="16" y="26">年代（ERP 演進）</text>
-<text fill="#6b4fa0" font-size="12" font-weight="700" x="700" y="26">對應的 ERP 階段</text>
+<text fill="#7b8494" font-size="12" font-weight="700" x="16" y="26">上一層看不到什麼</text>
 <text fill="#4a5262" font-size="12" font-weight="700" x="286" y="26">研究方法長出來的層</text>
+<text fill="#1f5fa8" font-size="12" font-weight="700" x="700" y="26">所以這一層補上</text>
 <!-- 7 -->
 <rect fill="#ecf7f1" height="52" rx="5" stroke="#c3e5d4" width="400" x="282" y="42"></rect>
 <text fill="#155f3d" font-size="14" font-weight="700" x="298" y="66">7　治理層：基準預期表與版本治理</text>
 <text fill="#1e8e5a" font-size="12" x="298" y="85">規定「多少算正常」，且改尺要留痕</text>
-<text fill="#7b8494" font-size="13" x="16" y="74">現在</text>
-<text fill="#6b4fa0" font-size="13" x="700" y="70">治理與稽核</text>
-<text fill="#7b8494" font-size="11.5" x="700" y="88">誰改了什麼、依據是什麼</text>
+<text fill="#7b8494" font-size="12" x="16" y="64">沒有尺，每則新聞都能</text>
+<text fill="#7b8494" font-size="12" x="16" y="82">自圓其說</text>
+<text fill="#1f5fa8" font-size="13" x="700" y="70">先立尺，再規定改尺流程</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="88">誰改了什麼、憑什麼</text>
 <!-- 6 -->
 <rect fill="#eef3fb" height="52" rx="5" stroke="#c8d8ef" width="400" x="282" y="100"></rect>
 <text fill="#1c3f70" font-size="14" font-weight="700" x="298" y="124">6　回饋層：反射性迴路</text>
 <text fill="#2f5fa8" font-size="12" x="298" y="143">股價與估值會回頭影響公司行為</text>
-<text fill="#7b8494" font-size="13" x="16" y="132">2010s</text>
-<text fill="#6b4fa0" font-size="13" x="700" y="128">即時分析／儀表板</text>
-<text fill="#7b8494" font-size="11.5" x="700" y="146">回饋開始被看見</text>
+<text fill="#7b8494" font-size="12" x="16" y="122">若以為市場只是鏡子，</text>
+<text fill="#7b8494" font-size="12" x="16" y="140">看不懂股價回頭影響行為</text>
+<text fill="#1f5fa8" font-size="13" x="700" y="128">把市場當成迴路的一環</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="146">融資、敘事、資本開支互相反饋</text>
 <!-- 5 -->
 <rect fill="#fdf5e8" height="52" rx="5" stroke="#efd9ad" width="400" x="282" y="158"></rect>
 <text fill="#7a5210" font-size="14" font-weight="700" x="298" y="182">5　外部層：外生變數與競爭者</text>
-<text fill="#b8791a" font-size="12" x="298" y="201">利率、出口管制、電力、地緣</text>
-<text fill="#7b8494" font-size="13" x="16" y="190">2000s</text>
-<text fill="#6b4fa0" font-size="13" x="700" y="186">ERP II／延伸企業</text>
-<text fill="#7b8494" font-size="11.5" x="700" y="204">把公司外面接進來</text>
+<text fill="#b8791a" font-size="12" x="298" y="201">利率、出口管制、政策許可</text>
+<text fill="#7b8494" font-size="12" x="16" y="180">鏈外力量不會出現在</text>
+<text fill="#7b8494" font-size="12" x="16" y="198">任何一層的財報裡</text>
+<text fill="#1f5fa8" font-size="13" x="700" y="186">預留外部打擊的位置</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="204">不硬塞進產業敘事</text>
 <!-- 4 -->
 <rect fill="#f6f3fb" height="52" rx="5" stroke="#ddd3ef" width="400" x="282" y="216"></rect>
 <text fill="#3d2d5c" font-size="14" font-weight="700" x="298" y="240">4　整合層：八層因果鏈</text>
 <text fill="#6b4fa0" font-size="12" x="298" y="259">從終端需求一路串到電力</text>
-<text fill="#7b8494" font-size="13" x="16" y="248">1990s</text>
-<text fill="#6b4fa0" font-size="13" x="700" y="244">ERP</text>
-<text fill="#7b8494" font-size="11.5" x="700" y="262">單一資料庫，全部打通</text>
+<text fill="#7b8494" font-size="12" x="16" y="238">單看一家產能不夠，</text>
+<text fill="#7b8494" font-size="12" x="16" y="256">也說不清新聞是第幾環</text>
+<text fill="#1f5fa8" font-size="13" x="700" y="244">同一條有方向的鏈</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="262">跳數 × 時滯，箭頭待驗證</text>
 <!-- 3 -->
 <rect fill="#fbeeed" height="52" rx="5" stroke="#f0c9c7" width="400" x="282" y="274"></rect>
 <text fill="#7d2622" font-size="14" font-weight="700" x="298" y="298">3　產能層：資本支出與瓶頸</text>
 <text fill="#c9312b" font-size="12" x="298" y="317">錢什麼時候花、產能什麼時候開出來</text>
-<text fill="#7b8494" font-size="13" x="16" y="306">1980s</text>
-<text fill="#6b4fa0" font-size="13" x="700" y="302">MRP II</text>
-<text fill="#7b8494" font-size="11.5" x="700" y="320">加上產能與財務</text>
+<text fill="#7b8494" font-size="12" x="16" y="296">只知道誰跟誰有關，</text>
+<text fill="#7b8494" font-size="12" x="16" y="314">不知道影響多久才到</text>
+<text fill="#1f5fa8" font-size="13" x="700" y="302">加上時間差與產能約束</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="320">錢先花，產能兩三年後才來</text>
 <!-- 2 -->
 <rect fill="#eaf6f5" height="52" rx="5" stroke="#c4e3df" width="400" x="282" y="332"></rect>
 <text fill="#12554f" font-size="14" font-weight="700" x="298" y="356">2　展開層：供應鏈 BOM</text>
-<text fill="#1f7a72" font-size="12" x="298" y="375">這家公司的產品是誰做的、用誰的料</text>
-<text fill="#7b8494" font-size="13" x="16" y="364">1970s</text>
-<text fill="#6b4fa0" font-size="13" x="700" y="360">MRP</text>
-<text fill="#7b8494" font-size="11.5" x="700" y="378">從成品往回展開</text>
+<text fill="#1f7a72" font-size="12" x="298" y="375">上游誰供、下游誰買、真正掏錢的是誰</text>
+<text fill="#7b8494" font-size="12" x="16" y="354">財報只看得到結果，</text>
+<text fill="#7b8494" font-size="12" x="16" y="372">看不出錢從哪來、客戶是誰</text>
+<text fill="#1f5fa8" font-size="13" x="700" y="360">把公司拆成上下游清單</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="378">誰牽動它、它又牽動誰</text>
 <!-- 1 -->
 <rect fill="#f2f4f7" height="52" rx="5" stroke="#e3e6ec" width="400" x="282" y="390"></rect>
 <text fill="#4a5262" font-size="14" font-weight="700" x="298" y="414">1　起點層：單一公司的財報</text>
 <text fill="#7b8494" font-size="12" x="298" y="433">營收、毛利率、股價</text>
-<text fill="#7b8494" font-size="13" x="16" y="422">1960s</text>
-<text fill="#6b4fa0" font-size="13" x="700" y="418">庫存管理／訂購點</text>
-<text fill="#7b8494" font-size="11.5" x="700" y="436">只管自己手上有的</text>
+<text fill="#7b8494" font-size="12" x="16" y="412">最容易拿到、</text>
+<text fill="#7b8494" font-size="12" x="16" y="430">也可對帳的一手數字</text>
+<text fill="#1f5fa8" font-size="13" x="700" y="418">先判斷現在賺不賺錢</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="436">但這只是結果，不是原因</text>
 <!-- 箭頭 -->
 <line marker-end="url(#up)" stroke="#7b8494" stroke-width="1.6" x1="266" x2="266" y1="416" y2="68"></line>
 <text fill="#7b8494" font-size="12" transform="rotate(-90 240 250)" x="240" y="250">每一層都是因為上一層有洞</text>
 </svg>
 </div>
-<div class="cap">圖 0-1｜這套研究方法的七次擴張。底部是最早的、也是最基礎的；往上是每一次撞牆後補上去的。</div>
+<div class="cap">圖 0-1｜這套研究方法的七次擴張。底部是最早、也最基礎的起點；往上每一層，都是因為上一層看不到某個產業事實，才有必要補上。</div>
 </section>
 <section id="l1">
 <h2><span class="lv">1</span>起點層：只看一家公司的財報</h2>
-<p class="stage">對應 ERP 的 1960s：先把自己手上有的東西記下來再說</p>
-<div class="erp">
-<div class="t">ERP 類比</div>
-<div class="b">最早的系統只回答一個問題：<b>「我倉庫裡還剩多少？」</b>它不管你要生產什麼、不管客戶明天要什麼。早期的投資研究也一樣——把一家公司的財報讀完，就覺得自己懂了。</div>
+<p class="stage">從最容易拿到的一手數字開始：營收、毛利率、股價</p>
+<div class="bridge">
+<div class="t">為什麼從這裡開始</div>
+<div class="b">一家公司的財報是最容易取得、也可對帳的起點。它能告訴你這家公司<b>現在</b>賺不賺錢，但看完之後，你仍然不知道錢從哪裡來、客戶是誰、明年還會不會買。</div>
 </div>
 <p>以台積電為例，第一層能看到的就是這三樣東西：<b>營收</b>（賣了多少錢）、<b>毛利率</b>（扣掉直接成本後還剩多少比例）、<b>股價</b>（市場願意用多少錢買它）。</p>
 <div class="chart" id="c1"></div>
@@ -247,10 +242,10 @@
 </section>
 <section id="l2">
 <h2><span class="lv">2</span>展開層：把這家公司拆成一張供應鏈 BOM</h2>
-<p class="stage">對應 ERP 的 1970s：MRP 從成品往回展開，算出每一層要什麼</p>
-<div class="erp">
-<div class="t">ERP 類比</div>
-<div class="b">MRP 的核心動作叫 <b>BOM 展開</b>：一台腳踏車 = 1 車架 + 2 輪子 + 1 鏈條……一路拆到最底層的螺絲。<b>投資研究的第二層，就是把「台積電」這個成品拆開</b>——它的產能是誰給的、它的客戶又是誰。</div>
+<p class="stage">上一層只看得到結果，看不出客戶是誰、料從哪來，所以要把公司拆開</p>
+<div class="bridge">
+<div class="t">上一層看不到什麼</div>
+<div class="b">財報上的每一根營收柱，都是「別人決定要買這麼多」的結果。你看不到①客戶是誰②他們明年還會不會買③如果他們不買，還有沒有替代出口。所以這一層把「台積電」拆成供應鏈清單：<b>上游誰供、下游誰買、真正掏錢的是誰</b>。</div>
 </div>
 <h3>台積電的 BOM 展開</h3>
 <div class="svgbox">
@@ -347,10 +342,10 @@
 </section>
 <section id="l3">
 <h2><span class="lv">3</span>產能層：錢先花，產能兩年後才來</h2>
-<p class="stage">對應 ERP 的 1980s：MRP II 發現「算得出來但做不出來」，於是把產能加進來</p>
-<div class="erp">
-<div class="t">ERP 類比</div>
-<div class="b">MRP 算出「下個月要 1,000 台」，但工廠一個月只能做 600 台——<b>算出來的計畫做不出來</b>。這就是產能約束。投資研究裡對應的概念是：<b>不是有需求就有營收，要先有產能；而產能不是用錢當場買得到的。</b></div>
+<p class="stage">上一層只知道「誰跟誰有關」，還不知道影響多久才到，所以要加入產能與時間差</p>
+<div class="bridge">
+<div class="t">上一層看不到什麼</div>
+<div class="b">供應鏈清單能回答「誰牽動誰」，但不能回答「這筆需求什麼時候變成營收」。<b>不是有需求就有營收，要先有產能；而產能不是用錢當場買得到的。</b>錢先花，廠房與機器往往兩三年後才開出來。</div>
 </div>
 <div class="svgbox">
 <svg aria-label="資本支出到產能開出的時間落差圖" role="img" style="min-width:920px" viewbox="0 0 980 200" width="100%">
@@ -392,10 +387,10 @@
 </section>
 <section id="l4">
 <h2><span class="lv">4</span>整合層：把上下游串成「一條」因果鏈</h2>
-<p class="stage">對應 ERP 的 1990s：全公司共用一個資料庫，從此不用各說各話</p>
-<div class="erp">
-<div class="t">ERP 類比</div>
-<div class="b">ERP 的真正突破不是功能變多，而是<b>「同一份資料、同一個定義」</b>——業務說的「訂單」，就是財務看到的「訂單」。研究框架的整合層做的事一樣：把前面拆開的上下游，放進<b>同一條有方向、有順序的鏈</b>裡，每個人都能指出「這則新聞是鏈上的第幾環」。</div>
+<p class="stage">單看一家公司的產能不夠，瓶頸會換人當，所以要把上下游收成同一條鏈</p>
+<div class="bridge">
+<div class="t">上一層看不到什麼</div>
+<div class="b">你已經知道產能有時間差、瓶頸會輪動，但若各段仍分開看，就無法指出「這則新聞是鏈上的第幾環」，也無法用同一套定義討論跳數與時滯。這一層把前面拆開的上下游，放進<b>同一條有方向、有順序的鏈</b>。</div>
 </div>
 <h3>八層因果鏈（往下讀：錢從哪裡來；往上讀：卡在哪裡）</h3>
 <div class="svgbox">
@@ -486,10 +481,10 @@
 </section>
 <section id="l5">
 <h2><span class="lv">5</span>外部層：世界不會照著你的鏈走</h2>
-<p class="stage">對應 ERP 的 2000s：ERP II 把供應商、客戶、外部夥伴接進系統</p>
-<div class="erp">
-<div class="t">ERP 類比</div>
-<div class="b">ERP 把公司內部打通了，但公司不是活在真空裡——<b>供應商延遲、客戶取消訂單、匯率變動，全都在系統外面</b>。ERP II 做的就是「延伸企業」：把外面的角色接進來。研究框架的第五層同理：這條鏈不是封閉系統。</div>
+<p class="stage">八層鏈假設世界是單向、只講實體經濟；鏈外的力量卻能改寫鏈上的數字，所以要加外生變數</p>
+<div class="bridge">
+<div class="t">上一層看不到什麼</div>
+<div class="b">因果鏈再完整，也畫不出利率、出口管制或政策許可——這些不是產業內部長出來的，也通常不會事先出現在台積電或雲廠的財報裡。若不預留外部打擊的位置，遇到這類事件就會硬把它塞進產業敘事，或直接愣住。這一層要承認：<b>這條鏈不是封閉系統</b>。</div>
 </div>
 <div class="svgbox">
 <svg aria-label="外生變數從外部打進因果鏈的示意圖" role="img" style="min-width:920px" viewbox="0 0 980 300" width="100%">
@@ -540,10 +535,10 @@
 </section>
 <section id="l6">
 <h2><span class="lv">6</span>回饋層：市場不是鏡子，它是迴路的一部分</h2>
-<p class="stage">對應 ERP 的 2010s：開始有即時儀表板，但也開始被儀表板騙</p>
-<div class="erp">
-<div class="t">ERP 類比</div>
-<div class="b">有了即時儀表板之後，公司發現一件尷尬的事：<b>指標本身會改變人的行為</b>。你設定「庫存週轉率」當 KPI，各部門就開始壓庫存，結果缺料風險上升。系統不再只是觀察對象，它成了被觀察者的一部分。</div>
+<p class="stage">若以為市場只是反映基本面，就看不懂股價會回頭影響融資與資本開支，所以要加反射性迴路</p>
+<div class="bridge">
+<div class="t">上一層看不到什麼</div>
+<div class="b">外生變數解釋了「外面打進來的東西」。但股價、估值與融資不是鏡子：它們會回頭改變公司能不能募資、敢不敢加資本開支，再經過兩年才反映到財報。把市場當成客觀反映，就無法解釋「<b>財報很好、股價卻在跌</b>」。</div>
 </div>
 <div class="svgbox">
 <svg aria-label="反射性迴路示意圖" role="img" style="min-width:920px" viewbox="0 0 980 320" width="100%">
@@ -612,10 +607,10 @@
 </section>
 <section id="l7">
 <h2><span class="lv">7</span>治理層：先規定「多少算正常」，才談得上判斷</h2>
-<p class="stage">對應現在的 ERP：治理與稽核——誰改了什麼、什麼時候改、依據是什麼</p>
-<div class="erp">
-<div class="t">ERP 類比</div>
-<div class="b">系統做到最後才會發現：真正難的不是收集資料，而是<b>確保資料沒被偷偷改過</b>。所以現代 ERP 一定要有稽核軌跡（audit trail）——任何一筆修改，都要留下「誰、何時、從什麼改成什麼、憑什麼」。研究的第七層做的就是這件事。</div>
+<p class="stage">到這裡知識很多，但還沒有「多少算正常」的尺，每則新聞都能自圓其說，所以要先立尺並規定改尺的流程</p>
+<div class="bridge">
+<div class="t">上一層看不到什麼</div>
+<div class="b">反射性迴路能解釋背離，卻不能告訴你「營收成長 30%」算好還是不好。沒有事先寫下的預期、容忍與偏離訊號，判斷就會隨著新聞即興改口。這一層先立一把尺，並留下「誰改了什麼、何時改、憑什麼」，避免看到結果才偷偷改尺。</div>
 </div>
 <h3>第一步：立一把尺（基準預期表）</h3>
 <p>對鏈上的每一層，事先寫下三件事：<b>你預期會是多少</b>、<b>多大的誤差可以接受</b>、<b>什麼狀況叫做偏離</b>。這三欄合起來就是一把尺。</p>
@@ -785,7 +780,7 @@
 </table>
 </section>
 <footer>
-<div><b>製作：</b>阿圖｜<b>日期：</b>2026-09-21｜<b>對象：</b>大一新鮮人（不需要財會背景）｜<b>框架版本：</b>v3｜<b>基準表版本：</b>v1.1</div>
+<div><b>資料時點：</b>2026-09-21｜<b>教學主軸修訂：</b>2026-11-19（台北時間，UTC+8）｜<b>對象：</b>大一新鮮人（不需要財會背景）｜<b>框架版本：</b>v3｜<b>基準表版本：</b>v1.1</div>
 <div style="margin-top:8px"><b>資料與來源：</b>本頁所有數據均標註時點與來源，時點統一為 2026-09-21（除另有標示）。一手來源：台積電法說會與財報、聯準會 FOMC 聲明（2026-09-16）、各公司法說。需核實原文之轉引：TrendForce 雲端資本開支估計（2026-05-06）、光刻膠漲價幅度（產業消息，2026-09-15～21）、A 股板塊漲幅與公募配置統計、各公司股價與本益比。跨公司比較時請注意財年不一致（輝達、博通、美光、應用材料等皆非日曆年）與幣別未統一（USD／EUR／TWD／KRW／CNY）。台積電毛利率 67.7% 為法說口徑（新台幣基礎），與美元換算口徑 66.67% 不可混用。</div>
 <div style="margin-top:8px"><b>本頁的教學立場：</b>所有內容僅為研究方法示範，不構成任何投資建議，也不代表對任何標的的評價。</div>
 <div class="disc"><b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。</div>

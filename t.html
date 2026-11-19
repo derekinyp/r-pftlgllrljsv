@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+<script src="js/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1b1f27; --ink2:#4a5262; --ink3:#7b8494;
+    --line:#e3e6ec; --line2:#eef0f4;
+    --red:#c9312b; --green:#1e8e5a; --blue:#2f5fa8; --amber:#b8791a; --purple:#6b4fa0; --teal:#1f7a72;
+    --redbg:#fbeeed; --greenbg:#ecf7f1; --bluebg:#eef3fb; --amberbg:#fdf5e8; --graybg:#f2f4f7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter","Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,sans-serif;
+    font-size:15.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px}
+
+  /* Hero */
+  .hero{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:34px 32px 28px;margin:32px 0 0}
+  .kicker{font-size:12px;letter-spacing:.18em;color:var(--ink3);text-transform:uppercase;font-weight:700}
+  h1{font-size:31px;line-height:1.32;margin:12px 0 14px;letter-spacing:-.015em}
+  .sub{font-size:15.5px;color:var(--ink2);margin:0}
+  .herometa{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+  .pill{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--graybg);color:var(--ink2);border:1px solid var(--line)}
+
+  /* 導覽 */
+  .nav{position:sticky;top:0;z-index:20;background:rgba(247,248,250,.94);backdrop-filter:blur(6px);
+       border-bottom:1px solid var(--line);margin:28px 0 0;padding:10px 0}
+  .navin{max-width:1000px;margin:0 auto;padding:0 24px;display:flex;gap:6px;flex-wrap:wrap}
+  .nav a{font-size:12.5px;color:var(--ink2);text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent}
+  .nav a:hover{background:var(--graybg);border-color:var(--line);color:var(--ink)}
+  .nav a.on{background:var(--ink);color:#fff}
+
+  h2{font-size:23px;margin:56px 0 4px;letter-spacing:-.01em;scroll-margin-top:70px}
+  h2 .lv{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:6px;
+         background:var(--ink);color:#fff;font-size:14px;font-weight:700;margin-right:10px;vertical-align:3px}
+  .stage{font-size:13px;color:var(--ink3);margin:0 0 18px;padding-left:40px}
+  h3{font-size:16.5px;margin:30px 0 8px}
+  h4{font-size:14.5px;margin:0 0 6px}
+  p{margin:9px 0}
+  .lead{color:var(--ink2);font-size:15px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:20px 22px}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+  @media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+
+  /* ERP 類比條 */
+  .erp{border-left:4px solid var(--purple);background:#f6f3fb;border-radius:0 6px 6px 0;padding:13px 18px;margin:18px 0}
+  .erp .t{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--purple);text-transform:uppercase}
+  .erp .b{font-size:14px;color:#3d2d5c;margin-top:4px}
+
+  /* 加了什麼 / 還缺什麼 */
+  .add{border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-top:18px}
+  .add .row{display:flex;gap:0;border-bottom:1px solid var(--line)}
+  .add .row:last-child{border-bottom:none}
+  .add .k{flex:0 0 128px;background:var(--graybg);padding:14px 16px;font-size:13px;font-weight:700;color:var(--ink2);display:flex;align-items:center}
+  .add .v{padding:14px 18px;font-size:14.5px;flex:1}
+  .add .row.gap .k{background:var(--amberbg);color:var(--amber)}
+  .add .row.gap .v{background:#fffdf7}
+
+  /* 名詞卡 */
+  .term{background:#fbfcfd;border:1px dashed var(--ink3);border-radius:6px;padding:14px 18px;margin:16px 0;font-size:14px}
+  .term .n{font-weight:700;color:var(--ink)}
+  .term .n::after{content:"是什麼？";font-weight:400;color:var(--ink3);font-size:12.5px;margin-left:6px}
+
+  .note{background:var(--graybg);border-left:3px solid var(--ink3);padding:13px 17px;margin-top:16px;font-size:14px;color:var(--ink2);border-radius:0 4px 4px 0}
+  .note.warn{background:var(--redbg);border-left-color:var(--red);color:#7d2622}
+  .note.ok{background:var(--greenbg);border-left-color:var(--green);color:#155f3d}
+  .note.key{background:var(--amberbg);border-left-color:var(--amber);color:#7a5210}
+
+  .svgbox{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:12px;margin-top:18px;overflow-x:auto}
+  .cap{font-size:12.5px;color:var(--ink3);margin-top:7px;text-align:center}
+  .chart{height:330px;background:var(--card);border:1px solid var(--line);border-radius:7px;margin-top:18px}
+
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:var(--graybg);font-weight:700;font-size:13px;color:var(--ink2)}
+  tbody tr:nth-child(even){background:#fbfcfd}
+  .chip{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:3px;white-space:nowrap}
+  .chip.red{background:var(--redbg);color:var(--red)}
+  .chip.green{background:var(--greenbg);color:var(--green)}
+  .chip.blue{background:var(--bluebg);color:var(--blue)}
+  .chip.amber{background:var(--amberbg);color:var(--amber)}
+  .chip.gray{background:var(--graybg);color:var(--ink2)}
+  .chip.purple{background:#f1ecfa;color:var(--purple)}
+
+  .quiz{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:18px 22px;margin-top:16px}
+  .quiz .q{font-weight:700;margin-bottom:8px}
+  .quiz details{margin-top:10px}
+  .quiz summary{cursor:pointer;color:var(--blue);font-size:14px}
+  .quiz .a{font-size:14px;color:var(--ink2);margin-top:8px;padding-left:4px}
+
+  footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:20px;font-size:12.5px;color:var(--ink2);line-height:1.85}
+  .disc{margin-top:14px;padding:12px 14px;background:var(--graybg);border:1px solid var(--line);border-radius:4px;font-size:12.5px;color:var(--ink2)}
+  b.hl{background:#fff3bf;padding:0 3px;border-radius:2px}
+</style>
+<meta name="robots" content="noindex,nofollow"><title>從 ERP 到產業鏈｜方法入門</title><style>
+#sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
+#sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+#sb-nav a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
+#sb-nav a:hover{background:#374151;color:#fff}
+#sb-nav a.sb-on{background:#1d4ed8;color:#fff}
+#sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
+#sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
+</style></head>
+<body><nav id="sb-nav"><div class="sb-inner"><span class="sb-brand">目錄</span><a href="index.html">首頁</a><a class="sb-on" href="t.html">入門</a><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準草案</a><a href="w39.html">39</a><a href="w40.html">40</a><a href="w41.html">41</a><a href="w42.html">42</a><a href="w43.html">43</a><a href="w44.html">44</a><a href="w45.html">45</a><a href="w46.html">46</a><a href="w47.html">47</a><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
+<div class="nav"><div class="navin" id="navin">
+<a href="#why">0 為什麼</a><a href="#l1">1 一家公司</a><a href="#l2">2 展開 BOM</a><a href="#l3">3 產能與錢</a>
+<a href="#l4">4 串成鏈</a><a href="#l5">5 外部世界</a><a href="#l6">6 市場回饋</a><a href="#l7">7 管好自己</a>
+<a href="#now">8 現況</a><a href="#next">9 追蹤</a><a href="#quiz">10 練習</a>
+</div></div>
+<div class="wrap">
+<div class="hero">
+<div class="kicker">入門教學 · 給大一新鮮人 · 繁體中文</div>
+<h1>從 ERP 到產業鏈：<br/>AI 與半導體盡職調查是怎麼長出來的</h1>
+<p class="sub">這份教材不直接丟一個「八層框架」叫你背。我們從最原始的狀態出發——就像 ERP 系統一開始只是為了管物料——<b>看每一次撞到什麼問題，才不得不往上加一層</b>。你會看到這套研究方法為什麼長成現在這個樣子，而不只是長成什麼樣子。</p>
+<div class="herometa">
+<span class="pill">閱讀時間約 25 分鐘</span>
+<span class="pill">不需要財會背景</span>
+<span class="pill">案例：台積電與 AI 供應鏈</span>
+<span class="pill">資料時點：2026-09-21</span>
+</div>
+</div>
+<section id="why">
+<h2><span class="lv">0</span>先講目的：我們到底在解決什麼問題</h2>
+<p class="stage">對應 ERP 的起源：一切都從「我倉庫裡還剩多少東西」開始</p>
+<p class="lead">投資最常見的三個錯誤，都很合理、很人性，但都會讓你賠錢：</p>
+<div class="grid3">
+<div class="card">
+<h4>① 只看一家公司</h4>
+<p style="font-size:14px;color:var(--ink2)">把台積電的財報讀到滾瓜爛熟，就覺得自己懂了。但台積電的營收是<b>別人的採購預算</b>變出來的——輝達不買、雲廠不蓋，財報再漂亮也沒用。</p>
+</div>
+<div class="card">
+<h4>② 只看股價</h4>
+<p style="font-size:14px;color:var(--ink2)">股價是<b>結果</b>，不是原因。它漲了不代表你對，它跌了也不代表你錯。用股價當證據，等於用體重計的數字解釋你為什麼胖。</p>
+</div>
+<div class="card">
+<h4>③ 只看新聞</h4>
+<p style="font-size:14px;color:var(--ink2)">新聞是<b>已經發生</b>的事，而且通常是單一角度。等你看到「HBM 缺貨」的標題，價格早就反映完了。</p>
+</div>
+</div>
+<div class="note key"><b>這套方法的目的，一句話：</b>把「我覺得這家公司不錯」，換成「<b>我知道這家公司賺的錢，是從哪一條鏈的哪一個環節流出來的，而這個環節什麼時候會停</b>」。</div>
+<h3>為什麼拿 ERP 來比喻</h3>
+<p>ERP（企業資源規劃）不是一開始就叫 ERP。它的演進史，幾乎就是「每次撞牆就加一層」的標準示範：</p>
+<table>
+<thead><tr><th style="width:82px">年代</th><th style="width:150px">系統</th><th>本來想解決什麼</th><th>為什麼不夠，所以要再長</th></tr></thead>
+<tbody>
+<tr><td>1960s</td><td><b>庫存管理／訂購點</b></td><td>料快用完時自動提醒採購</td><td>它不知道「要生產什麼」，所以補的料常常不對</td></tr>
+<tr><td>1970s</td><td><b>MRP</b> 物料需求計畫</td><td>從最終產品的 BOM 往回展開，算出該買什麼、買多少</td><td>它假設產能無限，算出來的排程做不出來</td></tr>
+<tr><td>1980s</td><td><b>MRP II</b> 製造資源規劃</td><td>加入產能、車間排程、成本與財務</td><td>各部門各用一套系統，資料對不起來</td></tr>
+<tr><td>1990s</td><td><b>ERP</b> 企業資源規劃</td><td>全公司共用單一資料庫，財務／生產／採購打通</td><td>公司外面呢？供應商、客戶、市場都還在外面</td></tr>
+<tr><td>2000s</td><td><b>ERP II</b>／延伸企業</td><td>往外接到供應鏈、客戶關係、電子商務</td><td>資料都有了，但沒人規定「多少算正常」</td></tr>
+<tr><td>2010s</td><td>即時分析／商業智慧</td><td>即時儀表板、預測分析</td><td>儀表板會騙人——你只看你設的指標，就會只看見你想看的</td></tr>
+<tr><td>現在</td><td><b>治理與稽核</b></td><td>誰改了什麼、什麼時候改、依據是什麼</td><td>（這一層我們自己也還在蓋）</td></tr>
+</tbody>
+</table>
+<div class="note"><b>看懂了嗎：</b>每一層都不是「變複雜」，而是<b>上一層有個具體的洞，非補不可</b>。接下來的七層也是這樣長出來的。你只要記得每一層「補了哪個洞」，整套框架就記住了。</div>
+<h3>整張地圖：七層堆疊</h3>
+<div class="svgbox">
+<svg aria-label="七層堆疊圖：從單一公司一路疊到治理層，對應 ERP 演進" role="img" style="min-width:920px" viewbox="0 0 980 470" width="100%">
+<defs><marker id="up" markerheight="9" markerwidth="9" orient="auto" refx="4.5" refy="7">
+<path d="M0,9 L4.5,0 L9,9 Z" fill="#7b8494"></path></marker></defs>
+<text fill="#7b8494" font-size="12" font-weight="700" x="16" y="26">年代（ERP 演進）</text>
+<text fill="#6b4fa0" font-size="12" font-weight="700" x="700" y="26">對應的 ERP 階段</text>
+<text fill="#4a5262" font-size="12" font-weight="700" x="286" y="26">研究方法長出來的層</text>
+<!-- 7 -->
+<rect fill="#ecf7f1" height="52" rx="5" stroke="#c3e5d4" width="400" x="282" y="42"></rect>
+<text fill="#155f3d" font-size="14" font-weight="700" x="298" y="66">7　治理層：基準預期表與版本治理</text>
+<text fill="#1e8e5a" font-size="12" x="298" y="85">規定「多少算正常」，且改尺要留痕</text>
+<text fill="#7b8494" font-size="13" x="16" y="74">現在</text>
+<text fill="#6b4fa0" font-size="13" x="700" y="70">治理與稽核</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="88">誰改了什麼、依據是什麼</text>
+<!-- 6 -->
+<rect fill="#eef3fb" height="52" rx="5" stroke="#c8d8ef" width="400" x="282" y="100"></rect>
+<text fill="#1c3f70" font-size="14" font-weight="700" x="298" y="124">6　回饋層：反射性迴路</text>
+<text fill="#2f5fa8" font-size="12" x="298" y="143">股價與估值會回頭影響公司行為</text>
+<text fill="#7b8494" font-size="13" x="16" y="132">2010s</text>
+<text fill="#6b4fa0" font-size="13" x="700" y="128">即時分析／儀表板</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="146">回饋開始被看見</text>
+<!-- 5 -->
+<rect fill="#fdf5e8" height="52" rx="5" stroke="#efd9ad" width="400" x="282" y="158"></rect>
+<text fill="#7a5210" font-size="14" font-weight="700" x="298" y="182">5　外部層：外生變數與競爭者</text>
+<text fill="#b8791a" font-size="12" x="298" y="201">利率、出口管制、電力、地緣</text>
+<text fill="#7b8494" font-size="13" x="16" y="190">2000s</text>
+<text fill="#6b4fa0" font-size="13" x="700" y="186">ERP II／延伸企業</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="204">把公司外面接進來</text>
+<!-- 4 -->
+<rect fill="#f6f3fb" height="52" rx="5" stroke="#ddd3ef" width="400" x="282" y="216"></rect>
+<text fill="#3d2d5c" font-size="14" font-weight="700" x="298" y="240">4　整合層：八層因果鏈</text>
+<text fill="#6b4fa0" font-size="12" x="298" y="259">從終端需求一路串到電力</text>
+<text fill="#7b8494" font-size="13" x="16" y="248">1990s</text>
+<text fill="#6b4fa0" font-size="13" x="700" y="244">ERP</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="262">單一資料庫，全部打通</text>
+<!-- 3 -->
+<rect fill="#fbeeed" height="52" rx="5" stroke="#f0c9c7" width="400" x="282" y="274"></rect>
+<text fill="#7d2622" font-size="14" font-weight="700" x="298" y="298">3　產能層：資本支出與瓶頸</text>
+<text fill="#c9312b" font-size="12" x="298" y="317">錢什麼時候花、產能什麼時候開出來</text>
+<text fill="#7b8494" font-size="13" x="16" y="306">1980s</text>
+<text fill="#6b4fa0" font-size="13" x="700" y="302">MRP II</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="320">加上產能與財務</text>
+<!-- 2 -->
+<rect fill="#eaf6f5" height="52" rx="5" stroke="#c4e3df" width="400" x="282" y="332"></rect>
+<text fill="#12554f" font-size="14" font-weight="700" x="298" y="356">2　展開層：供應鏈 BOM</text>
+<text fill="#1f7a72" font-size="12" x="298" y="375">這家公司的產品是誰做的、用誰的料</text>
+<text fill="#7b8494" font-size="13" x="16" y="364">1970s</text>
+<text fill="#6b4fa0" font-size="13" x="700" y="360">MRP</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="378">從成品往回展開</text>
+<!-- 1 -->
+<rect fill="#f2f4f7" height="52" rx="5" stroke="#e3e6ec" width="400" x="282" y="390"></rect>
+<text fill="#4a5262" font-size="14" font-weight="700" x="298" y="414">1　起點層：單一公司的財報</text>
+<text fill="#7b8494" font-size="12" x="298" y="433">營收、毛利率、股價</text>
+<text fill="#7b8494" font-size="13" x="16" y="422">1960s</text>
+<text fill="#6b4fa0" font-size="13" x="700" y="418">庫存管理／訂購點</text>
+<text fill="#7b8494" font-size="11.5" x="700" y="436">只管自己手上有的</text>
+<!-- 箭頭 -->
+<line marker-end="url(#up)" stroke="#7b8494" stroke-width="1.6" x1="266" x2="266" y1="416" y2="68"></line>
+<text fill="#7b8494" font-size="12" transform="rotate(-90 240 250)" x="240" y="250">每一層都是因為上一層有洞</text>
+</svg>
+</div>
+<div class="cap">圖 0-1｜這套研究方法的七次擴張。底部是最早的、也是最基礎的；往上是每一次撞牆後補上去的。</div>
+</section>
+<section id="l1">
+<h2><span class="lv">1</span>起點層：只看一家公司的財報</h2>
+<p class="stage">對應 ERP 的 1960s：先把自己手上有的東西記下來再說</p>
+<div class="erp">
+<div class="t">ERP 類比</div>
+<div class="b">最早的系統只回答一個問題：<b>「我倉庫裡還剩多少？」</b>它不管你要生產什麼、不管客戶明天要什麼。早期的投資研究也一樣——把一家公司的財報讀完，就覺得自己懂了。</div>
+</div>
+<p>以台積電為例，第一層能看到的就是這三樣東西：<b>營收</b>（賣了多少錢）、<b>毛利率</b>（扣掉直接成本後還剩多少比例）、<b>股價</b>（市場願意用多少錢買它）。</p>
+<div class="chart" id="c1"></div>
+<div class="cap">圖 1-1｜台積電 2024Q3～2026Q2 的單季營收（柱，億美元）與毛利率（線，％）。資料來源：台積電法說會（毛利率為法說口徑，新台幣合併基礎）。時點：2026-09-21。</div>
+<div class="note ok"><b>這張圖讀起來很漂亮：</b>營收從 235 億一路爬到 402 億，毛利率從 57.8% 升到 67.7%。任何人都會說「這家公司很強」。</div>
+<div class="add">
+<div class="row"><div class="k">這層能做什麼</div><div class="v">判斷一家公司<b>現在</b>賺不賺錢、賺得比以前好還是差。</div></div>
+<div class="row gap"><div class="k">撞到什麼洞</div><div class="v">這是<b>結果</b>，不是原因。圖上每一根柱子都是「別人決定了要買這麼多」的結果。你完全看不出來：<br/>① 是誰在買？（客戶是誰）<br/>② 他們明年還會買嗎？（需求從哪來）<br/>③ 如果他們不買，台積電能去找誰？（替代性）<br/><b>→ 只看一家公司，你永遠只能在事後解釋，不能在事前判斷。</b></div></div>
+</div>
+<div class="term">
+<span class="n">毛利率</span>：營收扣掉「直接生產成本」後剩下的比例。台積電 67.7% 的意思是，每收 100 元，扣掉生產這批晶片直接花的錢（材料、設備折損、廠內人力），還剩 67.7 元。它反映的是<b>議價能力</b>——越高代表客戶越難找到替代品。注意：它還沒扣管理費、研發費，所以不等於淨利。
+  </div>
+</section>
+<section id="l2">
+<h2><span class="lv">2</span>展開層：把這家公司拆成一張供應鏈 BOM</h2>
+<p class="stage">對應 ERP 的 1970s：MRP 從成品往回展開，算出每一層要什麼</p>
+<div class="erp">
+<div class="t">ERP 類比</div>
+<div class="b">MRP 的核心動作叫 <b>BOM 展開</b>：一台腳踏車 = 1 車架 + 2 輪子 + 1 鏈條……一路拆到最底層的螺絲。<b>投資研究的第二層，就是把「台積電」這個成品拆開</b>——它的產能是誰給的、它的客戶又是誰。</div>
+</div>
+<h3>台積電的 BOM 展開</h3>
+<div class="svgbox">
+<svg aria-label="台積電供應鏈上下游展開圖" role="img" style="min-width:920px" viewbox="0 0 980 400" width="100%">
+<defs>
+<marker id="ar2" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="4.5">
+<path d="M0,0 L9,4.5 L0,9 Z" fill="#7b8494"></path></marker>
+</defs>
+<text fill="#1f7a72" font-size="13" font-weight="700" x="150" y="24">上游：誰供應給它</text>
+<text fill="#1b1f27" font-size="13" font-weight="700" x="452" y="24">這家公司</text>
+<text fill="#c9312b" font-size="13" font-weight="700" x="742" y="24">下游：誰買它的東西</text>
+<!-- 上游四塊 -->
+<g>
+<rect fill="#eaf6f5" height="62" rx="5" stroke="#c4e3df" width="252" x="24" y="46"></rect>
+<text fill="#12554f" font-size="12.5" font-weight="700" x="38" y="68">設備（L7a）</text>
+<text fill="#1f7a72" font-size="12" x="38" y="88">ASML 曝光機、應用材料、泛林、KLA</text>
+<text fill="#7b8494" font-size="11" x="38" y="101">沒有它，產能根本蓋不出來</text>
+</g>
+<g>
+<rect fill="#eaf6f5" height="62" rx="5" stroke="#c4e3df" width="252" x="24" y="118"></rect>
+<text fill="#12554f" font-size="12.5" font-weight="700" x="38" y="140">材料（L7b）</text>
+<text fill="#1f7a72" font-size="12" x="38" y="160">矽晶圓、光刻膠、電子特氣</text>
+<text fill="#7b8494" font-size="11" x="38" y="173">2026-10 起光刻膠漲價約 15%</text>
+</g>
+<g>
+<rect fill="#f1ecfa" height="62" rx="5" stroke="#ddd3ef" width="252" x="24" y="190"></rect>
+<text fill="#3d2d5c" font-size="12.5" font-weight="700" x="38" y="212">記憶體／HBM（L4）</text>
+<text fill="#6b4fa0" font-size="12" x="38" y="232">SK 海力士、三星、美光</text>
+<text fill="#7b8494" font-size="11" x="38" y="245">AI 晶片旁邊必須搭配的高頻寬記憶體</text>
+</g>
+<g>
+<rect fill="#f1ecfa" height="62" rx="5" stroke="#ddd3ef" width="252" x="24" y="262"></rect>
+<text fill="#3d2d5c" font-size="12.5" font-weight="700" x="38" y="284">先進封裝（L5）</text>
+<text fill="#6b4fa0" font-size="12" x="38" y="304">日月光、安靠、長電</text>
+<text fill="#7b8494" font-size="11" x="38" y="317">CoWoS 產能是這幾年最緊的一環</text>
+</g>
+<!-- 中間 -->
+<rect fill="#f2f4f7" height="140" rx="6" stroke="#1b1f27" stroke-width="1.6" width="172" x="404" y="130"></rect>
+<text fill="#1b1f27" font-size="15" font-weight="700" text-anchor="middle" x="490" y="176">台積電</text>
+<text fill="#4a5262" font-size="12" text-anchor="middle" x="490" y="200">晶圓代工（L6）</text>
+<text fill="#7b8494" font-size="11.5" text-anchor="middle" x="490" y="222">3nm／2nm 製程</text>
+<text fill="#7b8494" font-size="11.5" text-anchor="middle" x="490" y="244">2026Q2 毛利率 67.7%</text>
+<!-- 下游 -->
+<g>
+<rect fill="#fbeeed" height="62" rx="5" stroke="#f0c9c7" width="252" x="704" y="46"></rect>
+<text fill="#7d2622" font-size="12.5" font-weight="700" x="718" y="68">AI 芯片（L3）</text>
+<text fill="#c9312b" font-size="12" x="718" y="88">輝達、超微、博通</text>
+<text fill="#7b8494" font-size="11" x="718" y="101">下單的人，不是掏錢的人</text>
+</g>
+<g>
+<rect fill="#fbeeed" height="62" rx="5" stroke="#f0c9c7" width="252" x="704" y="118"></rect>
+<text fill="#7d2622" font-size="12.5" font-weight="700" x="718" y="140">雲端服務商（L2）</text>
+<text fill="#c9312b" font-size="12" x="718" y="160">微軟、Google、Amazon、Meta</text>
+<text fill="#7b8494" font-size="11" x="718" y="173">真正掏錢蓋資料中心的人</text>
+</g>
+<g>
+<rect fill="#fdf5e8" height="62" rx="5" stroke="#efd9ad" width="252" x="704" y="190"></rect>
+<text fill="#7a5210" font-size="12.5" font-weight="700" x="718" y="212">終端使用者（L1）</text>
+<text fill="#b8791a" font-size="12" x="718" y="232">你我、企業的 AI 應用</text>
+<text fill="#7b8494" font-size="11" x="718" y="245">token 用量、AI 服務收入</text>
+</g>
+<g>
+<rect fill="#fdf5e8" height="62" rx="5" stroke="#efd9ad" width="252" x="704" y="262"></rect>
+<text fill="#7a5210" font-size="12.5" font-weight="700" x="718" y="284">電力（L8）</text>
+<text fill="#b8791a" font-size="12" x="718" y="304">變壓器、燃氣機組、表後供電</text>
+<text fill="#7b8494" font-size="11" x="718" y="317">蓋好了沒有電，一樣開不了機</text>
+</g>
+<!-- 連線 -->
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.2" x1="276" x2="402" y1="77" y2="170"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.2" x1="276" x2="402" y1="149" y2="185"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.2" x1="276" x2="402" y1="221" y2="205"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.2" x1="276" x2="402" y1="293" y2="235"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.2" x1="578" x2="702" y1="165" y2="77"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.2" x1="578" x2="702" y1="185" y2="149"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.2" x1="578" x2="702" y1="205" y2="221"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.2" x1="578" x2="702" y1="235" y2="293"></line>
+<text fill="#7b8494" font-size="12" x="290" y="356">往左是「它拿什麼做出來的」</text>
+<text fill="#7b8494" font-size="12" x="596" y="356">往右是「誰把它買走的」</text>
+<text fill="#1b1f27" font-size="12.5" x="404" y="384">注意：掏錢的人（雲廠）和收貨的人（AI 芯片商）不是同一個</text>
+</svg>
+</div>
+<div class="cap">圖 2-1｜台積電的上下游展開。括號中是它在八層框架裡的層號，第 4 層會正式定義。</div>
+<h3>往下游再追一層：客戶的錢從哪來</h3>
+<p>輝達買台積電的產能，但輝達的錢來自雲端服務商。而雲廠的錢，來自它們的資本開支預算。所以真正要盯的數字在這裡：</p>
+<div class="chart" id="c2"></div>
+<div class="cap">圖 2-2｜九大雲端服務商的資本開支：2024→2026E（柱，億美元）與年增率（線，％）。資料來源：TrendForce 2026-05-06（轉引，需核實原文）。注意：基準預期表中的「五大 CSP 約 6,900 億美元」是不同口徑，比較時不可混用。</div>
+<div class="add">
+<div class="row"><div class="k">這層能做什麼</div><div class="v">知道這家公司<b>被誰牽動</b>：上游斷料它就做不出來，下游砍單它就沒訂單。</div></div>
+<div class="row gap"><div class="k">撞到什麼洞</div><div class="v">你只知道<b>「誰跟誰有關」</b>，還不知道<b>「影響多久才會到」</b>。雲廠今年多花錢，台積電的營收是下季就反應，還是兩年後？<br/><b>→ 少了「時間」這個維度。下一層補的就是它。</b></div></div>
+</div>
+<div class="term">
+<span class="n">BOM</span>（Bill of Materials，物料清單）：做一個產品需要的所有零件與數量清單。供應鏈版本的 BOM，就是把「這家公司」換成「這家公司要出貨，需要誰先交貨」。
+  </div>
+</section>
+<section id="l3">
+<h2><span class="lv">3</span>產能層：錢先花，產能兩年後才來</h2>
+<p class="stage">對應 ERP 的 1980s：MRP II 發現「算得出來但做不出來」，於是把產能加進來</p>
+<div class="erp">
+<div class="t">ERP 類比</div>
+<div class="b">MRP 算出「下個月要 1,000 台」，但工廠一個月只能做 600 台——<b>算出來的計畫做不出來</b>。這就是產能約束。投資研究裡對應的概念是：<b>不是有需求就有營收，要先有產能；而產能不是用錢當場買得到的。</b></div>
+</div>
+<div class="svgbox">
+<svg aria-label="資本支出到產能開出的時間落差圖" role="img" style="min-width:920px" viewbox="0 0 980 200" width="100%">
+<text fill="#7b8494" font-size="12.5" font-weight="700" x="16" y="24">半導體的「先花錢、後收穫」</text>
+<line stroke="#e3e6ec" stroke-width="2" x1="60" x2="940" y1="120" y2="120"></line>
+<rect fill="#fbeeed" height="34" rx="4" stroke="#f0c9c7" width="120" x="90" y="86"></rect>
+<text fill="#7d2622" font-size="12.5" font-weight="700" text-anchor="middle" x="150" y="107">決定蓋廠</text>
+<text fill="#7b8494" font-size="12" text-anchor="middle" x="150" y="150">第 0 年</text>
+<rect fill="#fdf5e8" height="34" rx="4" stroke="#efd9ad" width="120" x="270" y="86"></rect>
+<text fill="#7a5210" font-size="12.5" font-weight="700" text-anchor="middle" x="330" y="107">付錢蓋廠</text>
+<text fill="#7b8494" font-size="12" text-anchor="middle" x="330" y="150">CAPEX 認列</text>
+<rect fill="#eef3fb" height="34" rx="4" stroke="#c8d8ef" width="120" x="450" y="86"></rect>
+<text fill="#1c3f70" font-size="12.5" font-weight="700" text-anchor="middle" x="510" y="107">裝機驗證</text>
+<text fill="#7b8494" font-size="12" text-anchor="middle" x="510" y="150">設備進場</text>
+<rect fill="#ecf7f1" height="34" rx="4" stroke="#c3e5d4" width="120" x="630" y="86"></rect>
+<text fill="#155f3d" font-size="12.5" font-weight="700" text-anchor="middle" x="690" y="107">量產出貨</text>
+<text fill="#7b8494" font-size="12" text-anchor="middle" x="690" y="150">營收進來</text>
+<rect fill="#f2f4f7" height="34" rx="4" stroke="#e3e6ec" width="120" x="810" y="86"></rect>
+<text fill="#4a5262" font-size="12.5" font-weight="700" text-anchor="middle" x="870" y="107">折舊開始</text>
+<text fill="#7b8494" font-size="12" text-anchor="middle" x="870" y="150">壓縮毛利率</text>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.4" x1="210" x2="266" y1="103" y2="103"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.4" x1="390" x2="446" y1="103" y2="103"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.4" x1="570" x2="626" y1="103" y2="103"></line>
+<line marker-end="url(#ar2)" stroke="#7b8494" stroke-width="1.4" x1="750" x2="806" y1="103" y2="103"></line>
+<line stroke="#c9312b" stroke-width="1.6" x1="90" x2="930" y1="176" y2="176"></line>
+<text fill="#c9312b" font-size="12.5" text-anchor="middle" x="510" y="196">← 這整段通常要 2～3 年：所以「今年資本支出暴增」講的是兩三年後的事，不是明天的事 →</text>
+</svg>
+</div>
+<div class="cap">圖 3-1｜資本支出（CAPEX）到產能開出之間的時間落差。</div>
+<div class="chart" id="c3"></div>
+<div class="cap">圖 3-2｜台積電年度資本支出（億美元）。2026 為公司指引區間 600～640 億之中間值估算。資料來源：台積電法說會。</div>
+<div class="add">
+<div class="row"><div class="k">這層能做什麼</div><div class="v">看懂<b>時間差</b>：今天的新聞講的是幾年後的事？今天的股價反映的是哪一年的產能？</div></div>
+<div class="row gap"><div class="k">撞到什麼洞</div><div class="v">你以為瓶頸只有一個（產能），但實際上<b>瓶頸會換人當</b>。2023–24 缺 GPU；2024–25 缺先進封裝；2025–26 缺 HBM；2026–27 輪到<b>電力</b>。<br/><b>→ 單看一家公司的產能不夠，要把整條鏈上「現在最慢的是誰」找出來。這就是下一層。</b></div></div>
+</div>
+<div class="term">
+<span class="n">CAPEX</span>（資本支出）：買土地、蓋廠房、買機器這種「一次花一大筆、但能用很多年」的支出。跟水電費那種每月發生的費用不同。會計上不會一次認列為費用，而是分年<b>折舊</b>。<b>折舊</b>就是把這筆大錢攤到每一年，所以它會在往後好幾年持續壓低毛利率。這也是為什麼「狂蓋廠」短期會讓財報變醜、長期才變漂亮。
+  </div>
+</section>
+<section id="l4">
+<h2><span class="lv">4</span>整合層：把上下游串成「一條」因果鏈</h2>
+<p class="stage">對應 ERP 的 1990s：全公司共用一個資料庫，從此不用各說各話</p>
+<div class="erp">
+<div class="t">ERP 類比</div>
+<div class="b">ERP 的真正突破不是功能變多，而是<b>「同一份資料、同一個定義」</b>——業務說的「訂單」，就是財務看到的「訂單」。研究框架的整合層做的事一樣：把前面拆開的上下游，放進<b>同一條有方向、有順序的鏈</b>裡，每個人都能指出「這則新聞是鏈上的第幾環」。</div>
+</div>
+<h3>八層因果鏈（往下讀：錢從哪裡來；往上讀：卡在哪裡）</h3>
+<div class="svgbox">
+<svg aria-label="八層因果鏈框架圖" role="img" style="min-width:920px" viewbox="0 0 980 452" width="100%">
+<text fill="#7b8494" font-size="12.5" font-weight="700" x="16" y="22">層</text>
+<text fill="#7b8494" font-size="12.5" font-weight="700" x="150" y="22">這一層在問什麼</text>
+<text fill="#7b8494" font-size="12.5" font-weight="700" x="596" y="22">代表性的公司／指標</text>
+<text fill="#7b8494" font-size="12.5" font-weight="700" x="812" y="22">現在卡不卡</text>
+<g>
+<rect fill="#f2f4f7" height="40" rx="4" stroke="#e3e6ec" width="948" x="16" y="34"></rect>
+<text fill="#4a5262" font-size="13" font-weight="700" x="34" y="59">L0　弱訊號入口</text>
+<text fill="#4a5262" font-size="12.5" x="150" y="59">有沒有出現會改變成本曲線的技術或政策？</text>
+<text fill="#7b8494" font-size="12" x="596" y="59">模型效率躍升、能源政策、材料斷供</text>
+<rect fill="#f2f4f7" height="20" rx="3" width="60" x="812" y="44"></rect><text fill="#7b8494" font-size="11.5" text-anchor="middle" x="842" y="58">持續掃</text>
+</g>
+<g>
+<rect fill="#fdf5e8" height="40" rx="4" stroke="#efd9ad" width="948" x="16" y="78"></rect>
+<text fill="#7a5210" font-size="13" font-weight="700" x="34" y="103">L1　AI 終端需求</text>
+<text fill="#4a5262" font-size="12.5" x="150" y="103">真的有人在用嗎？用多少？</text>
+<text fill="#7b8494" font-size="12" x="596" y="103">龍頭資料中心營收年增、雲廠 AI 營收</text>
+<rect fill="#ecf7f1" height="20" rx="3" width="60" x="812" y="88"></rect><text fill="#1e8e5a" font-size="11.5" text-anchor="middle" x="842" y="102">不卡</text>
+</g>
+<g>
+<rect fill="#fdf5e8" height="40" rx="4" stroke="#efd9ad" width="948" x="16" y="122"></rect>
+<text fill="#7a5210" font-size="13" font-weight="700" x="34" y="147">L2　算力／雲端資本開支</text>
+<text fill="#4a5262" font-size="12.5" x="150" y="147">掏錢的人今年打算花多少？</text>
+<text fill="#7b8494" font-size="12" x="596" y="147">五大 CSP 2026 約 6,900 億美元</text>
+<rect fill="#eef3fb" height="20" rx="3" width="60" x="812" y="132"></rect><text fill="#2f5fa8" font-size="11.5" text-anchor="middle" x="842" y="146">熱</text>
+</g>
+<g>
+<rect fill="#fbeeed" height="40" rx="4" stroke="#f0c9c7" width="948" x="16" y="166"></rect>
+<text fill="#7d2622" font-size="13" font-weight="700" x="34" y="191">L3　AI 芯片</text>
+<text fill="#4a5262" font-size="12.5" x="150" y="191">誰在下單？晶片夠不夠？</text>
+<text fill="#7b8494" font-size="12" x="596" y="191">輝達、超微、博通</text>
+<rect fill="#eef3fb" height="20" rx="3" width="60" x="812" y="176"></rect><text fill="#2f5fa8" font-size="11.5" text-anchor="middle" x="842" y="190">熱</text>
+</g>
+<g>
+<rect fill="#f1ecfa" height="40" rx="4" stroke="#ddd3ef" width="948" x="16" y="210"></rect>
+<text fill="#3d2d5c" font-size="13" font-weight="700" x="34" y="235">L4　記憶體／HBM</text>
+<text fill="#4a5262" font-size="12.5" x="150" y="235">晶片旁邊的記憶體跟得上嗎？</text>
+<text fill="#7b8494" font-size="12" x="596" y="235">SK 海力士 50%、三星 33%、美光 18%</text>
+<rect fill="#fdf5e8" height="20" rx="3" width="60" x="812" y="220"></rect><text fill="#b8791a" font-size="11.5" text-anchor="middle" x="842" y="234">緊</text>
+</g>
+<g>
+<rect fill="#f1ecfa" height="40" rx="4" stroke="#ddd3ef" width="948" x="16" y="254"></rect>
+<text fill="#3d2d5c" font-size="13" font-weight="700" x="34" y="279">L5　先進封裝</text>
+<text fill="#4a5262" font-size="12.5" x="150" y="279">晶片做出來，有人把它包起來嗎？</text>
+<text fill="#7b8494" font-size="12" x="596" y="279">CoWoS 交期逾 52 週、日月光、安靠</text>
+<rect fill="#fdf5e8" height="20" rx="3" width="60" x="812" y="264"></rect><text fill="#b8791a" font-size="11.5" text-anchor="middle" x="842" y="278">緊</text>
+</g>
+<g>
+<rect fill="#eef3fb" height="40" rx="4" stroke="#c8d8ef" width="948" x="16" y="298"></rect>
+<text fill="#1c3f70" font-size="13" font-weight="700" x="34" y="323">L6　晶圓代工</text>
+<text fill="#4a5262" font-size="12.5" x="150" y="323">誰把晶片真的做出來？</text>
+<text fill="#7b8494" font-size="12" x="596" y="323">台積電 3nm／2nm，毛利率 67.7%</text>
+<rect fill="#eef3fb" height="20" rx="3" width="60" x="812" y="308"></rect><text fill="#2f5fa8" font-size="11.5" text-anchor="middle" x="842" y="322">滿載</text>
+</g>
+<g>
+<rect fill="#eaf6f5" height="40" rx="4" stroke="#c4e3df" width="948" x="16" y="342"></rect>
+<text fill="#12554f" font-size="13" font-weight="700" x="34" y="367">L7　設備（a）／材料（b）</text>
+<text fill="#4a5262" font-size="12.5" x="150" y="367">蓋廠的機器和原料供應得上嗎？</text>
+<text fill="#7b8494" font-size="12" x="596" y="367">ASML、應用材料；光刻膠 10 月起 +15%</text>
+<rect fill="#ecf7f1" height="20" rx="3" width="60" x="812" y="352"></rect><text fill="#1e8e5a" font-size="11.5" text-anchor="middle" x="842" y="366">a 順／b 緊</text>
+</g>
+<g>
+<rect fill="#fdf5e8" height="40" rx="4" stroke="#efd9ad" width="948" x="16" y="386"></rect>
+<text fill="#7a5210" font-size="13" font-weight="700" x="34" y="411">L8　電力</text>
+<text fill="#4a5262" font-size="12.5" x="150" y="411">蓋好了，有電嗎？</text>
+<text fill="#7b8494" font-size="12" x="596" y="411">變壓器交期約 36 個月、表後供電約 75GW</text>
+<rect fill="#fbeeed" height="20" rx="3" width="60" x="812" y="396"></rect><text fill="#c9312b" font-size="11.5" text-anchor="middle" x="842" y="410">最卡</text>
+</g>
+<text fill="#7b8494" font-size="12" x="16" y="444">讀法：由上往下＝錢從終端一路流到設備與電力；由下往上＝哪一環慢，整條鏈就慢在那裡。</text>
+</svg>
+</div>
+<div class="cap">圖 4-1｜八層因果鏈。右欄「現在卡不卡」是 2026-09-21 的判定，詳細依據見第 8 章。</div>
+<div class="note key"><b>這一層最重要的一句話：</b>層與層之間的每一支箭頭，都是<b>「待驗證的轉換關係」，不是事實</b>。「雲廠增加資本開支」<b>不等於</b>「台積電營收增加」——中間還要經過晶片商下單、封裝排程、產能調度好幾關。把箭頭當成必然，是這套方法最容易犯的錯。</div>
+<h3>為什麼「離得遠」反而是優勢（但也有代價）</h3>
+<p>如果整條鏈上每一層都同時反應，那新聞一出來大家就知道了，沒有任何優勢。真正有意義的是<b>落差</b>——同一條鏈上，有的層已經漲翻天，有的層還沒動：</p>
+<div class="chart" id="c4"></div>
+<div class="cap">圖 4-2｜同一條 AI 供應鏈上，不同板塊 2026 年至今的漲幅落差（A 股板塊，％）。資料來源：市場資料，時點 2026-09-21（轉引，需核實原文）。</div>
+<div class="term">
+<span class="n">跳數</span>：一則新聞發生的位置，到你投資的標的，中間隔了幾層。隔越多層（跳數越大），影響越不確定。<span class="n">時滯</span>：訊號傳過去要多久。<b>「離得遠」本身不是優勢，只有「離得遠 × 傳導時間長」才是</b>——因為你才有時間在別人還沒反應時布局；如果距離遠但當天就反應完，那你只是比較晚知道而已。
+  </div>
+<div class="add">
+<div class="row"><div class="k">這層能做什麼</div><div class="v">把任何一則新聞，精確歸到鏈上的某一層；並用「跳數 × 時滯」估它<b>什麼時候</b>、<b>影響誰</b>。</div></div>
+<div class="row gap"><div class="k">撞到什麼洞</div><div class="v">這條鏈假設世界是<b>單向、線性、只講實體經濟</b>的。但真實世界裡，鏈的外面還有東西會打進來（政策、利率），而且市場的情緒會<b>回頭影響</b>鏈本身。<br/><b>→ 這兩個洞，就是第 5 層和第 6 層。</b></div></div>
+</div>
+</section>
+<section id="l5">
+<h2><span class="lv">5</span>外部層：世界不會照著你的鏈走</h2>
+<p class="stage">對應 ERP 的 2000s：ERP II 把供應商、客戶、外部夥伴接進系統</p>
+<div class="erp">
+<div class="t">ERP 類比</div>
+<div class="b">ERP 把公司內部打通了，但公司不是活在真空裡——<b>供應商延遲、客戶取消訂單、匯率變動，全都在系統外面</b>。ERP II 做的就是「延伸企業」：把外面的角色接進來。研究框架的第五層同理：這條鏈不是封閉系統。</div>
+</div>
+<div class="svgbox">
+<svg aria-label="外生變數從外部打進因果鏈的示意圖" role="img" style="min-width:920px" viewbox="0 0 980 300" width="100%">
+<text fill="#7b8494" font-size="12.5" font-weight="700" x="16" y="22">左側：外生變數（不在鏈上，但會打進來）</text>
+<text fill="#7b8494" font-size="12.5" font-weight="700" x="660" y="22">右側：這條鏈</text>
+<!-- 外生 -->
+<rect fill="#fbeeed" height="52" rx="5" stroke="#f0c9c7" width="180" x="16" y="40"></rect>
+<text fill="#7d2622" font-size="12.5" font-weight="700" x="30" y="62">利率</text>
+<text fill="#c9312b" font-size="11.5" x="30" y="82">影響所有資產的折現率</text>
+<rect fill="#fbeeed" height="52" rx="5" stroke="#f0c9c7" width="180" x="16" y="100"></rect>
+<text fill="#7d2622" font-size="12.5" font-weight="700" x="30" y="122">出口管制／地緣</text>
+<text fill="#c9312b" font-size="11.5" x="30" y="142">一紙公文就改寫供需</text>
+<rect fill="#fdf5e8" height="52" rx="5" stroke="#efd9ad" width="180" x="16" y="160"></rect>
+<text fill="#7a5210" font-size="12.5" font-weight="700" x="30" y="182">匯率</text>
+<text fill="#b8791a" font-size="11.5" x="30" y="202">新台幣升值直接吃掉毛利</text>
+<rect fill="#fdf5e8" height="52" rx="5" stroke="#efd9ad" width="180" x="16" y="220"></rect>
+<text fill="#7a5210" font-size="12.5" font-weight="700" x="30" y="242">能源與環境政策</text>
+<text fill="#b8791a" font-size="11.5" x="30" y="262">許可、碳排、電價</text>
+<!-- 鏈 -->
+<rect fill="#fdf5e8" height="38" rx="4" stroke="#efd9ad" width="304" x="660" y="40"></rect>
+<text fill="#7a5210" font-size="12.5" x="676" y="64">L1～L2　需求與雲端資本開支</text>
+<rect fill="#fbeeed" height="38" rx="4" stroke="#f0c9c7" width="304" x="660" y="86"></rect>
+<text fill="#7d2622" font-size="12.5" x="676" y="110">L3～L4　AI 芯片與記憶體</text>
+<rect fill="#f1ecfa" height="38" rx="4" stroke="#ddd3ef" width="304" x="660" y="132"></rect>
+<text fill="#3d2d5c" font-size="12.5" x="676" y="156">L5～L6　封裝與晶圓代工</text>
+<rect fill="#eaf6f5" height="38" rx="4" stroke="#c4e3df" width="304" x="660" y="178"></rect>
+<text fill="#12554f" font-size="12.5" x="676" y="202">L7　設備與材料</text>
+<rect fill="#fdf5e8" height="38" rx="4" stroke="#efd9ad" width="304" x="660" y="224"></rect>
+<text fill="#7a5210" font-size="12.5" x="676" y="248">L8　電力</text>
+<!-- 箭頭 -->
+<line marker-end="url(#ar2)" stroke="#c9312b" stroke-width="1.3" x1="200" x2="656" y1="66" y2="66"></line>
+<line marker-end="url(#ar2)" stroke="#c9312b" stroke-width="1.3" x1="200" x2="656" y1="126" y2="112"></line>
+<line marker-end="url(#ar2)" stroke="#b8791a" stroke-width="1.3" x1="200" x2="656" y1="186" y2="158"></line>
+<line marker-end="url(#ar2)" stroke="#b8791a" stroke-width="1.3" x1="200" x2="656" y1="246" y2="240"></line>
+<line marker-end="url(#ar2)" stroke="#b8791a" stroke-width="1.3" x1="200" x2="656" y1="256" y2="196"></line>
+<text fill="#7b8494" font-size="12" x="230" y="286">這些變數的共同特色：你沒辦法從供應鏈的任何一層預判它，它會<b>從外面</b>打進來。</text>
+</svg>
+</div>
+<div class="cap">圖 5-1｜外生變數不屬於鏈的任何一層，但會直接改寫鏈上的數字。</div>
+<div class="note warn"><b>真實案例（2026-09-16）：</b>聯準會升息 25bp 至 3.75～4.00%，是 2023 年 7 月以來第一次升息，而且是 12 票對 0 票全數通過。<br/>這件事<b>在整條 AI 供應鏈上找不到任何徵兆</b>——台積電的營收、輝達的訂單、雲廠的資本開支，沒有一個能預告它。但它會直接影響所有高本益比資產的估值。<b>這就是外生變數最麻煩的地方：它不是你研究的產業發生的事，卻能推翻你的結論。</b></div>
+<div class="add">
+<div class="row"><div class="k">這層能做什麼</div><div class="v">在框架裡<b>預留外部打擊的位置</b>，遇到政策或總經事件時不會愣住，也不會硬把它塞進產業敘事裡。</div></div>
+<div class="row gap"><div class="k">撞到什麼洞</div><div class="v">我們還是假設「市場只是客觀反映基本面」。但實際上<b>股價會回頭影響公司行為</b>——股價高，公司更容易募資；募到錢，就能蓋更多產能；產能開出，財報變好；財報變好，故事又被強化。<br/><b>→ 市場不是鏡子，它是迴路的一部分。下一層補這個。</b></div></div>
+</div>
+<div class="term">
+<span class="n">外生變數</span>：不是由這套系統內部產生、而是從外部給定的條件。經濟學裡叫 exogenous。對投資研究來說，重點不是預測它，而是<b>先承認它存在，並隨時準備好「如果它變了，我的結論哪裡會先垮」</b>。
+  </div>
+</section>
+<section id="l6">
+<h2><span class="lv">6</span>回饋層：市場不是鏡子，它是迴路的一部分</h2>
+<p class="stage">對應 ERP 的 2010s：開始有即時儀表板，但也開始被儀表板騙</p>
+<div class="erp">
+<div class="t">ERP 類比</div>
+<div class="b">有了即時儀表板之後，公司發現一件尷尬的事：<b>指標本身會改變人的行為</b>。你設定「庫存週轉率」當 KPI，各部門就開始壓庫存，結果缺料風險上升。系統不再只是觀察對象，它成了被觀察者的一部分。</div>
+</div>
+<div class="svgbox">
+<svg aria-label="反射性迴路示意圖" role="img" style="min-width:920px" viewbox="0 0 980 320" width="100%">
+<defs>
+<marker id="arp" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="4.5">
+<path d="M0,0 L9,4.5 L0,9 Z" fill="#6b4fa0"></path></marker>
+</defs>
+<g>
+<rect fill="#f6f3fb" height="56" rx="5" stroke="#ddd3ef" width="180" x="60" y="40"></rect>
+<text fill="#3d2d5c" font-size="13.5" font-weight="700" text-anchor="middle" x="150" y="66">① 敘事</text>
+<text fill="#6b4fa0" font-size="11.5" text-anchor="middle" x="150" y="86">「AI 是這十年的主旋律」</text>
+</g>
+<g>
+<rect fill="#f6f3fb" height="56" rx="5" stroke="#ddd3ef" width="180" x="400" y="40"></rect>
+<text fill="#3d2d5c" font-size="13.5" font-weight="700" text-anchor="middle" x="490" y="66">② 估值</text>
+<text fill="#6b4fa0" font-size="11.5" text-anchor="middle" x="490" y="86">股價與本益比上升</text>
+</g>
+<g>
+<rect fill="#f6f3fb" height="56" rx="5" stroke="#ddd3ef" width="180" x="740" y="40"></rect>
+<text fill="#3d2d5c" font-size="13.5" font-weight="700" text-anchor="middle" x="830" y="66">③ 融資</text>
+<text fill="#6b4fa0" font-size="11.5" text-anchor="middle" x="830" y="86">發債、增資更容易也更便宜</text>
+</g>
+<g>
+<rect fill="#f6f3fb" height="56" rx="5" stroke="#ddd3ef" width="180" x="740" y="190"></rect>
+<text fill="#3d2d5c" font-size="13.5" font-weight="700" text-anchor="middle" x="830" y="216">④ 資本支出</text>
+<text fill="#6b4fa0" font-size="11.5" text-anchor="middle" x="830" y="236">真的把錢花下去蓋廠</text>
+</g>
+<g>
+<rect fill="#f6f3fb" height="56" rx="5" stroke="#ddd3ef" width="180" x="400" y="190"></rect>
+<text fill="#3d2d5c" font-size="13.5" font-weight="700" text-anchor="middle" x="490" y="216">⑤ 財報</text>
+<text fill="#6b4fa0" font-size="11.5" text-anchor="middle" x="490" y="236">營收與毛利真的變好了</text>
+</g>
+<g>
+<rect fill="#f6f3fb" height="56" rx="5" stroke="#ddd3ef" width="180" x="60" y="190"></rect>
+<text fill="#3d2d5c" font-size="13.5" font-weight="700" text-anchor="middle" x="150" y="216">⑥ 回到敘事</text>
+<text fill="#6b4fa0" font-size="11.5" text-anchor="middle" x="150" y="236">「你看，我說的沒錯吧」</text>
+</g>
+<line marker-end="url(#arp)" stroke="#6b4fa0" stroke-width="1.6" x1="240" x2="396" y1="68" y2="68"></line>
+<line marker-end="url(#arp)" stroke="#6b4fa0" stroke-width="1.6" x1="580" x2="736" y1="68" y2="68"></line>
+<line marker-end="url(#arp)" stroke="#6b4fa0" stroke-width="1.6" x1="830" x2="830" y1="96" y2="186"></line>
+<line marker-end="url(#arp)" stroke="#6b4fa0" stroke-width="1.6" x1="736" x2="580" y1="218" y2="218"></line>
+<line marker-end="url(#arp)" stroke="#6b4fa0" stroke-width="1.6" x1="396" x2="240" y1="218" y2="218"></line>
+<line marker-end="url(#arp)" stroke="#6b4fa0" stroke-width="1.6" x1="150" x2="150" y1="186" y2="96"></line>
+<text fill="#3d2d5c" font-size="13" font-weight="700" text-anchor="middle" x="490" y="278">這是一個會自我強化的環：好消息 → 價格上漲 → 更容易籌錢 → 真的投資 → 好消息</text>
+<text fill="#7b8494" font-size="12.5" text-anchor="middle" x="490" y="302">正循環時它讓一切都看起來對；但它是雙向的——反過來走的時候，每一環都會加速往下。</text>
+</svg>
+</div>
+<div class="cap">圖 6-1｜反射性迴路。注意箭頭是繞一圈的，不是單向的。</div>
+<div class="note key"><b>為什麼這一層對新手最重要：</b>因為它解釋了「<b>為什麼財報很好、股價卻在跌</b>」。基本面（⑤）好，不代表迴路還在正循環——只要融資那一環（③）卡住，或是敘事那一環（①）開始被懷疑，接下來的資本支出（④）就會縮手，而財報要兩年後才反應。<b>股價跌在財報壞掉之前，是這套迴路的正常現象，不是市場失靈。</b></div>
+<h3>怎麼判斷這個環快轉不動了：看擁擠度</h3>
+<p>不用猜，看錢擠在哪裡。當大家都買同一個東西，價格裡已經沒有「新買家」的空間了：</p>
+<div class="grid2">
+<div class="card">
+<h4>公募基金對通信／AI 板塊的配置</h4>
+<p style="font-size:14px;color:var(--ink2)">2025Q1 約 <b>2.7%</b> → 2026Q1 約 <b>13.1%</b>，一年增加近 5 倍。<br/><span style="font-size:12.5px;color:var(--ink3)">資料來源：市場統計（轉引，需核實原文）</span></p>
+</div>
+<div class="card">
+<h4>怎麼用它</h4>
+<p style="font-size:14px;color:var(--ink2)">擁擠度是<b>反向指標</b>，不是基本面指標。它不告訴你公司好不好，只告訴你「還有沒有人沒進場」。極度擁擠時，好消息的反應會鈍化，壞消息的反應會被放大。</p>
+</div>
+</div>
+<div class="add">
+<div class="row"><div class="k">這層能做什麼</div><div class="v">解釋「基本面與股價背離」，並提前注意迴路反轉的徵兆（融資成本、發債難度、擁擠度）。</div></div>
+<div class="row gap"><div class="k">撞到什麼洞</div><div class="v">到這裡為止，你已經有很多知識了，但你<b>還沒有一把尺</b>。「營收成長 30%」到底算好還是不好？「毛利率 67%」是超標還是剛好？沒有尺，每一則新聞你都能自圓其說。<br/><b>→ 最後一層，就是那把尺。</b></div></div>
+</div>
+</section>
+<section id="l7">
+<h2><span class="lv">7</span>治理層：先規定「多少算正常」，才談得上判斷</h2>
+<p class="stage">對應現在的 ERP：治理與稽核——誰改了什麼、什麼時候改、依據是什麼</p>
+<div class="erp">
+<div class="t">ERP 類比</div>
+<div class="b">系統做到最後才會發現：真正難的不是收集資料，而是<b>確保資料沒被偷偷改過</b>。所以現代 ERP 一定要有稽核軌跡（audit trail）——任何一筆修改，都要留下「誰、何時、從什麼改成什麼、憑什麼」。研究的第七層做的就是這件事。</div>
+</div>
+<h3>第一步：立一把尺（基準預期表）</h3>
+<p>對鏈上的每一層，事先寫下三件事：<b>你預期會是多少</b>、<b>多大的誤差可以接受</b>、<b>什麼狀況叫做偏離</b>。這三欄合起來就是一把尺。</p>
+<table>
+<thead><tr><th style="width:150px">層</th><th style="width:32%">基準預期（我預期是多少）</th><th style="width:116px">容忍區間（可接受誤差）</th><th>偏離訊號（什麼時候要示警）</th></tr></thead>
+<tbody>
+<tr><td><b>L1</b> 終端需求</td><td>龍頭資料中心營收年增 &gt;50%</td><td>±20pp</td><td>連續兩季 &lt;30%；或雲廠 AI 收入增速低於資本開支增速</td></tr>
+<tr><td><b>L2</b> 雲端資本開支</td><td>五大 CSP 2026 約 6,900 億美元</td><td>±10%</td><td>任一 CSP 下修全年指引；或受限於電力而非需求</td></tr>
+<tr><td><b>L4</b> 記憶體</td><td>HBM 供不應求、合約價上漲</td><td>季增 5～25%</td><td>現貨鬆動、庫存回升逾 4 週</td></tr>
+<tr><td><b>L6</b> 晶圓代工</td><td>3nm／2nm 近滿載、毛利率 &gt;60%</td><td>±3pp</td><td>出現降價或折讓、利用率下滑</td></tr>
+<tr><td><b>L7b</b> 材料</td><td>價格平穩或溫和上行</td><td>年漲幅 0～10%</td><td>年漲幅 &gt;15% 並持續</td></tr>
+<tr><td><b>L8</b> 電力</td><td>表後供電訂單快速累積</td><td>±20%</td><td>許可大幅放行（瓶頸降級）；或供電計畫延宕</td></tr>
+</tbody>
+</table>
+<div class="cap">表 7-1｜基準預期表（節錄，完整版為 v1.1，共 13 列）。時點：2026-09-21。</div>
+<div class="note ok"><b>有了尺之後，新聞才有意義。</b>「HBM 合約價季增 20%」——在沒有尺的世界裡，這只是一則新聞；有了尺（容忍區間 5～25%），你知道它<b>符合預期但貼著上緣</b>，下一步該問的是「下季還在區間內嗎」。</div>
+<h3>第二步：規定「改尺」的流程</h3>
+<p>最危險的不是尺不準，而是<b>看到結果才偷偷改尺</b>。本來預期成長 20%，結果只有 5%，於是把預期改成 5%——這樣永遠不會錯，也就永遠沒有資訊量。所以改尺必須走流程：</p>
+<div class="svgbox">
+<svg aria-label="修正基準表的六步流程" role="img" style="min-width:920px" viewbox="0 0 980 150" width="100%">
+<defs><marker id="ar6" markerheight="8" markerwidth="8" orient="auto" refx="6.5" refy="4">
+<path d="M0,0 L8,4 L0,8 Z" fill="#7b8494"></path></marker></defs>
+<rect fill="#eef3fb" height="56" rx="5" stroke="#c8d8ef" width="140" x="12" y="34"></rect>
+<text fill="#1c3f70" font-size="12.5" font-weight="700" text-anchor="middle" x="82" y="60">① 觸發</text>
+<text fill="#2f5fa8" font-size="11" text-anchor="middle" x="82" y="78">某層連續超出容忍</text>
+<rect fill="#eef3fb" height="56" rx="5" stroke="#c8d8ef" width="140" x="164" y="34"></rect>
+<text fill="#1c3f70" font-size="12.5" font-weight="700" text-anchor="middle" x="234" y="60">② 提案</text>
+<text fill="#2f5fa8" font-size="11" text-anchor="middle" x="234" y="78">改哪格、原值→新值</text>
+<rect fill="#eef3fb" height="56" rx="5" stroke="#c8d8ef" width="140" x="316" y="34"></rect>
+<text fill="#1c3f70" font-size="12.5" font-weight="700" text-anchor="middle" x="386" y="60">③ 證據</text>
+<text fill="#2f5fa8" font-size="11" text-anchor="middle" x="386" y="78">一手來源＋時點</text>
+<rect fill="#fdf5e8" height="56" rx="5" stroke="#efd9ad" width="150" x="468" y="34"></rect>
+<text fill="#7a5210" font-size="12.5" font-weight="700" text-anchor="middle" x="543" y="60">④ 影響面</text>
+<text fill="#b8791a" font-size="11" text-anchor="middle" x="543" y="78">哪些既有判定會反轉</text>
+<rect fill="#fbeeed" height="56" rx="5" stroke="#f0c9c7" width="150" x="630" y="34"></rect>
+<text fill="#7d2622" font-size="12.5" font-weight="700" text-anchor="middle" x="705" y="60">⑤ 核准</text>
+<text fill="#c9312b" font-size="11" text-anchor="middle" x="705" y="78">人工閘門，沒過就不算</text>
+<rect fill="#ecf7f1" height="56" rx="5" stroke="#c3e5d4" width="168" x="792" y="34"></rect>
+<text fill="#155f3d" font-size="12.5" font-weight="700" text-anchor="middle" x="876" y="60">⑥ 版本推進</text>
+<text fill="#1e8e5a" font-size="11" text-anchor="middle" x="876" y="78">v1.0→v1.1，留 diff</text>
+<line marker-end="url(#ar6)" stroke="#7b8494" stroke-width="1.3" x1="152" x2="160" y1="62" y2="62"></line>
+<line marker-end="url(#ar6)" stroke="#7b8494" stroke-width="1.3" x1="304" x2="312" y1="62" y2="62"></line>
+<line marker-end="url(#ar6)" stroke="#7b8494" stroke-width="1.3" x1="456" x2="464" y1="62" y2="62"></line>
+<line marker-end="url(#ar6)" stroke="#7b8494" stroke-width="1.3" x1="618" x2="626" y1="62" y2="62"></line>
+<line marker-end="url(#ar6)" stroke="#7b8494" stroke-width="1.3" x1="780" x2="788" y1="62" y2="62"></line>
+<line stroke="#7b8494" stroke-width="1.2" x1="543" x2="543" y1="90" y2="116"></line>
+<text fill="#7b8494" font-size="12" x="490" y="138">沒過 ⑤？→ 判定繼續用舊尺，提案留到下期再議。絕不「先改再說」。</text>
+</svg>
+</div>
+<div class="cap">圖 7-1｜改尺的六步流程。第 ⑤ 步是唯一的人工閘門。</div>
+<div class="note key"><b>一個真實的例子，說明為什麼要這麼麻煩：</b>原本「設備」和「材料」是混在同一層的。2026 年 10 月光刻膠要漲價約 15%（高階品項漲 16～22%），但在混層的尺之下，這個訊號被設備端的高成長（營收年增 15～30%）稀釋掉了，判定上只寫成「建議新增子層」，<b>不是示警</b>。把兩層拆開之後，它立刻浮現為一張正式的示警卡。<br/><b>教訓：混層不只是不方便，它本身就是一種判定偏誤——它不會報錯，只會靜靜地把示警吃掉。</b>這也是基準表從 v1.0 推進到 v1.1 的第一項修正。</div>
+<div class="add">
+<div class="row"><div class="k">這層能做什麼</div><div class="v">讓每一則新聞都能被判成<b>「符合／超越／偏離」</b>，而不是每次都即興解釋；且任何改尺都留下可追溯的紀錄。</div></div>
+<div class="row"><div class="k">這層的洞</div><div class="v">老實說，還是有。最大的一個是：<b>基準值終究是我設的，不是市場共識</b>。所以每一格都要標註來源與時點，並區分「一手可查核」與「主觀設定」。這是這套方法目前最脆弱的地方，也是必須持續複核的原因。</div></div>
+</div>
+</section>
+<section id="now">
+<h2><span class="lv">8</span>現況：用這把尺，現在量到什麼</h2>
+<p class="stage">把前面七層全部套上去，看看 2026-09-21 這一刻的結果</p>
+<table>
+<thead><tr><th style="width:150px">層</th><th style="width:36%">現在看到的</th><th style="width:100px">判定</th><th>這代表什麼</th></tr></thead>
+<tbody>
+<tr><td><b>L1</b> 終端需求</td><td>龍頭資料中心營收年增 +106%</td><td><span class="chip green">符合</span></td><td>證據等級：強（以一手財報為分母）</td></tr>
+<tr><td><b>L2</b> 雲端資本開支</td><td>九大 CSP 2026E 約 8,300 億美元，年增 +79%</td><td><span class="chip blue">超越</span></td><td>落在容忍區間上緣之外（加速）</td></tr>
+<tr><td><b>L3</b> AI 芯片</td><td>輝達 FY27Q2 營收 962 億（+106%）</td><td><span class="chip blue">超越</span></td><td>龍頭強，但二線漲得更兇（見下圖）</td></tr>
+<tr><td><b>L4</b> 記憶體</td><td>HBM3E 合約價 +約 20%；韓系 DRAM 庫存低於 10 天</td><td><span class="chip green">符合</span></td><td>貼著容忍上緣，成本壓力正在往下傳</td></tr>
+<tr><td><b>L5</b> 先進封裝</td><td>CoWoS 持續吃緊</td><td><span class="chip green">符合</span></td><td>交期數字待複核</td></tr>
+<tr><td><b>L6</b> 晶圓代工</td><td>台積電毛利率 67.7%（基準 &gt;60%）</td><td><span class="chip blue">超越</span></td><td>定價權極強</td></tr>
+<tr><td><b>L7a</b> 設備</td><td>營收年增 +15～30%，在容忍內</td><td><span class="chip green">符合</span></td><td>但近 60 日股價回檔 8～31%</td></tr>
+<tr><td><b>L7b</b> 材料</td><td>光刻膠 10 月起 +15%（高階 +16～22%）</td><td><span class="chip red">偏離</span></td><td><b>正式示警</b>：成本推升，會壓毛利</td></tr>
+<tr><td><b>L8</b> 電力</td><td>表後供電訂單約 75GW 持續累積</td><td><span class="chip green">符合</span></td><td>瓶頸仍在，變壓器交期約 36 個月</td></tr>
+<tr><td><b>外生</b>｜利率</td><td>9/16 升息至 3.75～4.00%；10Y 美債約 5.01%</td><td><span class="chip red">已觸發</span></td><td>折現率上行，高本益比環節承壓</td></tr>
+<tr><td><b>反射性</b>迴路</td><td>公募對該板塊配置一年從 2.7% 拉到 13.1%</td><td><span class="chip amber">待觀察</span></td><td>擁擠度升高，好消息的反應會鈍化</td></tr>
+</tbody>
+</table>
+<div class="cap">表 8-1｜2026-09-21 的現況判定。判定尺：基準預期表 v1.1。資料來源：各公司法說與財報（一手）、市場統計（轉引，需核實原文）。</div>
+<div class="chart" id="c5"></div>
+<div class="cap">圖 8-1｜同一條鏈上，重點公司 2026 年至今的漲幅（％）。<b>台灣慣例：紅色代表上漲、綠色代表下跌</b>（與歐美相反）。資料來源：市場資料，時點 2026-09-21。</div>
+<div class="grid3">
+<div class="card">
+<h4>① 產業鏈本身幾乎全部符合或超越</h4>
+<p style="font-size:14px;color:var(--ink2)">十一層裡有八層是綠或藍。<b>問題不在產業，在產業外面</b>——利率那一欄是紅的。</p>
+</div>
+<div class="card">
+<h4>② 全鏈出現同一個背離：財報強、股價軟</h4>
+<p style="font-size:14px;color:var(--ink2)">設備商近 60 日全線回檔 8～31%，但營收年增仍有 15～30%。<b>這不是矛盾，這是第 6 層講的迴路該有的樣子。</b></p>
+</div>
+<div class="card">
+<h4>③ 二線的彈性遠大於龍頭</h4>
+<p style="font-size:14px;color:var(--ink2)">美光 +264%、英特爾 +233%，對比輝達 +21%、博通 +4%。<b>這通常不是基本面差異，而是資金在找補漲。</b></p>
+</div>
+</div>
+</section>
+<section id="next">
+<h2><span class="lv">9</span>後續追蹤重點：接下來要看什麼</h2>
+<p class="stage">研究不是做完就結束，而是排好「下一次要查什麼」</p>
+<p>整套方法最後會落到一張查核表。重點不是「看很多新聞」，而是<b>每一項都先寫好「看到什麼數字，就代表我錯了」</b>——這叫打臉條件，沒有它，你看再多新聞都只是在找支持自己的證據。</p>
+<table>
+<thead><tr><th style="width:96px">時間（台北）</th><th style="width:150px">事件</th><th style="width:30%">要看的數字</th><th>打臉條件（看到就代表我錯了）</th></tr></thead>
+<tbody>
+<tr><td>9/23</td><td>Meta Connect</td><td>AI 相關資本開支指引</td><td>下修全年資本開支 → L2 基準被打臉</td></tr>
+<tr><td>9 月下旬</td><td>美光財報</td><td>HBM 出貨與合約價</td><td>合約價季增低於 5% → L4「供不應求」的假設要改</td></tr>
+<tr><td>10/01</td><td>光刻膠漲價生效</td><td>實際漲幅與轉嫁情況</td><td>漲幅低於 10% 或可完全轉嫁 → L7b 示警降級</td></tr>
+<tr><td>10/05</td><td>Intel PC 處理器漲價</td><td>漲幅與市場接受度</td><td>需求明顯下滑 → 成本推升開始反噬終端</td></tr>
+<tr><td><b>10/14～15</b></td><td><b>台積電法說（最關鍵）</b></td><td>毛利率、資本支出、2nm 進度</td><td>毛利率低於 60% 或資本支出下修 → L6 與整條鏈都要重估</td></tr>
+<tr><td>10 月</td><td>FOMC</td><td>是否再升息、點陣圖</td><td>單次升息超過 25bp 或轉向降息 → 外生利率欄重新設定</td></tr>
+</tbody>
+</table>
+<div class="cap">表 9-1｜下期查核日曆。時間均為台北時間（GMT+8）。</div>
+<div class="note"><b>同時進行的還有這些週期性工作：</b>每週一次新聞解析（套回框架判定偏離）；每月一次的傳導鏈追蹤（記憶體漲價 → AI 成本 → 雲廠投資報酬率）、電力瓶頸追蹤、中國變數（雙向）；每季一次的 Kill Thesis 維護（寫下「什麼情況這套論點就死了」）。</div>
+</section>
+<section id="quiz">
+<h2><span class="lv">10</span>練習：把這套方法用一次</h2>
+<p class="stage">三題，答案在下面，建議先自己想過再展開</p>
+<div class="quiz">
+<div class="q">Q1｜新聞：「某雲端服務商宣布明年資本開支增加 50%。」請問這則新聞對台積電的營收影響，最快會在什麼時候出現？</div>
+<details><summary>展開解答</summary>
+<div class="a">不能直接回答，要先問三個問題：<b>①</b> 這筆錢有多少比例會變成晶片採購（而不是土地、電力、冷卻）？<b>②</b> 中間還要經過晶片商下單、封裝排程、代工產能調度幾關（跳數）？<b>③</b> 台積電現在有沒有多餘產能可以接（還是要等新廠，那就是兩年後）？<br/><b>這就是第 2、3、4 層的重點：</b>「雲廠增加支出」和「台積電營收增加」之間不是等號，是一串要逐關驗證的轉換關係。至少要看到晶片商的訂單或台積電的產能利用率變化，才能算有證據。</div>
+</details>
+</div>
+<div class="quiz">
+<div class="q">Q2｜某公司營收年增 40%、毛利率創新高，但股價近兩個月跌了 25%。用這套框架，你會怎麼解釋？</div>
+<details><summary>展開解答</summary>
+<div class="a">第一層（財報）告訴你公司很強；但第 6 層（反射性）告訴你<b>股價反映的是「迴路還能不能繼續轉」，不是「公司現在好不好」</b>。可能的檢查順序：<b>①</b> 是不是估值本來就太高（本益比 150 倍的公司，成長 40% 也不夠）；<b>②</b> 融資那一環有沒有卡住（升息會讓發債變貴）；<b>③</b> 擁擠度是不是已經很高（大家都在船上，沒新買盤）；<b>④</b> 是不是有外生變數打進來（例如升息、管制）。<br/><b>關鍵：不要急著說「市場錯了」。財報好而股價跌，通常是市場在定價「兩年後」，而你在看「這一季」。</b></div>
+</details>
+</div>
+<div class="quiz">
+<div class="q">Q3｜你設的基準預期是「某層年增 20%」，結果實際只有 5%。這時候該怎麼辦？</div>
+<details><summary>展開解答</summary>
+<div class="a"><b>先別動那把尺。</b>第一步是分辨：<b>①</b> 是<b>事實偏離</b>——那就出示警卡，寫下方向、誰受益誰受害、傳導路徑、下一步看什麼；<b>②</b> 還是<b>我的尺設錯了</b>——那就進候選修正提案，寫明改哪一格、原值→新值、依據來源與時點、以及「改了之後過去哪些判定會反轉」。<br/>不管是哪一種，<b>在還沒走完流程（尤其是人工核准那一步）之前，所有判定繼續用舊尺。</b>因為「看到結果就改預期」是最舒服也最致命的動作——那樣你永遠不會錯，也永遠學不到東西。</div>
+</details>
+</div>
+<h3>新手最常踩的五個坑</h3>
+<table>
+<thead><tr><th style="width:44px">#</th><th style="width:34%">坑</th><th>怎麼避開</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>把箭頭當事實</td><td>每次說「A 所以 B」之前，先問：A 到 B 中間還經過什麼？有沒有數據支持那一關？</td></tr>
+<tr><td>2</td><td>用股價當證據</td><td>股價是結果，不是原因。它只能用來觀察「市場現在怎麼想」，不能用來證明「公司是好的」。</td></tr>
+<tr><td>3</td><td>只看一家、不看上下游</td><td>至少做到第 2 層：展開這家公司的上游是誰、下游客戶是誰、真正掏錢的是誰。</td></tr>
+<tr><td>4</td><td>混層</td><td>性質不同的變數不要放在同一層判斷（例如「設備」是落後資本開支 6～12 個月的訂單型，「材料」是當期反應的成本型）。混層會把小訊號吃掉。</td></tr>
+<tr><td>5</td><td>事後改尺</td><td>看到結果才調預期，是最舒適的自我欺騙。改尺要留版本、留理由、留核准日期。</td></tr>
+</tbody>
+</table>
+</section>
+<section>
+<h2><span class="lv">附</span>名詞對照表</h2>
+<p class="stage">看不懂就回來查這裡</p>
+<table>
+<thead><tr><th style="width:132px">名詞</th><th style="width:38%">白話解釋</th><th>在框架裡的角色</th></tr></thead>
+<tbody>
+<tr><td><b>盡職調查</b></td><td>投資前把一家公司（和它所在的產業）從頭到尾查清楚</td><td>整套方法的目的</td></tr>
+<tr><td><b>BOM</b></td><td>做一個產品需要的所有零件清單</td><td>第 2 層：展開上下游</td></tr>
+<tr><td><b>CAPEX</b></td><td>蓋廠買機器這種「一次花大錢、能用很多年」的支出</td><td>第 3 層：產能與時間差</td></tr>
+<tr><td><b>折舊</b></td><td>把那筆大錢攤到每一年認列，所以會持續壓低毛利率</td><td>第 3 層：為什麼狂蓋廠短期財報會變醜</td></tr>
+<tr><td><b>毛利率</b></td><td>營收扣掉直接成本後剩下的比例，反映議價能力</td><td>第 1 層：最基礎的體溫計</td></tr>
+<tr><td><b>HBM</b></td><td>高頻寬記憶體，AI 晶片旁邊一定要配的高速記憶體</td><td>第 4 層：2025–26 的瓶頸之一</td></tr>
+<tr><td><b>CoWoS</b></td><td>台積電的先進封裝技術，把多個晶片「包」在一起</td><td>第 5 層：2024–25 的瓶頸</td></tr>
+<tr><td><b>跳數</b></td><td>新聞發生的位置到你投資的標的，中間隔幾層</td><td>第 4 層：衡量「這則新聞跟我有多大關係」</td></tr>
+<tr><td><b>時滯</b></td><td>訊號傳過去要多久</td><td>第 4 層：距離遠且時滯長，才是真的優勢</td></tr>
+<tr><td><b>外生變數</b></td><td>系統內部產生不了、從外面給定的條件（利率、政策）</td><td>第 5 層：會從外面打進來</td></tr>
+<tr><td><b>反射性</b></td><td>市場的看法會回頭影響真實的經營行為，形成迴路</td><td>第 6 層：解釋「財報好但股價跌」</td></tr>
+<tr><td><b>擁擠度</b></td><td>有多少資金已經擠在同一個標的或板塊</td><td>第 6 層：反向指標，不是基本面指標</td></tr>
+<tr><td><b>基準預期</b></td><td>事先寫下「我預期是多少」，好讓新聞有得比較</td><td>第 7 層：那把尺</td></tr>
+<tr><td><b>容忍區間</b></td><td>多大的誤差算正常，超過才算偏離</td><td>第 7 層：避免每則新聞都即興解釋</td></tr>
+<tr><td><b>打臉條件</b></td><td>事先寫好「看到什麼數字，就代表我錯了」</td><td>第 9 層：避免只找支持自己的證據</td></tr>
+</tbody>
+</table>
+</section>
+<footer>
+<div><b>製作：</b>阿圖｜<b>日期：</b>2026-09-21｜<b>對象：</b>大一新鮮人（不需要財會背景）｜<b>框架版本：</b>v3｜<b>基準表版本：</b>v1.1</div>
+<div style="margin-top:8px"><b>資料與來源：</b>本頁所有數據均標註時點與來源，時點統一為 2026-09-21（除另有標示）。一手來源：台積電法說會與財報、聯準會 FOMC 聲明（2026-09-16）、各公司法說。需核實原文之轉引：TrendForce 雲端資本開支估計（2026-05-06）、光刻膠漲價幅度（產業消息，2026-09-15～21）、A 股板塊漲幅與公募配置統計、各公司股價與本益比。跨公司比較時請注意財年不一致（輝達、博通、美光、應用材料等皆非日曆年）與幣別未統一（USD／EUR／TWD／KRW／CNY）。台積電毛利率 67.7% 為法說口徑（新台幣基礎），與美元換算口徑 66.67% 不可混用。</div>
+<div style="margin-top:8px"><b>本頁的教學立場：</b>所有內容僅為研究方法示範，不構成任何投資建議，也不代表對任何標的的評價。</div>
+<div class="disc"><b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。</div>
+</footer>
+</div>
+<script>
+(function(){
+  var RED='#c9312b', GREEN='#1e8e5a', BLUE='#2f5fa8', AMBER='#b8791a', GRAY='#7b8494', INK='#1b1f27', INK2='#4a5262';
+  var charts=[];
+
+  function mk(id, opt){
+    var el=document.getElementById(id);
+    if(!el) return;
+    var ch=echarts.init(el);
+    ch.setOption(opt);
+    charts.push(ch);
+  }
+
+  /* 圖 1-1 台積電八季營收與毛利率 */
+  mk('c1', {
+    grid:{left:56,right:56,top:44,bottom:38},
+    tooltip:{trigger:'axis'},
+    legend:{data:['單季營收','毛利率'],top:8,textStyle:{color:INK2,fontSize:12}},
+    xAxis:{type:'category',data:['24Q3','24Q4','25Q1','25Q2','25Q3','25Q4','26Q1','26Q2'],
+      axisLine:{lineStyle:{color:'#d5d9e0'}},axisLabel:{color:INK2,fontSize:11.5}},
+    yAxis:[
+      {type:'value',name:'億美元',nameTextStyle:{color:GRAY,fontSize:11},
+       splitLine:{lineStyle:{color:'#eef0f4'}},axisLabel:{color:INK2,fontSize:11.5}},
+      {type:'value',name:'毛利率 %',min:50,max:72,nameTextStyle:{color:GRAY,fontSize:11},
+       splitLine:{show:false},axisLabel:{color:INK2,fontSize:11.5,formatter:'{value}'}}
+    ],
+    series:[
+      {name:'單季營收',type:'bar',data:[235.0,268.6,255.2,302.3,330.8,337.0,358.5,401.8],
+       itemStyle:{color:BLUE},barWidth:'46%',
+       label:{show:true,position:'top',color:INK2,fontSize:10.5,formatter:function(p){return p.value;}}},
+      {name:'毛利率',type:'line',yAxisIndex:1,data:[57.8,59.0,58.8,58.6,59.5,62.3,66.2,67.7],
+       smooth:true,symbolSize:6,lineStyle:{color:RED,width:2.4},itemStyle:{color:RED},
+       label:{show:true,position:'top',color:RED,fontSize:10.5,formatter:'{c}%'}}
+    ]
+  });
+
+  /* 圖 2-2 CSP 資本開支 */
+  mk('c2', {
+    grid:{left:60,right:60,top:44,bottom:38},
+    tooltip:{trigger:'axis'},
+    legend:{data:['資本開支','年增率'],top:8,textStyle:{color:INK2,fontSize:12}},
+    xAxis:{type:'category',data:['2024','2025','2026E'],
+      axisLine:{lineStyle:{color:'#d5d9e0'}},axisLabel:{color:INK2,fontSize:12}},
+    yAxis:[
+      {type:'value',name:'億美元',nameTextStyle:{color:GRAY,fontSize:11},
+       splitLine:{lineStyle:{color:'#eef0f4'}},axisLabel:{color:INK2,fontSize:11.5}},
+      {type:'value',name:'年增 %',nameTextStyle:{color:GRAY,fontSize:11},
+       splitLine:{show:false},axisLabel:{color:INK2,fontSize:11.5,formatter:'{value}'}}
+    ],
+    series:[
+      {name:'資本開支',type:'bar',data:[2880,4637,8300],itemStyle:{color:BLUE},barWidth:'42%',
+       label:{show:true,position:'top',color:INK2,fontSize:11,formatter:function(p){return p.value.toLocaleString();}}},
+      {name:'年增率',type:'line',yAxisIndex:1,data:[null,61,79],smooth:true,symbolSize:7,
+       lineStyle:{color:RED,width:2.4},itemStyle:{color:RED},
+       label:{show:true,position:'top',color:RED,fontSize:11,formatter:'{c}%'}}
+    ]
+  });
+
+  /* 圖 3-2 台積電年度資本支出 */
+  mk('c3', {
+    grid:{left:60,right:30,top:44,bottom:38},
+    tooltip:{trigger:'axis'},
+    xAxis:{type:'category',data:['2022','2023','2024','2025','2026E'],
+      axisLine:{lineStyle:{color:'#d5d9e0'}},axisLabel:{color:INK2,fontSize:12}},
+    yAxis:{type:'value',name:'億美元',nameTextStyle:{color:GRAY,fontSize:11},
+      splitLine:{lineStyle:{color:'#eef0f4'}},axisLabel:{color:INK2,fontSize:11.5}},
+    series:[{
+      name:'資本支出',type:'bar',data:[363,305,298,409,620],barWidth:'46%',
+      itemStyle:{color:function(p){ return p.dataIndex===4 ? RED : BLUE; }},
+      label:{show:true,position:'top',color:INK2,fontSize:11.5}
+    }]
+  });
+
+  /* 圖 4-2 板塊漲幅落差 */
+  mk('c4', {
+    grid:{left:120,right:56,top:34,bottom:34},
+    tooltip:{trigger:'axis',formatter:function(ps){ return ps[0].name+'：'+ps[0].value+'%'; }},
+    xAxis:{type:'value',name:'％',nameTextStyle:{color:GRAY,fontSize:11},
+      splitLine:{lineStyle:{color:'#eef0f4'}},axisLabel:{color:INK2,fontSize:11.5}},
+    yAxis:{type:'category',data:['電力','AI 算力芯片','HBM','先進封裝'],
+      axisLine:{lineStyle:{color:'#d5d9e0'}},axisLabel:{color:INK2,fontSize:12.5}},
+    series:[{
+      type:'bar',data:[2.25,19.23,55.75,60.63],barWidth:'52%',
+      itemStyle:{color:function(p){ var v=[2.25,19.23,55.75,60.63]; return v[p.dataIndex]>50 ? RED : AMBER; }},
+      label:{show:true,position:'right',color:INK2,fontSize:12,formatter:'{c}%'}
+    }]
+  });
+
+  /* 圖 8-1 重點公司 YTD */
+  mk('c5', {
+    grid:{left:110,right:70,top:34,bottom:34},
+    tooltip:{trigger:'axis',formatter:function(ps){ return ps[0].name+'：'+ps[0].value+'%'; }},
+    xAxis:{type:'value',name:'YTD ％',nameTextStyle:{color:GRAY,fontSize:11},
+      splitLine:{lineStyle:{color:'#eef0f4'}},axisLabel:{color:INK2,fontSize:11.5}},
+    yAxis:{type:'category',data:['博通','輝達','台積電','艾司摩爾','應用材料','超微','英特爾','美光'],
+      axisLine:{lineStyle:{color:'#d5d9e0'}},axisLabel:{color:INK2,fontSize:12.5}},
+    series:[{
+      type:'bar',data:[4.18,21.08,46.45,58.93,79.31,186.98,232.91,264.34],barWidth:'54%',
+      itemStyle:{color:RED},
+      label:{show:true,position:'right',color:INK2,fontSize:12,formatter:function(p){ return p.value+'%'; }}
+    }]
+  });
+
+  window.addEventListener('resize', function(){
+    for(var i=0;i<charts.length;i++){ charts[i].resize(); }
+  });
+
+  /* 導覽高亮 */
+  var links=document.querySelectorAll('#navin a');
+  var secs=[];
+  for(var i=0;i<links.length;i++){
+    var id=links[i].getAttribute('href').slice(1);
+    var s=document.getElementById(id);
+    if(s){ secs.push({a:links[i], s:s}); }
+  }
+  function spy(){
+    var best=null, bestD=1e9;
+    for(var i=0;i<secs.length;i++){
+      var d=Math.abs(secs[i].s.getBoundingClientRect().top-90);
+      if(d<bestD){ bestD=d; best=secs[i]; }
+    }
+    for(var j=0;j<secs.length;j++){ secs[j].a.className=(secs[j]===best)?'on':''; }
+  }
+  window.addEventListener('scroll', spy);
+  spy();
+})();
+</script>
+</body>
+</html>

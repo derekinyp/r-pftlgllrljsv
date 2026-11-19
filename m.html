@@ -13,149 +13,428 @@
 #sb-nav a.sb-on{background:#1d4ed8;color:#fff}
 #sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
 #sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
+/* 本頁專用：大點擊目標、橫向捲動與縮放 */
+#m-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+#m-tools button{min-height:44px;min-width:44px;padding:8px 12px;border:1px solid #e3e6ec;background:#fff;border-radius:6px;font:inherit;font-size:14px;cursor:pointer}
+#m-tools button[aria-pressed="true"]{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+.node-btns button{min-height:44px;min-width:48px;padding:8px 12px;font-size:14px}
+#m-scroll{overflow:auto;-webkit-overflow-scrolling:touch;border:1px solid #e3e6ec;border-radius:10px;background:#fff;width:100%;max-width:100%}
+#m-scroll .map{border:0;border-radius:0;width:1180px;max-width:none;height:auto;transform-origin:top left}
+.m-hint{font-size:12px;color:#8a93a3;margin:0 0 8px}
+#info{margin-top:16px}
+#info .m-props{display:grid;grid-template-columns:1fr 1fr;gap:8px 28px}
+@media (max-width:700px){#info .m-props{grid-template-columns:1fr}}
+#info dl{margin:0}
+#info dt{color:#8a93a3;font-size:12px;margin:10px 0 2px}
+#info dd{margin:0;color:#1b1f2a;font-size:14px;line-height:1.55}
+.disc{margin-top:12px;color:#4d5666;font-size:12px;line-height:1.6}
 </style>
 <link rel="stylesheet" href="css/s.css">
 <link rel="stylesheet" href="css/nav.css">
 <script src="js/issues.js" defer></script>
+<style>
+/* 覆蓋 s.css：本頁圖在上、說明在下，並加寬以免右欄被裁 */
+.wrap{max-width:1200px}
+.map-grid{display:block;grid-template-columns:none}
+</style>
 </head>
 <body>
-<nav id="sb-nav"><div class="sb-inner"><span class="sb-brand">目錄</span><a href="index.html">首頁</a><a href="t.html">入門</a><a href="o.html">綜覽</a><a href="m.html" class="sb-on">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="2026-w47.html">週報（2026-W47）</a><a href="index.html#weeks">各期列表</a></noscript><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
+<nav id="sb-nav"><div class="sb-inner"><span class="sb-brand">目錄</span><a href="index.html">首頁</a><a href="q.html">入門（簡易）</a><a href="t.html">入門（完整）</a><a href="o.html">綜覽</a><a href="m.html" class="sb-on">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="2026-w47.html">週報（2026-W47）</a><a href="index.html#weeks">各期列表</a></noscript><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
 <div class="wrap">
 
 <h1>跨層傳導圖</h1>
-<p class="lead">先看圖，再看說明。點選任一層，右側（或下方）會顯示：這支箭從哪裡來、傳到哪裡、要幾季、以及它對應基準表的哪幾列。實線是主鏈或已立尺的關係；虛線是間接、擬新增或尚未立尺的關係。箭頭是待驗證的轉換關係，不是事實。</p>
-<div class="banner"><b>現行版（v2.0，2026-11-19 核准，2026-W48 起適用）。</b> 許可與能源已立為外生列；配套層正式宣告不立尺、僅記錄，仍留在圖上。已刊 2026-W39 至 2026-W47 不回溯改判。</div>
-<div class="node-btns" id="btns"></div>
+<p class="lead">中間是主鏈（錢從上往下流；瓶頸從下往上讀）。左側是外生列；右側是反射性迴路與不立尺的配套層。實線是主鏈或已立尺的關係，虛線是間接或回饋。點選任一層（或上方列名），圖上會標出連到它的箭，右側說明上游、下游、跳數×時滯，以及對應基準表哪一列。箭頭是待驗證的轉換關係，不是事實。</p>
+<div class="banner"><b>現行版（v2.0，2026-11-19 核准，2026-W48 起適用）。</b> 許可與能源已立為外生列；配套層正式宣告不立尺、僅記錄，仍留在圖上。L2 約 8,200 億美元為暫定，待一手對帳。L3 打臉門檻為毛利率 &lt;72%。已刊 2026-W39 至 2026-W47 不回溯改判。</div>
+
+<div class="node-btns" id="btns" role="tablist" aria-label="選擇層級"></div>
+<div id="m-tools">
+  <span class="muted" style="margin-right:4px">圖面縮放（窄屏可橫向捲動）</span>
+  <button type="button" id="z-out" aria-label="縮小">−</button>
+  <button type="button" id="z-100" aria-pressed="true">100%</button>
+  <button type="button" id="z-in" aria-label="放大">+</button>
+</div>
+<p class="m-hint">窄屏請左右滑動看完整圖；也可用上方縮放。點節點或列名可改選中層。</p>
 <div class="map-grid">
-  <svg class="map" id="map" viewBox="0 0 900 820" role="img" aria-label="跨層傳導圖"></svg>
+  <div id="m-scroll">
+    <svg class="map" id="map" viewBox="0 0 1180 980" role="img" aria-label="跨層傳導圖：點選節點可看說明"></svg>
+  </div>
   <div class="panel" id="info">
     <h3>請點選一層</h3>
     <p>選了之後，這裡會說明上游、下游與對應的基準列。</p>
   </div>
 </div>
-<p class="muted">跳數與時滯若寫「推論」，是從框架原文或後續提案推得，不是新的量測。設備時滯在 v2.0 改為 3～9 個月（v1.1 原為 6～12 個月）。L2 約 8,200 億美元為暫定。</p>
+<p class="muted">跳數與時滯若寫「推論」，是從框架原文或後續提案推得，不是新的量測。設備時滯在 v2.0 改為 3～9 個月（v1.1 原為 6～12 個月）。本圖節點、連線與「名稱／跳數×時滯」標註對齊審閱 Page 的精細傳導圖；配套層依已核准的 P4 保留在圖上（Page 原稿的 Diagram 未畫出該節點）。</p>
 
-<p class="foot">僅供內部審閱。頁面已標示 noindex。盤點日期 2026-11-19（台北時間，UTC+8）。不構成投資建議。</p>
+<p class="foot">僅供內部審閱。頁面已標示 noindex。盤點日期 2026-11-19（台北時間，UTC+8）。</p>
+<div class="disc"><b>免責聲明</b>：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</div>
 </div>
 
 <script>
 (function(){
-  const layers = {
-    L0:{name:"L0 弱訊號入口",arrow:"橫向掃描 → 任一主鏈（不是主鏈上的固定一跳）",lag:"0 季；生成假說，不是確認假說",why:"這一列沒有數值基準，只掃會不會改變單位成本曲線的技術或政策。",up:"無固定上游（外部弱訊號）",down:"可觸發對各層的新假說",rows:"v2.0 仍不加數值尺（對應原 v1.1 第 1 列）"},
-    L1:{name:"L1 終端需求",arrow:"終端使用 → L2 資本開支",lag:"約 1～2 季（推論：多在法說才改全年指引）",why:"用可對帳的資料中心與雲業務營收，代理「真的有人在用」。注意與 L3 分母重疊。",up:"終端使用者；可被利率／管制打偏",down:"L2 資本開支；成本無法轉嫁時也會回到終端",rows:"v2.0（對應原 v1.1 第 2 列；補使用規則）"},
-    L2:{name:"L2 雲端資本開支",arrow:"L1 需求 → L2 花錢 → L3 下單／L7a 設備／L8 用電",lag:"對 L3 約 0～1 季；對 L7a 為 3～9 個月（v2.0）",why:"要量的是掏錢的人今年花多少。v2.0 先鎖口徑；約 8,200 億美元為暫定，待一手對帳。",up:"L1；融資環節；利率",down:"L3、L7a（落後）、L8",rows:"v2.0 第 L2 列；約 8,200 億暫定（P5）"},
-    L3:{name:"L3 芯片",arrow:"L2 下單 → L4 記憶體／L5 封裝／L6 代工",lag:"營收在季度財報可讀；傳到封裝約 4 季（交期逾 52 週）",why:"要量誰在下單、晶片夠不夠。判定尺是財報與指引，不是個人治理事件。",up:"L2",down:"L4、L5、L6",rows:"v2.0（打臉門檻統一為毛利率 <72%）"},
-    L4:{name:"L4 記憶體",arrow:"L3 配套 → 記憶體成本 → 回傳 L3 毛利與終端成本",lag:"價格當期；產能「2027 前無有效新增」（約 ≥4 季）",why:"現行按季增 5～25% 是同規格漲價尺，遇上世代跳升會把升級誤記成漲價。",up:"L3；亦被材料成本推升",down:"L3 毛利、終端成本",rows:"v2.0 已採納 P6 與 P3"},
-    L5:{name:"L5 先進封裝",arrow:"L3 芯片做出來 → 包起來才能交付",lag:"約 4 季、約 2 跳（交期逾 52 週）",why:"要量交期與產能是否吃緊。多數期沒有新的交期讀數，卻仍作出判定。",up:"L3；代工廠亦是封裝供方",down:"L3 交期、L2 上線時程",rows:"v2.0（對應原 v1.1 第 6 列）"},
-    L6:{name:"L6 晶圓代工",arrow:"製程需求 → 定價權 → 回傳整條鏈成本",lag:"毛利率當季可讀；月營收約每月 10 日公布",why:"「代工畫在芯片下方」是錢的傳導順序，不是物料清單的物理上游順序。",up:"L3 下單、L5 排程",down:"L7a 點貨、L7b 拉貨",rows:"v2.0（對應原 v1.1 第 7 列）"},
-    L7a:{name:"L7a 設備",arrow:"資本開支 →（落後）設備訂單與營收",lag:"v2.0：3～9 個月（v1.1 原為 6～12 個月）",why:"設備是訂單型落後變數，不能和材料混判。出貨遞延若不拆供給型／需求型，會把缺料誤判成需求轉弱。",up:"L2／L6 擴產",down:"未來數季的代工產能",rows:"v2.0 已採納 P2"},
-    L7b:{name:"L7b 材料",arrow:"材料定價 → 當期推升代工／記憶體／芯片成本",lag:"0 季（當期成本推升型）",why:"這一列存在的理由，就是它和設備的定價節奏相反。年漲超過 15% 並持續，就是這支箭的偏離訊號。",up:"材料廠商；能源／管制可加劇",down:"L6、L4、L3 成本",rows:"v2.0（對應原 v1.1 第 9 列）"},
-    L8:{name:"L8 電力",arrow:"資料中心落地 → 供電；供電不足則往上卡住資本開支",lag:"變壓器交期約 36 個月（約 12 季）；許可可當期改變供給",why:"要量蓋好了有沒有電。近期轉紅主因是許可凍結，與交期不是同一支箭，故建議把國內許可拆出。",up:"L2；政策許可為外生側軌",down:"可卡住 L2 落地",rows:"v2.0 已與政策許可分帳（P0）"},
-    RATE:{name:"外生｜利率",arrow:"政策利率／長端利率 → 估值與融資 → 緩慢影響資本開支",lag:"估值當期；資本開支為數季級（推論）",why:"利率是折現率的分母，無法從供應鏈任一層預判。",up:"央行、通膨、長債供給；油價可傳向生產者物價",down:"反射性迴路；間接影響 L2",rows:"v2.0（對應原 v1.1 第 11 列）"},
-    CTRL:{name:"外生｜管制",arrow:"出口管制 → 當期打進芯片、代工或雲端算力服務",lag:"可 0 季（規則生效即改變可交貨範圍）",why:"現行只有「逐步收緊」一句，沒有可查核的偏離訊號。",up:"政策，不從主鏈預判",down:"L3、L6、雲端服務；若反制鎖材料則打 L7b",rows:"v2.0 已採納 P7（先定義、後量化）"},
-    REFL:{name:"反射性迴路",arrow:"敘事 → 估值 → 融資 → 資本開支 → 財報 → 回到敘事",lag:"股價與融資當期；財報可能兩年後才反應（框架原文）",why:"要量的不是公司好不好，是迴路還能不能繼續轉。",up:"敘事與利率；財報可回饋",down:"L2 資本開支；市場定價不作層級判定依據",rows:"v2.0（對應原 v1.1 第 13 列）"},
-    POL:{name:"外生｜政策與許可",arrow:"國內許可／用電審批 → 當期限制電力供給與落地",lag:"許可凍結：當期至 1 季；門檻應設在已生效行政措施",why:"若硬塞進電力列，會把設備交期與政治許可混為一談。",up:"聯邦／州層級政策",down:"L8、L2",rows:"v2.0 新列（P0 修改後採納）"},
-    NRG:{name:"外生｜能源價格與通道",arrow:"油價／通道 → 生產者物價與利率，並推材料與運輸成本",lag:"數週至 1～2 季（推論）；原提案門檻為持續 4 週高於 100 美元",why:"與政策許可性質不同，不建議合併成一列。2026-W47 明寫尚未觸發。",up:"國際油價與通道",down:"利率路徑、L7b",rows:"v2.0 新列（P1 修改後採納）"},
-    AUX:{name:"配套層（不立尺）",arrow:"跟隨資本開支與融資端，而不是穩定的訂單端",lag:"缺（無一手高頻量）",why:"框架圖有此層，現行表沒有對應列。建議宣告不立尺、僅記錄，但保留在圖上。",up:"L2 與融資環節",down:"不判層",rows:"v2.0 宣告不立尺、僅記錄（P4）"}
+  var layers = {
+    L0:{short:"L0",name:"L0 弱訊號入口",kind:"terminal",arrow:"橫向掃描 → 任一主鏈（不是主鏈上的固定一跳）",lag:"0 季；用途是生成假說，不是確認假說",why:"這一列沒有數值基準，只掃會不會改變單位成本曲線的技術或政策。它不是主鏈上固定的一跳，而是漏斗入口。",up:"無固定上游（外部弱訊號）",down:"可觸發對 L1～L8、外生或反射性的新假說",rows:"v2.0 仍不加數值尺（對應原 v1.1 第 1 列）"},
+    L1:{short:"L1",name:"L1 終端需求",kind:"box",arrow:"終端使用 → L2 資本開支（錢從哪裡來的第一條驗證）",lag:"約 1～2 季（推論：雲廠多在法說才改全年指引；框架未寫死跳數）",why:"用可對帳的資料中心與雲業務營收，代理「真的有人在用」。注意與 L3 分母重疊：同一筆資料中心營收不得再拿去改判 L3。",up:"終端使用者；可被利率／管制打偏",down:"L2 資本開支；成本無法轉嫁時也會回到終端",rows:"v2.0（對應原 v1.1 第 2 列；補使用規則）"},
+    L2:{short:"L2",name:"L2 雲端資本開支",kind:"box",arrow:"L1 需求 → L2 花錢 → L3 下單／L7a 設備／L8 用電",lag:"對 L3 約 0～1 季；對 L7a 為 3～9 個月（v2.0；v1.1 原為 6～12 個月）",why:"要量的是掏錢的人今年花多少。v2.0 先鎖口徑；約 8,200 億美元為暫定，待一手財報逐家對帳後再定案，對帳完成前不把此數當已鎖定的 ±10% 尺。",up:"L1；融資環節；利率",down:"L3、L7a（落後）、L8",rows:"v2.0 第 L2 列；約 8,200 億暫定（P5）"},
+    L3:{short:"L3",name:"L3 芯片",kind:"box",arrow:"L2 下單 → L4 記憶體／L5 封裝／L6 代工",lag:"營收與指引在季度財報可讀；傳到封裝約 4 季（交期逾 52 週）",why:"要量誰在下單、晶片夠不夠。判定尺是財報與指引，不是個人治理事件。打臉門檻統一為毛利率 <72%。",up:"L2",down:"L4、L5、L6",rows:"v2.0（打臉門檻統一為毛利率 <72%）"},
+    L4:{short:"L4",name:"L4 記憶體",kind:"box",arrow:"L3 配套 → 記憶體成本 → 回傳 L3 毛利與終端成本",lag:"價格當期（0 季）；產能「2027 前無有效新增」（約 ≥4 季）",why:"現行按季增 5～25% 是同規格漲價尺，遇上世代跳升會把升級誤記成漲價。v2.0 已拆世代並增列技術破局訊號。",up:"L3；亦被材料成本推升",down:"L3 毛利、終端成本",rows:"v2.0 已採納 P6 與 P3"},
+    L5:{short:"L5",name:"L5 先進封裝",kind:"box",arrow:"L3 芯片做出來 → 包起來才能交付",lag:"約 4 季、約 2 跳（交期逾 52 週）",why:"要量交期與產能是否吃緊。無新交期讀數時，不得把判定升級為超越。",up:"L3；代工廠亦是封裝供方",down:"L3 交期、L2 上線時程",rows:"v2.0（對應原 v1.1 第 6 列）"},
+    L6:{short:"L6",name:"L6 晶圓代工",kind:"box",arrow:"製程需求 → 定價權 → 回傳整條鏈成本",lag:"毛利率當季可讀（0～1 季）；月營收約每月 10 日公布",why:"「代工畫在芯片下方」是錢的傳導順序，不是物料清單的物理上游順序。兩種毛利口徑不可混用。",up:"L3 下單、L5 排程",down:"L7a 點貨、L7b 拉貨",rows:"v2.0（對應原 v1.1 第 7 列）"},
+    L7a:{short:"L7a",name:"L7a 設備",kind:"box",arrow:"資本開支 →（落後）設備訂單與營收",lag:"v2.0：3～9 個月（1～3 季；v1.1 原為 6～12 個月）",why:"設備是訂單型落後變數，不能和材料混判。出貨遞延須拆供給型／需求型，僅需求型遞延才算偏離。",up:"L2／L6 擴產",down:"未來數季的代工產能",rows:"v2.0 已採納 P2"},
+    L7b:{short:"L7b",name:"L7b 材料",kind:"box",arrow:"材料定價 → 當期推升代工／記憶體／芯片成本",lag:"0 季（當期成本推升型）",why:"這一列存在的理由，就是它和設備的定價節奏相反。年漲超過 15% 並持續，就是這支箭的偏離訊號。",up:"材料廠商；能源／管制可加劇",down:"L6、L4、L3 成本",rows:"v2.0（對應原 v1.1 第 9 列）"},
+    L8:{short:"L8",name:"L8 電力",kind:"box",arrow:"資料中心落地 → 供電；供電不足則往上卡住資本開支",lag:"變壓器交期約 36 個月（約 12 季）；許可可當期改變供給",why:"要量蓋好了有沒有電。國內許可改記到「政策與許可」列，不與交期混判。",up:"L2；政策許可為外生側軌",down:"可卡住 L2 落地",rows:"v2.0 已與政策許可分帳（P0）"},
+    RATE:{short:"利率",name:"外生｜利率",kind:"terminal",arrow:"政策利率／長端利率 → 估值與融資 → 緩慢影響資本開支",lag:"估值當期；資本開支為數季級（推論）",why:"利率是折現率的分母，無法從供應鏈任一層預判。",up:"央行、通膨、長債供給；油價可傳向生產者物價",down:"反射性迴路；間接影響 L2",rows:"v2.0（對應原 v1.1 第 11 列）"},
+    CTRL:{short:"管制",name:"外生｜管制",kind:"terminal",arrow:"出口管制 → 當期打進芯片、代工或雲端算力服務",lag:"可 0 季（規則生效即改變可交貨範圍）",why:"v2.0 補可查核定義：客體清單、規則是否已生效、高轉運風險名單。量化門檻待生效後的一手實務再補。",up:"政策，不從主鏈預判",down:"L3、L6、雲端服務；若反制鎖材料則打 L7b",rows:"v2.0 已採納 P7（先定義、後量化）"},
+    REFL:{short:"反射",name:"反射性迴路",kind:"decision",arrow:"敘事 → 估值 → 融資 → 資本開支 → 財報 → 回到敘事",lag:"股價與融資當期；財報可能兩年後才反應（框架原文，約 8 季）",why:"要量的不是公司好不好，是迴路還能不能繼續轉。偏離訊號：融資成本上升、發債受阻、擁擠度極值。",up:"敘事與利率；財報可回饋",down:"L2 資本開支；市場定價不作層級判定依據",rows:"v2.0（對應原 v1.1 第 13 列）"},
+    POL:{short:"許可",name:"外生｜政策與許可",kind:"terminal",series:1,arrow:"國內許可／用電審批 → 當期限制電力供給與落地",lag:"許可凍結：當期至 1 季；門檻設在已生效行政措施，或主要州凍結超過 3 個月",why:"若硬塞進電力列，會把設備交期與政治許可混為一談。",up:"聯邦／州層級政策",down:"L8、L2",rows:"v2.0 新列（P0 修改後採納）"},
+    NRG:{short:"能源",name:"外生｜能源價格與通道",kind:"terminal",series:1,arrow:"油價／通道 → 生產者物價與利率，並推材料與運輸成本",lag:"數週至 1～2 季（推論）；觀察門檻為持續 4 週高於 100 美元，偏離為高於 120 美元或通道中斷",why:"與政策許可性質不同，不與 P0 合併成一列。2026-W47 明寫尚未觸發。",up:"國際油價與通道",down:"利率路徑、L7b",rows:"v2.0 新列（P1 修改後採納）"},
+    AUX:{short:"配套",name:"配套層（不立尺）",kind:"aux",arrow:"跟隨資本開支與融資端，而不是穩定的訂單端",lag:"缺（無一手高頻量）",why:"框架圖有此層，基準表不立尺、僅記錄。依已核准的 P4，灰色虛線保留在圖上。",up:"L2 與融資環節",down:"不判層",rows:"v2.0 宣告不立尺、僅記錄（P4）"}
   };
 
-  /* positions: x,y center of boxes */
-  const pos = {
-    POL:[70,80], NRG:[70,200], RATE:[70,320], CTRL:[70,440],
-    L0:[320,60],
-    L1:[320,150], L2:[320,240], L3:[320,330],
-    L4:[200,430], L5:[320,430], L6:[440,430],
-    L7a:[250,540], L7b:[390,540],
-    L8:[320,650],
-    REFL:[680,240], AUX:[680,430]
+  var cap = {
+    L0:"0 季（生成假說）", L1:"約 1～2 季", L2:"對設備 3～9 個月",
+    L3:"傳到封裝約 4 季", L4:"價格當期／產能 ≥4 季", L5:"交期約 4 季",
+    L6:"毛利當季可讀", L7a:"3～9 個月（v2.0）", L7b:"0 季（當期成本）",
+    L8:"變壓器約 36 個月", RATE:"估值當期", CTRL:"可 0 季（生效即改）",
+    REFL:"融資當期／財報可達 8 季", POL:"當期至 1 季", NRG:"數週至 1～2 季",
+    AUX:"缺一手高頻量（不立尺）"
   };
-  const size = {w:120,h:44};
 
-  const edges = [
-    ["L1","L2",false],["L2","L3",false],["L3","L4",false],["L3","L5",false],["L3","L6",false],
-    ["L5","L6",false],["L2","L7a",false],["L6","L7a",true],["L7b","L6",false],["L7b","L4",true],
-    ["L2","L8",false],["L8","L2",true],["RATE","REFL",false],["REFL","L2",true],
-    ["CTRL","L3",true],["CTRL","L6",true],["POL","L8",false],["NRG","RATE",true],["NRG","L7b",true],
-    ["L0","L1",true],["L4","L1",true]
+  /* 中欄主鏈、左欄外生、右欄迴路／配套；座標為盒中心 */
+  var pos = {
+    POL:[130,110], NRG:[130,230], RATE:[130,430], CTRL:[130,560],
+    L0:[560,80],
+    L1:[560,200], L2:[560,330], L3:[560,460],
+    L4:[390,600], L5:[560,600], L6:[730,600],
+    L7a:[430,740], L7b:[690,740],
+    L8:[560,880],
+    REFL:[1000,330], AUX:[1000,600]
+  };
+  var size = {w:188,h:68};
+  var order = ["L0","L1","L2","L3","L4","L5","L6","L7a","L7b","L8","RATE","CTRL","REFL","POL","NRG","AUX"];
+
+  /* 與審閱 Page Diagram 同一組連線；時滯依已核准 v2.0 微調（設備 3～9 月、許可已立列） */
+  var edges = [
+    {from:"L1", to:"L2",  label:"需求驗證", detail:"約 1～2 季"},
+    {from:"L2", to:"L3",  label:"下單", detail:"約 0～1 季"},
+    {from:"L3", to:"L4",  label:"配套 HBM", detail:"價格當期／產能 ≥4 季"},
+    {from:"L3", to:"L5",  label:"封裝", detail:"交期約 4 季"},
+    {from:"L3", to:"L6",  label:"代工"},
+    {from:"L5", to:"L6",  label:"排程"},
+    {from:"L2", to:"L7a", label:"設備落後", detail:"3～9 個月（v2.0）"},
+    {from:"L6", to:"L7a", label:"擴產點貨", dashed:true},
+    {from:"L7b",to:"L6",  label:"當期成本", detail:"0 季"},
+    {from:"L7b",to:"L4",  label:"材料成本", dashed:true},
+    {from:"L2", to:"L8",  label:"用電"},
+    {from:"L8", to:"L2",  label:"瓶頸往上卡", dashed:true, nudge:12},
+    {from:"RATE",to:"REFL",label:"折現率"},
+    {from:"REFL",to:"L2", label:"融資→capex", dashed:true},
+    {from:"CTRL",to:"L3", label:"管制", dashed:true},
+    {from:"CTRL",to:"L6", label:"代工許可", dashed:true},
+    {from:"POL", to:"L8", label:"許可", detail:"已立列（P0）"},
+    {from:"NRG", to:"RATE",label:"PPI", dashed:true},
+    {from:"NRG", to:"L7b",label:"運輸／材料", dashed:true},
+    {from:"L0", to:"L1",  label:"假說入口", dashed:true},
+    {from:"L4", to:"L1",  label:"BOM 回傳", dashed:true, nudge:-16}
   ];
 
-  const svg = document.getElementById("map");
-  const info = document.getElementById("info");
-  const btns = document.getElementById("btns");
-  let sel = "L2";
+  var svg = document.getElementById("map");
+  var info = document.getElementById("info");
+  var btns = document.getElementById("btns");
+  var sel = "L2";
+  var zoom = 1;
+  var NS = "http://www.w3.org/2000/svg";
 
-  function line(a,b,dashed){
-    const pa=pos[a], pb=pos[b];
-    const el=document.createElementNS("http://www.w3.org/2000/svg","line");
-    el.setAttribute("x1",pa[0]); el.setAttribute("y1",pa[1]+18);
-    el.setAttribute("x2",pb[0]); el.setAttribute("y2",pb[1]-18);
-    el.setAttribute("stroke", dashed ? "#94a3b8" : "#334155");
-    el.setAttribute("stroke-width", dashed ? "1.2" : "1.6");
-    if(dashed) el.setAttribute("stroke-dasharray","5 4");
-    el.setAttribute("marker-end","url(#arr)");
-    return el;
+  function el(name, attrs){
+    var n = document.createElementNS(NS, name);
+    if (attrs) Object.keys(attrs).forEach(function(k){ n.setAttribute(k, attrs[k]); });
+    return n;
+  }
+  function rectOf(id){
+    var p = pos[id], w = size.w, h = size.h;
+    if (layers[id].kind === "decision") { w = 200; h = 78; }
+    return {cx:p[0], cy:p[1], w:w, h:h, x:p[0]-w/2, y:p[1]-h/2};
+  }
+  function port(id, toward, shift){
+    var a = rectOf(id), b = rectOf(toward);
+    var dx = b.cx - a.cx, dy = b.cy - a.cy;
+    var hx = a.w/2, hy = a.h/2;
+    var x, y;
+    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return {x:a.cx, y:a.cy};
+    if (Math.abs(dx)/hx > Math.abs(dy)/hy) {
+      var sx = dx > 0 ? 1 : -1;
+      x = a.cx + sx * hx;
+      y = a.cy + (dx !== 0 ? (dy/dx) * (sx*hx) : 0);
+      y = Math.max(a.y+10, Math.min(a.y+a.h-10, y));
+    } else {
+      var sy = dy > 0 ? 1 : -1;
+      y = a.cy + sy * hy;
+      x = a.cx + (dy !== 0 ? (dx/dy) * (sy*hy) : 0);
+      x = Math.max(a.x+10, Math.min(a.x+a.w-10, x));
+    }
+    if (shift) {
+      var len = Math.sqrt(dx*dx+dy*dy) || 1;
+      x += -dy/len * shift;
+      y += dx/len * shift;
+    }
+    return {x:x, y:y};
   }
 
-  function box(id){
-    const [x,y]=pos[id];
-    const g=document.createElementNS("http://www.w3.org/2000/svg","g");
-    g.style.cursor="pointer";
-    const r=document.createElementNS("http://www.w3.org/2000/svg","rect");
-    r.setAttribute("x",x-size.w/2); r.setAttribute("y",y-size.h/2);
-    r.setAttribute("width",size.w); r.setAttribute("height",size.h);
-    r.setAttribute("rx","8");
-    const proposed = (id==="AUX");
-    r.setAttribute("fill", id===sel ? "#1d4ed8" : proposed ? "#fff7ed" : "#f8fafc");
-    r.setAttribute("stroke", id===sel ? "#1e3a8a" : proposed ? "#c2410c" : "#64748b");
-    const t=document.createElementNS("http://www.w3.org/2000/svg","text");
-    t.setAttribute("x",x); t.setAttribute("y",y+4);
-    t.setAttribute("text-anchor","middle");
-    t.setAttribute("font-size","12");
-    t.setAttribute("font-family","Noto Sans TC,sans-serif");
-    t.setAttribute("fill", id===sel ? "#fff" : "#1b1f2a");
-    t.textContent = layers[id].name.replace("（擬新列）","").replace("（不立尺）","");
-    g.appendChild(r); g.appendChild(t);
-    g.addEventListener("click", function(){ sel=id; render(); });
+  function drawEdge(e){
+    var g = el("g");
+    var related = (e.from===sel || e.to===sel);
+    var dim = !related;
+    var color = related ? "#1d4ed8" : (e.dashed ? "#64748b" : "#1e293b");
+    var a = rectOf(e.from), b = rectOf(e.to);
+    var p1 = port(e.from, e.to, 0);
+    var p2 = port(e.to, e.from, 0);
+    var key = e.from+"->"+e.to;
+    var d, lx, ly;
+
+    function mid(points, frac){
+      /* points is list of [x,y]; pick along polyline */
+      var segs = [];
+      var total = 0;
+      for (var i=1;i<points.length;i++){
+        var dx=points[i][0]-points[i-1][0], dy=points[i][1]-points[i-1][1];
+        var len=Math.sqrt(dx*dx+dy*dy);
+        segs.push({x0:points[i-1][0],y0:points[i-1][1],dx:dx,dy:dy,len:len});
+        total += len;
+      }
+      var t = total * (frac==null ? 0.5 : frac), acc=0;
+      for (var j=0;j<segs.length;j++){
+        if (acc+segs[j].len >= t || j===segs.length-1){
+          var r = segs[j].len ? (t-acc)/segs[j].len : 0;
+          return {x: segs[j].x0 + segs[j].dx*r, y: segs[j].y0 + segs[j].dy*r};
+        }
+        acc += segs[j].len;
+      }
+    }
+    function poly(pts){
+      var s = "M "+pts[0][0]+" "+pts[0][1];
+      for (var i=1;i<pts.length;i++) s += " L "+pts[i][0]+" "+pts[i][1];
+      return s;
+    }
+
+    /* 長距或交叉的邊改走走廊，避免標註堆在 L3 */
+    var pts;
+    if (key==="POL->L8") {
+      var x = 248;
+      pts = [[p1.x,p1.y],[x,p1.y],[x,p2.y],[p2.x,p2.y]];
+    } else if (key==="NRG->L7b") {
+      var x = 268;
+      pts = [[p1.x,p1.y],[x,p1.y],[x,p2.y],[p2.x,p2.y]];
+    } else if (key==="CTRL->L3") {
+      pts = [[p1.x,p1.y],[p2.x,p1.y],[p2.x,p2.y]];
+    } else if (key==="CTRL->L6") {
+      var x = 820;
+      pts = [[p1.x,p1.y],[p1.x, 820],[x,820],[x,p2.y],[p2.x,p2.y]];
+    } else if (key==="L2->L7a") {
+      var x = 330;
+      pts = [[p1.x,p1.y],[x,p1.y],[x,p2.y],[p2.x,p2.y]];
+    } else if (key==="L2->L8") {
+      var x = 840;
+      pts = [[p1.x,p1.y],[x,p1.y],[x,p2.y],[p2.x,p2.y]];
+    } else if (key==="L8->L2") {
+      var x = 880;
+      pts = [[p1.x,p1.y],[x,p1.y],[x,p2.y],[p2.x,p2.y]];
+    } else if (key==="L4->L1") {
+      var x = 300;
+      pts = [[p1.x,p1.y],[x,p1.y],[x,p2.y],[p2.x,p2.y]];
+    } else if (key==="RATE->REFL") {
+      var x = 915;
+      pts = [[p1.x,p1.y],[x,p1.y],[x,p2.y],[p2.x,p2.y]];
+    } else if (key==="REFL->L2") {
+      pts = [[p1.x,p1.y],[p2.x,p1.y],[p2.x,p2.y]];
+    } else if (key==="NRG->RATE") {
+      pts = [[p1.x,p1.y],[p1.x,p2.y],[p2.x,p2.y]];
+    } else if (key==="L3->L4" || key==="L3->L6") {
+      pts = [[p1.x,p1.y],[p2.x,p1.y],[p2.x,p2.y]];
+    } else {
+      pts = [[p1.x,p1.y],[p2.x,p2.y]];
+    }
+
+    var path = el("path", {
+      d: poly(pts),
+      fill: "none",
+      stroke: color,
+      "stroke-width": related ? "2.2" : (e.dashed ? "1.3" : "1.7"),
+      "stroke-dasharray": e.dashed ? "6 4" : "none",
+      "marker-end": related ? "url(#arrOn)" : "url(#arr)",
+      "stroke-linejoin": "round",
+      opacity: dim ? "0.42" : "1"
+    });
+    g.appendChild(path);
+
+    var frac = ({
+      "L2->L3":0.45, "L1->L2":0.45, "L0->L1":0.5,
+      "POL->L8":0.28, "NRG->L7b":0.35, "L2->L7a":0.62,
+      "L2->L8":0.22, "L8->L2":0.22, "L4->L1":0.35,
+      "CTRL->L6":0.35, "CTRL->L3":0.35, "RATE->REFL":0.72,
+      "REFL->L2":0.55, "L3->L4":0.55, "L3->L5":0.55, "L3->L6":0.55
+    })[key];
+    var m = mid(pts, frac);
+    var txt = e.label + (e.detail ? " · "+e.detail : "");
+    /* CJK 寬度估計，避免底框過窄互相覆蓋 */
+    var tw = 0;
+    for (var i=0;i<txt.length;i++) tw += (txt.charCodeAt(i) > 127 ? 12 : 7);
+    var lx = m.x, ly = m.y - 10;
+    if (key==="L3->L5") ly = m.y - 16;
+    if (key==="L7b->L4") { lx = m.x; ly = m.y + 14; }
+    if (key==="L6->L7a") { ly = m.y + 14; }
+    if (key==="L5->L6") { ly = m.y - 14; }
+    if (key==="L7b->L6") { ly = m.y - 14; }
+    var bg = el("rect", {
+      x: lx-tw/2-5, y: ly-9, width: tw+10, height: 18, rx: 4,
+      fill: related ? "#eff6ff" : "#ffffff",
+      stroke: related ? "#93c5fd" : "#e2e8f0",
+      opacity: dim ? "0.85" : "1"
+    });
+    var t = el("text", {
+      x: lx, y: ly+4, "text-anchor": "middle",
+      "font-size": "11",
+      "font-family": "Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif",
+      fill: related ? "#1e3a8a" : "#334155"
+    });
+    t.textContent = txt;
+    g.appendChild(bg);
+    g.appendChild(t);
+    return g;
+  }
+
+  function wrapName(name){
+    /* 長名拆兩行，避免壓出盒子 */
+    if (name.length <= 10) return [name];
+    var cut = name.indexOf("｜");
+    if (cut > 0) return [name.slice(0, cut+1), name.slice(cut+1)];
+    if (name.indexOf("（") > 0) return [name.slice(0, name.indexOf("（")), name.slice(name.indexOf("（"))];
+    return [name];
+  }
+
+  function drawNode(id){
+    var L = layers[id], r = rectOf(id), on = id===sel;
+    var g = el("g", {"data-id": id, role: "button", tabindex: "0", "aria-pressed": on ? "true" : "false", "aria-label": L.name});
+    g.style.cursor = "pointer";
+    var fill, stroke, sw;
+    if (on) { fill="#1d4ed8"; stroke="#1e3a8a"; sw="2.2"; }
+    else if (L.kind==="aux") { fill="#fff7ed"; stroke="#c2410c"; sw="1.6"; }
+    else if (L.series===1) { fill="#fff7ed"; stroke="#b45309"; sw="1.6"; }
+    else if (L.kind==="terminal") { fill="#f1f5f9"; stroke="#475569"; sw="1.5"; }
+    else if (L.kind==="decision") { fill="#f5f3ff"; stroke="#6d28d9"; sw="1.6"; }
+    else { fill="#f8fafc"; stroke="#334155"; sw="1.5"; }
+
+    var shape;
+    if (L.kind==="decision") {
+      var cx=r.cx, cy=r.cy, w=r.w/2, h=r.h/2;
+      var d = "M "+cx+" "+(cy-h)+" L "+(cx+w)+" "+cy+" L "+cx+" "+(cy+h)+" L "+(cx-w)+" "+cy+" Z";
+      shape = el("path", {d:d, fill:fill, stroke:stroke, "stroke-width":sw});
+    } else if (L.kind==="terminal" || L.kind==="aux") {
+      shape = el("rect", {x:r.x, y:r.y, width:r.w, height:r.h, rx: L.kind==="aux" ? 8 : 22, fill:fill, stroke:stroke, "stroke-width":sw});
+      if (L.kind==="aux") shape.setAttribute("stroke-dasharray","6 4");
+    } else {
+      shape = el("rect", {x:r.x, y:r.y, width:r.w, height:r.h, rx:10, fill:fill, stroke:stroke, "stroke-width":sw});
+    }
+    g.appendChild(shape);
+
+    var ink = on ? "#fff" : "#1b1f2a";
+    var sub = on ? "#dbeafe" : "#64748b";
+    var lines = wrapName(L.name);
+    var titleY = r.cy - (lines.length>1 ? 8 : 4);
+    lines.forEach(function(line, i){
+      var t = el("text", {
+        x:r.cx, y: titleY + i*14,
+        "text-anchor":"middle",
+        "font-size": lines[0].length>9 ? "11.5" : "13",
+        "font-weight":"700",
+        "font-family":"Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif",
+        fill: ink
+      });
+      t.textContent = line;
+      g.appendChild(t);
+    });
+    var detail = on ? "本次選中：看右側說明" : (cap[id] || L.lag);
+    var d = el("text", {
+      x:r.cx, y: r.cy + (lines.length>1 ? 20 : 16),
+      "text-anchor":"middle",
+      "font-size":"10",
+      "font-family":"Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif",
+      fill: sub
+    });
+    d.textContent = detail;
+    g.appendChild(d);
+
+    function pick(){ sel=id; render(); }
+    g.addEventListener("click", pick);
+    g.addEventListener("keydown", function(ev){ if (ev.key==="Enter" || ev.key===" ") { ev.preventDefault(); pick(); } });
     return g;
   }
 
   function show(id){
-    const L=layers[id];
-    info.innerHTML = "<h3>"+L.name+"</h3>"
-      +"<p><b>上游→下游：</b>"+L.arrow+"</p>"
-      +"<p><b>傳導（跳數×時滯）：</b>"+L.lag+"</p>"
-      +"<p><b>為何這個數字代表這支箭：</b>"+L.why+"</p>"
-      +"<p><b>上游誰在推它：</b>"+L.up+"</p>"
-      +"<p><b>下游影響誰：</b>"+L.down+"</p>"
-      +"<p><b>對應基準表：</b>"+L.rows+"</p>";
+    var L = layers[id];
+    info.innerHTML = "<h3>"+L.name+"</h3><div class=\"m-props\"><dl>"
+      +"<dt>上游→下游</dt><dd>"+L.arrow+"</dd>"
+      +"<dt>傳導（跳數×時滯）</dt><dd>"+L.lag+"</dd>"
+      +"<dt>為何這個數字代表這支箭</dt><dd>"+L.why+"</dd>"
+      +"</dl><dl>"
+      +"<dt>上游誰在推它</dt><dd>"+L.up+"</dd>"
+      +"<dt>下游影響誰</dt><dd>"+L.down+"</dd>"
+      +"<dt>對應基準表</dt><dd>"+L.rows+"</dd>"
+      +"</dl></div>";
+  }
+
+  function colLabel(x, y, text){
+    var t = el("text", {x:x, y:y, "font-size":"12", "font-weight":"700", fill:"#64748b",
+      "font-family":"Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif"});
+    t.textContent = text;
+    return t;
   }
 
   function render(){
-    svg.innerHTML="";
-    const defs=document.createElementNS("http://www.w3.org/2000/svg","defs");
-    defs.innerHTML='<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker>';
+    svg.innerHTML = "";
+    var defs = el("defs");
+    defs.innerHTML =
+      '<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b"/></marker>'
+      +'<marker id="arrOn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1d4ed8"/></marker>';
     svg.appendChild(defs);
-    const lab=document.createElementNS("http://www.w3.org/2000/svg","text");
-    lab.setAttribute("x",70); lab.setAttribute("y",36);
-    lab.setAttribute("font-size","11"); lab.setAttribute("fill","#6b4100");
-    lab.setAttribute("font-family","Noto Sans TC,sans-serif");
-    lab.textContent="左側＝外生（橙框＝不立尺的配套層）　中＝主鏈　右＝迴路與配套";
-    svg.appendChild(lab);
-    edges.forEach(function(e){ svg.appendChild(line(e[0],e[1],e[2])); });
-    Object.keys(pos).forEach(function(id){ svg.appendChild(box(id)); });
+    svg.appendChild(colLabel(40, 36, "左側＝外生變數（許可／能源／利率／管制）"));
+    svg.appendChild(colLabel(430, 36, "中間＝主鏈 L0～L8"));
+    svg.appendChild(colLabel(880, 36, "右側＝反射性迴路與配套層（不立尺）"));
+    var cap = el("text", {x:40, y:54, "font-size":"11", fill:"#94a3b8",
+      "font-family":"Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif"});
+    cap.textContent = "實線＝主鏈或已立尺　虛線＝間接或回饋　橙框虛線＝配套層不立尺　菱形＝反射性　膠囊＝外生／入口　藍＝本次選中";
+    svg.appendChild(cap);
+    edges.forEach(function(e){ svg.appendChild(drawEdge(e)); });
+    order.forEach(function(id){ svg.appendChild(drawNode(id)); });
     show(sel);
     Array.prototype.forEach.call(btns.querySelectorAll("button"), function(b){
-      b.className = b.getAttribute("data-id")===sel ? "on" : "";
+      var on = b.getAttribute("data-id")===sel;
+      b.className = on ? "on" : "";
+      b.setAttribute("aria-selected", on ? "true" : "false");
     });
   }
 
-  Object.keys(layers).forEach(function(id){
-    const b=document.createElement("button");
-    b.textContent = id;
+  order.forEach(function(id){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = layers[id].short;
     b.setAttribute("data-id", id);
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-label", layers[id].name);
     b.addEventListener("click", function(){ sel=id; render(); });
     btns.appendChild(b);
   });
+
+  function applyZoom(){
+    var map = document.getElementById("map");
+    map.style.transform = "scale("+zoom+")";
+    /* 預留縮放後的捲動寬度 */
+    map.style.marginBottom = zoom>1 ? Math.round(980*(zoom-1)*0.2)+"px" : "0";
+    document.getElementById("z-100").textContent = Math.round(zoom*100)+"%";
+    document.getElementById("z-100").setAttribute("aria-pressed", zoom===1 ? "true" : "false");
+  }
+  document.getElementById("z-out").addEventListener("click", function(){ zoom=Math.max(0.7, Math.round((zoom-0.15)*100)/100); applyZoom(); });
+  document.getElementById("z-in").addEventListener("click", function(){ zoom=Math.min(1.6, Math.round((zoom+0.15)*100)/100); applyZoom(); });
+  document.getElementById("z-100").addEventListener("click", function(){ zoom=1; applyZoom(); });
+
   render();
 })();
 </script>

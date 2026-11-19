@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>入門（簡易）</title>
+<style>
+#sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
+#sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+#sb-nav a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
+#sb-nav a:hover{background:#374151;color:#fff}
+#sb-nav a.sb-on{background:#1d4ed8;color:#fff}
+#sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
+#sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
+:root{--ink:#1b1f2a;--ink2:#4d5666;--ink3:#8a93a3;--line:#e3e6ec;--bg:#f3f4f6;--panel:#fff;}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;}
+.wrap{max-width:1240px;margin:0 auto;padding:16px 16px 56px}
+.lead{font-size:17px;line-height:1.55;color:var(--ink2);margin:10px 0 18px;max-width:36em}
+.screens{display:flex;flex-direction:column;gap:20px}
+.screen{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:0;overflow:hidden;box-shadow:0 1px 0 rgba(15,23,42,.04)}
+.screen svg{display:block;width:100%;height:auto}
+.cta{margin:28px 0 12px;padding:22px 24px;background:var(--panel);border:1px solid var(--line);border-radius:14px;font-size:18px;line-height:1.55}
+.cta a{color:#1d4ed8;font-weight:700;text-decoration:none}
+.cta a:hover{text-decoration:underline}
+.disc{margin-top:16px;color:var(--ink2);font-size:13px;line-height:1.7}
+.foot{margin-top:12px;color:var(--ink3);font-size:12px}
+@media (max-width:700px){
+  html{scroll-snap-type:y proximity}
+  #sb-nav .sb-note{display:none}
+  #sb-nav .sb-inner{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:8px}
+  #sb-nav a,#sb-nav .sb-brand,#sb-issues, #sb-nav select{white-space:nowrap;flex-shrink:0}
+  .wrap{padding:10px 10px 40px}
+  .lead{font-size:16px;margin:8px 4px 10px}
+  .screen{
+    min-height:calc(100svh - 56px);
+    max-height:calc(100svh - 56px);
+    display:flex;align-items:stretch;
+    scroll-snap-align:start;
+    scroll-margin-top:52px;
+    padding:0;
+  }
+  .screen svg{width:100%;height:100%}
+}
+@media (min-width:1100px){
+  .screens{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+  .lead{font-size:18px}
+}
+</style>
+<link rel="stylesheet" href="css/nav.css">
+<script src="js/issues.js" defer></script>
+</head>
+<body>
+<nav id="sb-nav"><div class="sb-inner"><span class="sb-brand">目錄</span><a href="index.html">首頁</a><a class="sb-on" href="q.html">入門（簡易）</a><a href="t.html">入門（完整）</a><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="2026-w47.html">週報（2026-W47）</a><a href="index.html#weeks">各期列表</a></noscript><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
+<div class="wrap">
+<p class="lead">兩張圖、每層一句話。看完若要細節，再進完整教學。</p>
+<div class="screens">
+<figure class="screen" aria-label="八層因果鏈">
+<svg viewBox="0 0 390 800" role="img" aria-labelledby="c1t c1s">
+  <rect width="390" height="800" fill="#ffffff"/>
+  <text id="c1t" x="20" y="38" font-size="24" font-weight="700" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">八層因果鏈</text>
+  <text x="20" y="62" font-size="14" fill="#4d5666" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">錢從上往下流；瓶頸從下往上讀</text>
+  <g font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">
+    <!-- L0 -->
+    <rect x="16" y="80" width="358" height="58" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="28" y="104" font-size="16" font-weight="700" fill="#1b1f2a">L0 弱訊號</text>
+    <text x="28" y="126" font-size="14" fill="#4d5666">只找可能改寫成本曲線的新技術或政策。</text>
+    <path d="M195 138 L195 150" stroke="#64748b" stroke-width="1.6"/>
+    <!-- L1 -->
+    <rect x="16" y="150" width="358" height="58" rx="12" fill="#fff" stroke="#cbd5e1"/>
+    <text x="28" y="174" font-size="16" font-weight="700" fill="#1b1f2a">L1 終端需求</text>
+    <text x="28" y="196" font-size="14" fill="#4d5666">先確認真的有人在用，再往下看花錢。</text>
+    <path d="M195 208 L195 220" stroke="#64748b" stroke-width="1.6"/>
+    <!-- L2 -->
+    <rect x="16" y="220" width="358" height="76" rx="12" fill="#fff7ed" stroke="#c2410c"/>
+    <text x="28" y="244" font-size="16" font-weight="700" fill="#1b1f2a">L2 雲端資本開支</text>
+    <rect x="300" y="228" width="62" height="22" rx="11" fill="#c2410c"/>
+    <text x="331" y="244" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">暫定</text>
+    <text x="28" y="266" font-size="14" fill="#9a3412">看掏錢的人今年花多少。</text>
+    <text x="28" y="286" font-size="14" fill="#9a3412">口徑約 8,200 億美元（暫定）。</text>
+    <path d="M195 296 L195 308" stroke="#64748b" stroke-width="1.6"/>
+    <!-- L3 -->
+    <rect x="16" y="308" width="358" height="58" rx="12" fill="#fff" stroke="#cbd5e1"/>
+    <text x="28" y="332" font-size="16" font-weight="700" fill="#1b1f2a">L3 芯片</text>
+    <text x="28" y="354" font-size="14" fill="#4d5666">看誰在下單、夠不夠。毛利率低於 72% 才算打臉。</text>
+    <path d="M195 366 L195 378" stroke="#64748b" stroke-width="1.6"/>
+    <!-- L4 -->
+    <rect x="16" y="378" width="358" height="58" rx="12" fill="#fff" stroke="#cbd5e1"/>
+    <text x="28" y="402" font-size="16" font-weight="700" fill="#1b1f2a">L4 記憶體</text>
+    <text x="28" y="424" font-size="14" fill="#4d5666">同世代按季漲 5～25%；換世代另看單位成本。</text>
+    <path d="M195 436 L195 448" stroke="#64748b" stroke-width="1.6"/>
+    <!-- L5 -->
+    <rect x="16" y="448" width="358" height="58" rx="12" fill="#fff" stroke="#cbd5e1"/>
+    <text x="28" y="472" font-size="16" font-weight="700" fill="#1b1f2a">L5 先進封裝</text>
+    <text x="28" y="494" font-size="14" fill="#4d5666">看交期是否吃緊（基準是逾 52 週）。</text>
+    <path d="M195 506 L195 518" stroke="#64748b" stroke-width="1.6"/>
+    <!-- L6 -->
+    <rect x="16" y="518" width="358" height="58" rx="12" fill="#fff" stroke="#cbd5e1"/>
+    <text x="28" y="542" font-size="16" font-weight="700" fill="#1b1f2a">L6 晶圓代工</text>
+    <text x="28" y="564" font-size="14" fill="#4d5666">看先進製程的定價權與毛利。</text>
+    <path d="M195 576 L195 588" stroke="#64748b" stroke-width="1.6"/>
+    <!-- L7 -->
+    <rect x="16" y="588" width="358" height="76" rx="12" fill="#fff" stroke="#cbd5e1"/>
+    <text x="28" y="612" font-size="16" font-weight="700" fill="#1b1f2a">L7a 設備　／　L7b 材料</text>
+    <text x="28" y="634" font-size="14" fill="#4d5666">設備訂單落後資本開支 3～9 個月。</text>
+    <text x="28" y="654" font-size="14" fill="#4d5666">材料當期推升成本；年漲逾 15% 並持續就要示警。</text>
+    <path d="M195 664 L195 676" stroke="#64748b" stroke-width="1.6"/>
+    <!-- L8 -->
+    <rect x="16" y="676" width="358" height="58" rx="12" fill="#fff" stroke="#cbd5e1"/>
+    <text x="28" y="700" font-size="16" font-weight="700" fill="#1b1f2a">L8 電力</text>
+    <text x="28" y="722" font-size="14" fill="#4d5666">看蓋好了有沒有電。國內許可另外記。</text>
+    <text x="20" y="746" font-size="12" fill="#4d5666">外生另記：利率、管制、政策與許可、能源。</text>
+    <text x="20" y="762" font-size="12" fill="#4d5666">右側是反射性迴路。配套層不立尺，只記錄。</text>
+    <text id="c1s" x="20" y="776" font-size="10" fill="#8a93a3">基準預期表 v2.0｜2026-11-19 核准，2026-W48 起適用｜僅供內部審閱</text>
+  </g>
+</svg>
+</figure>
+<figure class="screen" aria-label="傳導時滯圖">
+<svg viewBox="0 0 390 800" role="img" aria-labelledby="c2t c2s">
+  <rect width="390" height="800" fill="#ffffff"/>
+  <text id="c2t" x="20" y="38" font-size="24" font-weight="700" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">傳導要多久</text>
+  <text x="20" y="62" font-size="14" fill="#4d5666" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">跳數 × 時滯，數字依基準 v2.0</text>
+  <g font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">
+    <rect x="95" y="80" width="200" height="42" rx="10" fill="#f8fafc" stroke="#334155"/>
+    <text x="195" y="107" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1f2a">L1 終端需求</text>
+
+    <line x1="195" y1="122" x2="195" y2="152" stroke="#1e293b" stroke-width="1.7"/>
+    <rect x="132" y="128" width="126" height="22" rx="11" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="195" y="144" text-anchor="middle" font-size="12" font-weight="600" fill="#1e3a8a">約 1～2 季</text>
+
+    <rect x="70" y="156" width="250" height="58" rx="10" fill="#fff7ed" stroke="#c2410c"/>
+    <text x="195" y="180" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1f2a">L2 雲端資本開支</text>
+    <text x="195" y="202" text-anchor="middle" font-size="13" fill="#9a3412">約 8,200 億美元（暫定）</text>
+    <rect x="252" y="162" width="56" height="20" rx="10" fill="#c2410c"/>
+    <text x="280" y="177" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">暫定</text>
+
+    <line x1="195" y1="214" x2="195" y2="244" stroke="#1e293b" stroke-width="1.7"/>
+    <rect x="132" y="220" width="126" height="22" rx="11" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="195" y="236" text-anchor="middle" font-size="12" font-weight="600" fill="#1e3a8a">約 0～1 季</text>
+
+    <rect x="95" y="248" width="200" height="42" rx="10" fill="#f8fafc" stroke="#334155"/>
+    <text x="195" y="275" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1f2a">L3 芯片</text>
+
+    <!-- three forks -->
+    <line x1="195" y1="290" x2="66" y2="348" stroke="#1e293b" stroke-width="1.5"/>
+    <line x1="195" y1="290" x2="195" y2="348" stroke="#1e293b" stroke-width="1.5"/>
+    <line x1="195" y1="290" x2="324" y2="348" stroke="#1e293b" stroke-width="1.5"/>
+    <rect x="20" y="308" width="92" height="36" rx="10" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="66" y="323" text-anchor="middle" font-size="11" font-weight="600" fill="#1e3a8a">價格當期</text>
+    <text x="66" y="338" text-anchor="middle" font-size="11" font-weight="600" fill="#1e3a8a">產能 ≥4 季</text>
+    <rect x="149" y="314" width="92" height="22" rx="11" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="195" y="330" text-anchor="middle" font-size="11" font-weight="600" fill="#1e3a8a">交期約 4 季</text>
+    <rect x="278" y="314" width="92" height="22" rx="11" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="324" y="330" text-anchor="middle" font-size="11" font-weight="600" fill="#1e3a8a">毛利 0～1 季</text>
+
+    <rect x="16" y="350" width="100" height="42" rx="10" fill="#f8fafc" stroke="#334155"/>
+    <text x="66" y="377" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1f2a">L4 記憶體</text>
+    <rect x="145" y="350" width="100" height="42" rx="10" fill="#f8fafc" stroke="#334155"/>
+    <text x="195" y="377" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1f2a">L5 封裝</text>
+    <rect x="274" y="350" width="100" height="42" rx="10" fill="#f8fafc" stroke="#334155"/>
+    <text x="324" y="377" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1f2a">L6 代工</text>
+
+    <text x="20" y="426" font-size="15" font-weight="700" fill="#1b1f2a">其他時滯（v2.0）</text>
+    <line x1="16" y1="436" x2="374" y2="436" stroke="#e3e6ec"/>
+
+    <!-- table-like rows -->
+    <text x="20" y="460" font-size="14" fill="#1b1f2a">L2 → L7a 設備</text>
+    <text x="370" y="460" text-anchor="end" font-size="14" font-weight="600" fill="#1e3a8a">3～9 個月</text>
+    <text x="20" y="486" font-size="14" fill="#1b1f2a">L7b → 成本（代工／材料）</text>
+    <text x="370" y="486" text-anchor="end" font-size="14" font-weight="600" fill="#1e3a8a">當期 0 季</text>
+    <text x="20" y="512" font-size="14" fill="#1b1f2a">L2 → L8 電力</text>
+    <text x="370" y="512" text-anchor="end" font-size="14" font-weight="600" fill="#1e3a8a">用電</text>
+    <text x="20" y="538" font-size="14" fill="#1b1f2a">L8 變壓器交期</text>
+    <text x="370" y="538" text-anchor="end" font-size="14" font-weight="600" fill="#1e3a8a">約 36 個月</text>
+    <text x="20" y="564" font-size="14" fill="#1b1f2a">L8 許可</text>
+    <text x="370" y="564" text-anchor="end" font-size="14" font-weight="600" fill="#1e3a8a">可當期改變供給</text>
+    <text x="20" y="590" font-size="14" fill="#1b1f2a">L5 → L6 排程</text>
+    <text x="370" y="590" text-anchor="end" font-size="14" font-weight="600" fill="#1e3a8a">未寫死時滯</text>
+    <text x="20" y="616" font-size="14" fill="#1b1f2a">利率 → 估值</text>
+    <text x="370" y="616" text-anchor="end" font-size="14" font-weight="600" fill="#1e3a8a">當期</text>
+    <text x="20" y="642" font-size="14" fill="#1b1f2a">管制 → 可交貨範圍</text>
+    <text x="370" y="642" text-anchor="end" font-size="14" font-weight="600" fill="#1e3a8a">可 0 季</text>
+    <text x="20" y="676" font-size="13" fill="#4d5666">影響資本開支的利率傳導要數季，屬推論，不是新量測。</text>
+    <text x="20" y="698" font-size="13" fill="#4d5666">L8 往上卡資本開支，為虛線回饋。</text>
+    <text x="20" y="728" font-size="13" fill="#9a3412">L2 口徑約 8,200 億美元，暫定，尚未完成一手對帳。</text>
+    <text id="c2s" x="20" y="782" font-size="10" fill="#8a93a3">基準預期表 v2.0｜2026-11-19 核准，2026-W48 起適用｜L2 暫定｜僅供內部審閱</text>
+  </g>
+</svg>
+</figure>
+</div>
+<div class="cta">想看為什麼要一層一層加、以及練習題，請打開<a href="t.html">入門（完整）</a>。</div>
+<p class="foot">僅供內部審閱。頁面已標示 noindex。盤點日期 2026-11-19（台北時間，UTC+8）。不構成投資建議。</p>
+<div class="disc"><b>免責聲明</b>：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</div>
+</div>
+</body>
+</html>

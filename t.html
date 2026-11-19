@@ -15,7 +15,7 @@
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"Inter","Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,sans-serif;
+    font-family:"Noto Sans CJK TC","Noto Sans TC","Inter","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
     font-size:15.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
   .wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px}
 
@@ -98,6 +98,34 @@
   footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:20px;font-size:12.5px;color:var(--ink2);line-height:1.85}
   .disc{margin-top:14px;padding:12px 14px;background:var(--graybg);border:1px solid var(--line);border-radius:4px;font-size:12.5px;color:var(--ink2)}
   b.hl{background:#fff3bf;padding:0 3px;border-radius:2px}
+
+  /* t-tblwrap: 教學頁表格欄寬與換行（2026-11-19） */
+  .t-tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:14px;border:1px solid var(--line);border-radius:7px;background:var(--card)}
+  .t-tblwrap table{width:100%;min-width:36rem;table-layout:fixed;border-collapse:collapse;margin:0;font-size:13.5px;background:transparent}
+  .t-tblwrap.t-wide table{min-width:42rem}
+  .t-tblwrap th,.t-tblwrap td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+  .t-tblwrap th{background:var(--graybg);font-weight:700;font-size:13px;color:var(--ink2)}
+  .t-tblwrap .read{margin:0;padding:8px 10px;font-size:12.5px;color:var(--ink3);border-top:1px solid var(--line);background:#fcfcfd}
+  .t-chain td.ly{font-weight:700;line-height:1.45}
+  .t-chain tbody tr:nth-child(even){background:transparent}
+  .t-chain tr.ly-l0{background:#f2f4f7}
+  .t-chain tr.ly-l0 td.ly{color:#4a5262}
+  .t-chain tr.ly-l1,.t-chain tr.ly-l2,.t-chain tr.ly-l8{background:#fdf5e8}
+  .t-chain tr.ly-l1 td.ly,.t-chain tr.ly-l2 td.ly,.t-chain tr.ly-l8 td.ly{color:#7a5210}
+  .t-chain tr.ly-l3{background:#fbeeed}
+  .t-chain tr.ly-l3 td.ly{color:#7d2622}
+  .t-chain tr.ly-l4,.t-chain tr.ly-l5{background:#f1ecfa}
+  .t-chain tr.ly-l4 td.ly,.t-chain tr.ly-l5 td.ly{color:#3d2d5c}
+  .t-chain tr.ly-l6{background:#eef3fb}
+  .t-chain tr.ly-l6 td.ly{color:#1c3f70}
+  .t-chain tr.ly-l7{background:#eaf6f5}
+  .t-chain tr.ly-l7 td.ly{color:#12554f}
+  .t-chain .chip{white-space:nowrap;margin:1px 2px 1px 0}
+  .t-chain .chip.gray{border:1px solid #d5d8de}
+  h2,.t-tblwrap,.svgbox{scroll-margin-top:var(--nav-stack,110px)}
+  @media (max-width:480px){
+    .wrap{padding-left:12px;padding-right:12px}
+  }
 </style>
 <meta name="robots" content="noindex,nofollow"><title>從財報到產業鏈｜方法入門</title><style>
 #sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;
@@ -109,8 +137,10 @@
 #sb-nav a.sb-on{background:#1d4ed8;color:#fff}
 #sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
 #sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
-</style></head>
-<body><nav id="sb-nav"><div class="sb-inner"><span class="sb-brand">目錄</span><a href="index.html">首頁</a><a class="sb-on" href="t.html">入門</a><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準草案</a><a href="w39.html">39</a><a href="w40.html">40</a><a href="w41.html">41</a><a href="w42.html">42</a><a href="w43.html">43</a><a href="w44.html">44</a><a href="w45.html">45</a><a href="w46.html">46</a><a href="w47.html">47</a><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
+</style><link rel="stylesheet" href="css/nav.css">
+<script src="js/issues.js" defer></script>
+</head>
+<body><nav id="sb-nav"><div class="sb-inner"><span class="sb-brand">目錄</span><a href="index.html">首頁</a><a class="sb-on" href="t.html">入門</a><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="2026-w47.html">週報（2026-W47）</a><a href="index.html#weeks">各期列表</a></noscript><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
 <div class="nav"><div class="navin" id="navin">
 <a href="#why">0 為什麼</a><a href="#l1">1 一家公司</a><a href="#l2">2 展開 BOM</a><a href="#l3">3 產能與錢</a>
 <a href="#l4">4 串成鏈</a><a href="#l5">5 外部世界</a><a href="#l6">6 市場回饋</a><a href="#l7">7 管好自己</a>
@@ -393,79 +423,32 @@
 <div class="b">你已經知道產能有時間差、瓶頸會輪動，但若各段仍分開看，就無法指出「這則新聞是鏈上的第幾環」，也無法用同一套定義討論跳數與時滯。這一層把前面拆開的上下游，放進<b>同一條有方向、有順序的鏈</b>。</div>
 </div>
 <h3>八層因果鏈（往下讀：錢從哪裡來；往上讀：卡在哪裡）</h3>
-<div class="svgbox">
-<svg aria-label="八層因果鏈框架圖" role="img" style="min-width:920px" viewbox="0 0 980 452" width="100%">
-<text fill="#7b8494" font-size="12.5" font-weight="700" x="16" y="22">層</text>
-<text fill="#7b8494" font-size="12.5" font-weight="700" x="150" y="22">這一層在問什麼</text>
-<text fill="#7b8494" font-size="12.5" font-weight="700" x="596" y="22">代表性的公司／指標</text>
-<text fill="#7b8494" font-size="12.5" font-weight="700" x="812" y="22">現在卡不卡</text>
-<g>
-<rect fill="#f2f4f7" height="40" rx="4" stroke="#e3e6ec" width="948" x="16" y="34"></rect>
-<text fill="#4a5262" font-size="13" font-weight="700" x="34" y="59">L0　弱訊號入口</text>
-<text fill="#4a5262" font-size="12.5" x="150" y="59">有沒有出現會改變成本曲線的技術或政策？</text>
-<text fill="#7b8494" font-size="12" x="596" y="59">模型效率躍升、能源政策、材料斷供</text>
-<rect fill="#f2f4f7" height="20" rx="3" width="60" x="812" y="44"></rect><text fill="#7b8494" font-size="11.5" text-anchor="middle" x="842" y="58">持續掃</text>
-</g>
-<g>
-<rect fill="#fdf5e8" height="40" rx="4" stroke="#efd9ad" width="948" x="16" y="78"></rect>
-<text fill="#7a5210" font-size="13" font-weight="700" x="34" y="103">L1　AI 終端需求</text>
-<text fill="#4a5262" font-size="12.5" x="150" y="103">真的有人在用嗎？用多少？</text>
-<text fill="#7b8494" font-size="12" x="596" y="103">龍頭資料中心營收年增、雲廠 AI 營收</text>
-<rect fill="#ecf7f1" height="20" rx="3" width="60" x="812" y="88"></rect><text fill="#1e8e5a" font-size="11.5" text-anchor="middle" x="842" y="102">不卡</text>
-</g>
-<g>
-<rect fill="#fdf5e8" height="40" rx="4" stroke="#efd9ad" width="948" x="16" y="122"></rect>
-<text fill="#7a5210" font-size="13" font-weight="700" x="34" y="147">L2　算力／雲端資本開支</text>
-<text fill="#4a5262" font-size="12.5" x="150" y="147">掏錢的人今年打算花多少？</text>
-<text fill="#7b8494" font-size="12" x="596" y="147">五大 CSP 2026 約 6,900 億美元</text>
-<rect fill="#eef3fb" height="20" rx="3" width="60" x="812" y="132"></rect><text fill="#2f5fa8" font-size="11.5" text-anchor="middle" x="842" y="146">熱</text>
-</g>
-<g>
-<rect fill="#fbeeed" height="40" rx="4" stroke="#f0c9c7" width="948" x="16" y="166"></rect>
-<text fill="#7d2622" font-size="13" font-weight="700" x="34" y="191">L3　AI 芯片</text>
-<text fill="#4a5262" font-size="12.5" x="150" y="191">誰在下單？晶片夠不夠？</text>
-<text fill="#7b8494" font-size="12" x="596" y="191">輝達、超微、博通</text>
-<rect fill="#eef3fb" height="20" rx="3" width="60" x="812" y="176"></rect><text fill="#2f5fa8" font-size="11.5" text-anchor="middle" x="842" y="190">熱</text>
-</g>
-<g>
-<rect fill="#f1ecfa" height="40" rx="4" stroke="#ddd3ef" width="948" x="16" y="210"></rect>
-<text fill="#3d2d5c" font-size="13" font-weight="700" x="34" y="235">L4　記憶體／HBM</text>
-<text fill="#4a5262" font-size="12.5" x="150" y="235">晶片旁邊的記憶體跟得上嗎？</text>
-<text fill="#7b8494" font-size="12" x="596" y="235">SK 海力士 50%、三星 33%、美光 18%</text>
-<rect fill="#fdf5e8" height="20" rx="3" width="60" x="812" y="220"></rect><text fill="#b8791a" font-size="11.5" text-anchor="middle" x="842" y="234">緊</text>
-</g>
-<g>
-<rect fill="#f1ecfa" height="40" rx="4" stroke="#ddd3ef" width="948" x="16" y="254"></rect>
-<text fill="#3d2d5c" font-size="13" font-weight="700" x="34" y="279">L5　先進封裝</text>
-<text fill="#4a5262" font-size="12.5" x="150" y="279">晶片做出來，有人把它包起來嗎？</text>
-<text fill="#7b8494" font-size="12" x="596" y="279">CoWoS 交期逾 52 週、日月光、安靠</text>
-<rect fill="#fdf5e8" height="20" rx="3" width="60" x="812" y="264"></rect><text fill="#b8791a" font-size="11.5" text-anchor="middle" x="842" y="278">緊</text>
-</g>
-<g>
-<rect fill="#eef3fb" height="40" rx="4" stroke="#c8d8ef" width="948" x="16" y="298"></rect>
-<text fill="#1c3f70" font-size="13" font-weight="700" x="34" y="323">L6　晶圓代工</text>
-<text fill="#4a5262" font-size="12.5" x="150" y="323">誰把晶片真的做出來？</text>
-<text fill="#7b8494" font-size="12" x="596" y="323">台積電 3nm／2nm，毛利率 67.7%</text>
-<rect fill="#eef3fb" height="20" rx="3" width="60" x="812" y="308"></rect><text fill="#2f5fa8" font-size="11.5" text-anchor="middle" x="842" y="322">滿載</text>
-</g>
-<g>
-<rect fill="#eaf6f5" height="40" rx="4" stroke="#c4e3df" width="948" x="16" y="342"></rect>
-<text fill="#12554f" font-size="13" font-weight="700" x="34" y="367">L7　設備（a）／材料（b）</text>
-<text fill="#4a5262" font-size="12.5" x="150" y="367">蓋廠的機器和原料供應得上嗎？</text>
-<text fill="#7b8494" font-size="12" x="596" y="367">ASML、應用材料；光刻膠 10 月起 +15%</text>
-<rect fill="#ecf7f1" height="20" rx="3" width="60" x="812" y="352"></rect><text fill="#1e8e5a" font-size="11.5" text-anchor="middle" x="842" y="366">a 順／b 緊</text>
-</g>
-<g>
-<rect fill="#fdf5e8" height="40" rx="4" stroke="#efd9ad" width="948" x="16" y="386"></rect>
-<text fill="#7a5210" font-size="13" font-weight="700" x="34" y="411">L8　電力</text>
-<text fill="#4a5262" font-size="12.5" x="150" y="411">蓋好了，有電嗎？</text>
-<text fill="#7b8494" font-size="12" x="596" y="411">變壓器交期約 36 個月、表後供電約 75GW</text>
-<rect fill="#fbeeed" height="20" rx="3" width="60" x="812" y="396"></rect><text fill="#c9312b" font-size="11.5" text-anchor="middle" x="842" y="410">最卡</text>
-</g>
-<text fill="#7b8494" font-size="12" x="16" y="444">讀法：由上往下＝錢從終端一路流到設備與電力；由下往上＝哪一環慢，整條鏈就慢在那裡。</text>
-</svg>
+<div class="t-tblwrap t-wide" id="t4-chain">
+<table class="t-chain">
+<colgroup>
+  <col style="width:22%">
+  <col style="width:28%">
+  <col style="width:36%">
+  <col style="width:14%">
+</colgroup>
+<thead>
+<tr><th>層</th><th>這一層在問什麼</th><th>代表性的公司／指標</th><th>現在卡不卡</th></tr>
+</thead>
+<tbody>
+<tr class="ly-l0"><td class="ly">L0　弱訊號入口</td><td>有沒有出現會改變成本曲線的技術或政策？</td><td>模型效率躍升、能源政策、材料斷供</td><td><span class="chip gray">持續掃</span></td></tr>
+<tr class="ly-l1"><td class="ly">L1　AI 終端需求</td><td>真的有人在用嗎？用多少？</td><td>龍頭資料中心營收年增、雲廠 AI 營收</td><td><span class="chip green">不卡</span></td></tr>
+<tr class="ly-l2"><td class="ly">L2　算力／雲端資本開支</td><td>掏錢的人今年打算花多少？</td><td>五大 CSP 2026 約 6,900 億美元</td><td><span class="chip blue">熱</span></td></tr>
+<tr class="ly-l3"><td class="ly">L3　AI 芯片</td><td>誰在下單？晶片夠不夠？</td><td>輝達、超微、博通</td><td><span class="chip blue">熱</span></td></tr>
+<tr class="ly-l4"><td class="ly">L4　記憶體／HBM</td><td>晶片旁邊的記憶體跟得上嗎？</td><td>SK 海力士 50%、三星 33%、美光 18%</td><td><span class="chip amber">緊</span></td></tr>
+<tr class="ly-l5"><td class="ly">L5　先進封裝</td><td>晶片做出來，有人把它包起來嗎？</td><td>CoWoS 交期逾 52 週、日月光、安靠</td><td><span class="chip amber">緊</span></td></tr>
+<tr class="ly-l6"><td class="ly">L6　晶圓代工</td><td>誰把晶片真的做出來？</td><td>台積電 3nm／2nm，毛利率 67.7%</td><td><span class="chip blue">滿載</span></td></tr>
+<tr class="ly-l7"><td class="ly">L7　設備（a）／材料（b）</td><td>蓋廠的機器和原料供應得上嗎？</td><td>ASML、應用材料；光刻膠 10 月起 +15%</td><td><span class="chip green">a 順</span><span class="chip amber">b 緊</span></td></tr>
+<tr class="ly-l8"><td class="ly">L8　電力</td><td>蓋好了，有電嗎？</td><td>變壓器交期約 36 個月、表後供電約 75GW</td><td><span class="chip red">最卡</span></td></tr>
+</tbody>
+</table>
+<p class="read">讀法：由上往下＝錢從終端一路流到設備與電力；由下往上＝哪一環慢，整條鏈就慢在那裡。</p>
 </div>
-<div class="cap">圖 4-1｜八層因果鏈。右欄「現在卡不卡」是 2026-09-21 的判定，詳細依據見第 8 章。</div>
+<div class="cap">表 4-1｜八層因果鏈。右欄「現在卡不卡」是 2026-09-21 的判定，詳細依據見第 8 章。</div>
 <div class="note key"><b>這一層最重要的一句話：</b>層與層之間的每一支箭頭，都是<b>「待驗證的轉換關係」，不是事實</b>。「雲廠增加資本開支」<b>不等於</b>「台積電營收增加」——中間還要經過晶片商下單、封裝排程、產能調度好幾關。把箭頭當成必然，是這套方法最容易犯的錯。</div>
 <h3>為什麼「離得遠」反而是優勢（但也有代價）</h3>
 <p>如果整條鏈上每一層都同時反應，那新聞一出來大家就知道了，沒有任何優勢。真正有意義的是<b>落差</b>——同一條鏈上，有的層已經漲翻天，有的層還沒動：</p>
@@ -614,8 +597,15 @@
 </div>
 <h3>第一步：立一把尺（基準預期表）</h3>
 <p>對鏈上的每一層，事先寫下三件事：<b>你預期會是多少</b>、<b>多大的誤差可以接受</b>、<b>什麼狀況叫做偏離</b>。這三欄合起來就是一把尺。</p>
+<div class="t-tblwrap t-wide">
 <table>
-<thead><tr><th style="width:150px">層</th><th style="width:32%">基準預期（我預期是多少）</th><th style="width:116px">容忍區間（可接受誤差）</th><th>偏離訊號（什麼時候要示警）</th></tr></thead>
+<colgroup>
+  <col style="width:16%">
+  <col style="width:32%">
+  <col style="width:16%">
+  <col style="width:36%">
+</colgroup>
+<thead><tr><th>層</th><th>基準預期（我預期是多少）</th><th>容忍區間（可接受誤差）</th><th>偏離訊號（什麼時候要示警）</th></tr></thead>
 <tbody>
 <tr><td><b>L1</b> 終端需求</td><td>龍頭資料中心營收年增 &gt;50%</td><td>±20pp</td><td>連續兩季 &lt;30%；或雲廠 AI 收入增速低於資本開支增速</td></tr>
 <tr><td><b>L2</b> 雲端資本開支</td><td>五大 CSP 2026 約 6,900 億美元</td><td>±10%</td><td>任一 CSP 下修全年指引；或受限於電力而非需求</td></tr>
@@ -624,7 +614,7 @@
 <tr><td><b>L7b</b> 材料</td><td>價格平穩或溫和上行</td><td>年漲幅 0～10%</td><td>年漲幅 &gt;15% 並持續</td></tr>
 <tr><td><b>L8</b> 電力</td><td>表後供電訂單快速累積</td><td>±20%</td><td>許可大幅放行（瓶頸降級）；或供電計畫延宕</td></tr>
 </tbody>
-</table>
+</table></div>
 <div class="cap">表 7-1｜基準預期表（節錄，完整版為 v1.1，共 13 列）。時點：2026-09-21。</div>
 <div class="note ok"><b>有了尺之後，新聞才有意義。</b>「HBM 合約價季增 20%」——在沒有尺的世界裡，這只是一則新聞；有了尺（容忍區間 5～25%），你知道它<b>符合預期但貼著上緣</b>，下一步該問的是「下季還在區間內嗎」。</div>
 <h3>第二步：規定「改尺」的流程</h3>
@@ -670,8 +660,15 @@
 <section id="now">
 <h2><span class="lv">8</span>現況：用這把尺，現在量到什麼</h2>
 <p class="stage">把前面七層全部套上去，看看 2026-09-21 這一刻的結果</p>
+<div class="t-tblwrap t-wide">
 <table>
-<thead><tr><th style="width:150px">層</th><th style="width:36%">現在看到的</th><th style="width:100px">判定</th><th>這代表什麼</th></tr></thead>
+<colgroup>
+  <col style="width:16%">
+  <col style="width:34%">
+  <col style="width:12%">
+  <col style="width:38%">
+</colgroup>
+<thead><tr><th>層</th><th>現在看到的</th><th>判定</th><th>這代表什麼</th></tr></thead>
 <tbody>
 <tr><td><b>L1</b> 終端需求</td><td>龍頭資料中心營收年增 +106%</td><td><span class="chip green">符合</span></td><td>證據等級：強（以一手財報為分母）</td></tr>
 <tr><td><b>L2</b> 雲端資本開支</td><td>九大 CSP 2026E 約 8,300 億美元，年增 +79%</td><td><span class="chip blue">超越</span></td><td>落在容忍區間上緣之外（加速）</td></tr>
@@ -685,7 +682,7 @@
 <tr><td><b>外生</b>｜利率</td><td>9/16 升息至 3.75～4.00%；10Y 美債約 5.01%</td><td><span class="chip red">已觸發</span></td><td>折現率上行，高本益比環節承壓</td></tr>
 <tr><td><b>反射性</b>迴路</td><td>公募對該板塊配置一年從 2.7% 拉到 13.1%</td><td><span class="chip amber">待觀察</span></td><td>擁擠度升高，好消息的反應會鈍化</td></tr>
 </tbody>
-</table>
+</table></div>
 <div class="cap">表 8-1｜2026-09-21 的現況判定。判定尺：基準預期表 v1.1。資料來源：各公司法說與財報（一手）、市場統計（轉引，需核實原文）。</div>
 <div class="chart" id="c5"></div>
 <div class="cap">圖 8-1｜同一條鏈上，重點公司 2026 年至今的漲幅（％）。<b>台灣慣例：紅色代表上漲、綠色代表下跌</b>（與歐美相反）。資料來源：市場資料，時點 2026-09-21。</div>
@@ -708,8 +705,15 @@
 <h2><span class="lv">9</span>後續追蹤重點：接下來要看什麼</h2>
 <p class="stage">研究不是做完就結束，而是排好「下一次要查什麼」</p>
 <p>整套方法最後會落到一張查核表。重點不是「看很多新聞」，而是<b>每一項都先寫好「看到什麼數字，就代表我錯了」</b>——這叫打臉條件，沒有它，你看再多新聞都只是在找支持自己的證據。</p>
+<div class="t-tblwrap t-wide">
 <table>
-<thead><tr><th style="width:96px">時間（台北）</th><th style="width:150px">事件</th><th style="width:30%">要看的數字</th><th>打臉條件（看到就代表我錯了）</th></tr></thead>
+<colgroup>
+  <col style="width:14%">
+  <col style="width:20%">
+  <col style="width:24%">
+  <col style="width:42%">
+</colgroup>
+<thead><tr><th>時間（台北）</th><th>事件</th><th>要看的數字</th><th>打臉條件（看到就代表我錯了）</th></tr></thead>
 <tbody>
 <tr><td>9/23</td><td>Meta Connect</td><td>AI 相關資本開支指引</td><td>下修全年資本開支 → L2 基準被打臉</td></tr>
 <tr><td>9 月下旬</td><td>美光財報</td><td>HBM 出貨與合約價</td><td>合約價季增低於 5% → L4「供不應求」的假設要改</td></tr>
@@ -718,7 +722,7 @@
 <tr><td><b>10/14～15</b></td><td><b>台積電法說（最關鍵）</b></td><td>毛利率、資本支出、2nm 進度</td><td>毛利率低於 60% 或資本支出下修 → L6 與整條鏈都要重估</td></tr>
 <tr><td>10 月</td><td>FOMC</td><td>是否再升息、點陣圖</td><td>單次升息超過 25bp 或轉向降息 → 外生利率欄重新設定</td></tr>
 </tbody>
-</table>
+</table></div>
 <div class="cap">表 9-1｜下期查核日曆。時間均為台北時間（GMT+8）。</div>
 <div class="note"><b>同時進行的還有這些週期性工作：</b>每週一次新聞解析（套回框架判定偏離）；每月一次的傳導鏈追蹤（記憶體漲價 → AI 成本 → 雲廠投資報酬率）、電力瓶頸追蹤、中國變數（雙向）；每季一次的 Kill Thesis 維護（寫下「什麼情況這套論點就死了」）。</div>
 </section>
@@ -744,8 +748,14 @@
 </details>
 </div>
 <h3>新手最常踩的五個坑</h3>
+<div class="t-tblwrap">
 <table>
-<thead><tr><th style="width:44px">#</th><th style="width:34%">坑</th><th>怎麼避開</th></tr></thead>
+<colgroup>
+  <col style="width:8%">
+  <col style="width:28%">
+  <col style="width:64%">
+</colgroup>
+<thead><tr><th>#</th><th>坑</th><th>怎麼避開</th></tr></thead>
 <tbody>
 <tr><td>1</td><td>把箭頭當事實</td><td>每次說「A 所以 B」之前，先問：A 到 B 中間還經過什麼？有沒有數據支持那一關？</td></tr>
 <tr><td>2</td><td>用股價當證據</td><td>股價是結果，不是原因。它只能用來觀察「市場現在怎麼想」，不能用來證明「公司是好的」。</td></tr>
@@ -753,13 +763,19 @@
 <tr><td>4</td><td>混層</td><td>性質不同的變數不要放在同一層判斷（例如「設備」是落後資本開支 6～12 個月的訂單型，「材料」是當期反應的成本型）。混層會把小訊號吃掉。</td></tr>
 <tr><td>5</td><td>事後改尺</td><td>看到結果才調預期，是最舒適的自我欺騙。改尺要留版本、留理由、留核准日期。</td></tr>
 </tbody>
-</table>
+</table></div>
 </section>
 <section>
 <h2><span class="lv">附</span>名詞對照表</h2>
 <p class="stage">看不懂就回來查這裡</p>
+<div class="t-tblwrap">
 <table>
-<thead><tr><th style="width:132px">名詞</th><th style="width:38%">白話解釋</th><th>在框架裡的角色</th></tr></thead>
+<colgroup>
+  <col style="width:16%">
+  <col style="width:50%">
+  <col style="width:34%">
+</colgroup>
+<thead><tr><th>名詞</th><th>白話解釋</th><th>在框架裡的角色</th></tr></thead>
 <tbody>
 <tr><td><b>盡職調查</b></td><td>投資前把一家公司（和它所在的產業）從頭到尾查清楚</td><td>整套方法的目的</td></tr>
 <tr><td><b>BOM</b></td><td>做一個產品需要的所有零件清單</td><td>第 2 層：展開上下游</td></tr>
@@ -777,17 +793,26 @@
 <tr><td><b>容忍區間</b></td><td>多大的誤差算正常，超過才算偏離</td><td>第 7 層：避免每則新聞都即興解釋</td></tr>
 <tr><td><b>打臉條件</b></td><td>事先寫好「看到什麼數字，就代表我錯了」</td><td>第 9 層：避免只找支持自己的證據</td></tr>
 </tbody>
-</table>
+</table></div>
 </section>
 <footer>
 <div><b>資料時點：</b>2026-09-21｜<b>教學主軸修訂：</b>2026-11-19（台北時間，UTC+8）｜<b>對象：</b>大一新鮮人（不需要財會背景）｜<b>框架版本：</b>v3｜<b>基準表版本：</b>v1.1</div>
 <div style="margin-top:8px"><b>資料與來源：</b>本頁所有數據均標註時點與來源，時點統一為 2026-09-21（除另有標示）。一手來源：台積電法說會與財報、聯準會 FOMC 聲明（2026-09-16）、各公司法說。需核實原文之轉引：TrendForce 雲端資本開支估計（2026-05-06）、光刻膠漲價幅度（產業消息，2026-09-15～21）、A 股板塊漲幅與公募配置統計、各公司股價與本益比。跨公司比較時請注意財年不一致（輝達、博通、美光、應用材料等皆非日曆年）與幣別未統一（USD／EUR／TWD／KRW／CNY）。台積電毛利率 67.7% 為法說口徑（新台幣基礎），與美元換算口徑 66.67% 不可混用。</div>
 <div style="margin-top:8px"><b>本頁的教學立場：</b>所有內容僅為研究方法示範，不構成任何投資建議，也不代表對任何標的的評價。</div>
-<div class="disc"><b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。</div>
+<div class="disc"><b>免責聲明</b>：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</div>
 </footer>
 </div>
 <script>
 (function(){
+  function syncNavStack(){
+    var sb=document.getElementById('sb-nav');
+    var nav=document.querySelector('.nav');
+    var h=sb?sb.offsetHeight:0;
+    document.documentElement.style.setProperty('--nav-stack', (h+((nav&&nav.offsetHeight)||0)+8)+'px');
+    if(nav) nav.style.top=h+'px';
+  }
+  syncNavStack();
+  window.addEventListener('resize', syncNavStack);
   var RED='#c9312b', GREEN='#1e8e5a', BLUE='#2f5fa8', AMBER='#b8791a', GRAY='#7b8494', INK='#1b1f27', INK2='#4a5262';
   var charts=[];
 

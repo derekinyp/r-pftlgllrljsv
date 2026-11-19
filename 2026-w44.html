@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+<script src="js/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --line:#e3e6ec; --line2:#eef1f5;
+    --ink:#1b1f2a; --ink2:#4d5666; --ink3:#8a93a3;
+    --red:#c8352f; --red-bg:#fdecea; --red-line:#f6cfcb;
+    --green:#1c7f52; --green-bg:#e8f5ee; --green-line:#c9e8d8;
+    --amber:#b06a00; --amber-bg:#fdf3e3; --amber-line:#f2ddb8;
+    --blue:#1f5fa8; --blue-bg:#eaf2fb; --blue-line:#cfe0f4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+    line-height:1.72;font-size:15px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:30px 22px 64px}
+  header.hero{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 30px;margin-bottom:18px}
+  .kicker{font-size:11.5px;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;margin-bottom:9px}
+  h1{margin:0 0 8px;font-size:26px;line-height:1.35;letter-spacing:-.01em}
+  .sub{margin:0;color:var(--ink2);font-size:14.5px}
+  .metabar{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+  .chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12.5px;
+    background:var(--line2);color:var(--ink2);border:1px solid var(--line)}
+  .chip.red{background:var(--red-bg);color:var(--red);border-color:var(--red-line)}
+  .chip.green{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+  .chip.amber{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-line)}
+  .chip.blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-line)}
+  .chip.gray{background:#f2f4f7;color:#6b7383;border-color:#dfe3ea}
+  section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 28px;margin-bottom:18px}
+  h2{margin:0 0 5px;font-size:19px;letter-spacing:-.005em}
+  h2 .num{color:var(--blue);font-variant-numeric:tabular-nums;margin-right:8px}
+  .lead{margin:0 0 16px;color:var(--ink2);font-size:13.8px}
+  h3{margin:22px 0 9px;font-size:15.5px}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:21px} li{margin:5px 0}
+  .svgbox{width:100%;overflow-x:auto;border:1px solid var(--line2);border-radius:10px;background:#fcfcfd;padding:6px}
+  .chartbox{border:1px solid var(--line2);border-radius:10px;background:#fcfcfd;padding:4px 2px 0;margin:12px 0 18px}
+  .chart{width:100%;height:330px}
+  .cap{font-size:12px;color:var(--ink3);padding:6px 12px 10px;line-height:1.62}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f7f8fa;font-weight:600;color:var(--ink2);font-size:12.5px}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tbody tr:nth-child(even){background:#fbfbfc}
+  .up{color:var(--red);font-variant-numeric:tabular-nums}
+  .dn{color:var(--green);font-variant-numeric:tabular-nums}
+  .flat{color:var(--ink2);font-variant-numeric:tabular-nums}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:13px}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .card{border:1px solid var(--line);border-radius:11px;padding:15px 17px;background:#fff}
+  .card .tag{font-size:11px;letter-spacing:.08em;color:var(--ink3);text-transform:uppercase}
+  .card h4{margin:5px 0 7px;font-size:15px;line-height:1.45}
+  .card p{margin:5px 0;font-size:13.3px;color:var(--ink2)}
+  .src{font-size:11.5px;color:var(--ink3);margin-top:8px;line-height:1.55}
+  .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin:14px 0 4px}
+  .s{border:1px solid var(--line2);border-radius:9px;padding:10px 12px;background:#fcfcfd}
+  .s .l{font-size:11.5px;color:var(--ink3)}
+  .s .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em;margin:1px 0}
+  .s .v.up{color:var(--red)} .s .v.dn{color:var(--green)} .s .v.nt{color:var(--ink)}
+  .s .d{font-size:11.5px;color:var(--ink3);line-height:1.5}
+  .note{background:#f7f9fc;border:1px solid #dfe6f0;border-left:3px solid var(--blue);
+    border-radius:8px;padding:11px 14px;font-size:13px;color:var(--ink2);margin:14px 0}
+  .note.warn{background:var(--amber-bg);border-color:var(--amber-line);border-left-color:var(--amber)}
+  .note.red{background:var(--red-bg);border-color:var(--red-line);border-left-color:var(--red)}
+  .note.calm{background:#f4f7f5;border-color:#d9e6de;border-left-color:var(--green)}
+  .ruler{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);
+    border-radius:10px;padding:13px 18px;margin-bottom:18px;font-size:13px;color:var(--ink2);line-height:1.7}
+  .ruler b{color:var(--ink)}
+  .j{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;white-space:nowrap}
+  .j.g{background:var(--green-bg);color:var(--green);border:1px solid var(--green-line)}
+  .j.b{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-line)}
+  .j.r{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+  .j.a{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-line)}
+  .j.n{background:#f2f4f7;color:#6b7383;border:1px solid #dfe3ea}
+  .wcard{border:1px solid var(--red-line);border-radius:11px;overflow:hidden;margin:14px 0;background:#fff}
+  .wcard.amber{border-color:var(--amber-line)}
+  .wcard .hd{padding:11px 16px;background:var(--red-bg);border-bottom:1px solid var(--red-line)}
+  .wcard.amber .hd{background:var(--amber-bg);border-bottom-color:var(--amber-line)}
+  .wcard .hd b{font-size:14.5px}
+  .wcard .hd .no{font-size:11px;letter-spacing:.08em;color:var(--ink3);margin-right:8px}
+  .wcard dl{margin:0;padding:13px 16px}
+  .wcard dt{display:block;font-size:11px;letter-spacing:.06em;color:var(--ink3);margin-top:9px;white-space:nowrap}
+  .wcard dt:first-child{margin-top:0}
+  .wcard dd{margin:2px 0 0;font-size:13.2px;color:var(--ink2)}
+  .prop{border:1px solid var(--line);border-radius:11px;margin:13px 0;background:#fff;overflow:hidden}
+  .prop .hd{padding:10px 16px;background:#f7f8fa;border-bottom:1px solid var(--line);font-size:14px;font-weight:600}
+  .prop .hd .no{color:var(--blue);margin-right:8px;font-variant-numeric:tabular-nums}
+  .prop .hd .st{float:right;font-size:11.5px;font-weight:400;color:var(--amber)}
+  .prop table{margin:0;font-size:12.8px}
+  .prop td{border:0;border-bottom:1px solid var(--line2);padding:8px 16px}
+  .prop td:first-child{width:104px;color:var(--ink3);background:#fafbfc;font-size:11.5px;letter-spacing:.04em}
+  .prop tr:last-child td{border-bottom:0}
+  footer{color:var(--ink3);font-size:11.8px;line-height:1.75;padding:20px 6px 0;border-top:1px solid var(--line);margin-top:8px}
+  .disc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 18px;font-size:12px;color:#6b7383;margin-top:16px}
+  @media(max-width:700px){
+    .wrap{padding:16px 10px 48px} section{padding:16px 14px}
+    .chart{height:290px} table{font-size:11.8px} h1{font-size:21px}
+  }
+</style>
+<meta name="robots" content="noindex,nofollow"><title>2026-W44（2026-10-20～10-30）</title><style>
+#sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
+#sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+#sb-nav a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
+#sb-nav a:hover{background:#374151;color:#fff}
+#sb-nav a.sb-on{background:#1d4ed8;color:#fff}
+#sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
+#sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
+</style><link rel="stylesheet" href="css/nav.css">
+<script src="js/issues.js" defer></script>
+</head>
+<body><nav id="sb-nav"><div class="sb-inner"><span class="sb-brand">目錄</span><a href="index.html">首頁</a><a href="t.html">入門</a><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="2026-w47.html">週報（2026-W47）</a><a href="index.html#weeks">各期列表</a></noscript><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
+<div class="wrap">
+<header class="hero">
+<div class="kicker">阿圖 · 每週新聞解析 · 第 44 週 · 回溯補寫稿</div>
+<h1>2026-W44（2026-10-20～10-30）</h1>
+<p class="sub">期間 <b>2026-10-20 ～ 10-30</b>（台北時間）。capex 還在加，現金流已經不夠——這一期<b>斷在融資端，不在需求端</b>。四大 CSP 的 2026 年支出上限合計超過 <b>7,400 億</b>美元，但五家中有四家 Q3 自由現金流轉負；Alphabet 10-29 單日 <b>-12%</b>、市值蒸發 5,000 億。同一週，記憶體交出史上最好財報：SK 海力士營益率 80%、三星單季營業利益破 100 兆韓元。</p>
+<div class="metabar">
+<span class="chip green">判定：綠 4 · 藍 3 · 紅 2 · 橙 3 · 灰 1</span>
+<span class="chip red">示警 1 紅 1 橙</span>
+<span class="chip">涵蓋：美／台／韓</span>
+<span class="chip amber">本期為 11 天銜接期</span>
+</div></header>
+<div class="ruler"><b>本期判定尺：基準預期表 v1.1（2026-09-21 核定）</b>｜檔案：<code>基準預期表-v1.1-20260921.html</code>｜13 列（L0～L8、L7a／L7b 分列、外生×2、反射性×1）<br/>
+本期<b>未修改任何一格數值</b>；所有判定以 v1.1 為尺。v1.0→v1.1 之變更公告已於 2026-W43（2026-10-19）正式發布，本補寫稿不重複公告、不回改其文字。
+</div>
+<div class="note warn"><b>回溯補寫聲明（必讀）：</b>本報告<b>原未出刊</b>，於 2026-11-06 回溯補寫。判定只採用「2026-10-30 收盤時」已可取得的資訊；10-31 之後（含期中選舉、AMD 財報、11-06 崩跌）全部隔離在第 7 節。<br/><b>期間說明：</b>本期涵蓋 11 天（10-20～10-30）。原因是 2026-W43 訖於 10-19、2026-W45 起於 10-31，中間沒有對應期別，而 10-27～30 正是 FOMC 與四大 CSP 財報週——把它切掉會失去整條因果鏈的關鍵一環。</div>
+<section id="s0"><h2><span class="num">0</span>首屏：本期三句話</h2>
+<p class="lead">先給結論，再看證據。三句話分別對應「基本面」、「成本」、「定價」三條線。</p>
+<div class="grid3">
+<div class="card"><div class="tag">基本面</div><h4>需求沒有壞，反而在加速</h4>
+<p>AWS 營收 <b>+39%</b>、Azure <b>+48%</b>、Google Cloud 營收翻倍。三家雲廠同時加速，這是 L1 判「超越」的依據——不是股價，是營收。</p>
+<p>記憶體更誇張：SK 海力士 Q3 營收 <b>104.6 兆韓元</b>（+328%）、營業利益 83.3 兆（+632%）、營益率 <b>80%</b>；三星 Q3 營業利益 <b>107.4 兆韓元</b>（+783%），成為全球首家單季營業利益突破 100 兆韓元的科技公司。</p>
+<p>需求端找不到任何裂縫。這也是我把 L1、L4 都給藍燈的原因。</p>
+<p class="src">來源：各公司法說（一手，2026-10-28～30）；三星、SK 海力士為韓元合併口徑</p></div>
+<div class="card"><div class="tag">資金</div><h4>斷在融資端：花得比賺得多</h4>
+<p>Alphabet Q3 capex <b>514 億</b>、自由現金流 <b>-91 億</b>，2026 上限拉到 2,050 億；10-29 股價 <b>-12%</b>（史上最大單日跌幅、市值 -5,000 億）。Meta FCF -21 億、擬增發最高 950 億、S&amp;P 把展望轉負。Amazon 滚动 FCF <b>-424 億</b>（去年 +148 億）。</p>
+<p>只有微軟守住：FCF <b>+186 億</b>，capex 452 億（低於 500 億預期，原因是<b>第三方產能延遲</b>），但同時發了 250 億債——九年來第一次。</p>
+<p>五家 2026 年合計發債 <b>3,260 億</b>，是去年的三倍。這是我判反射性迴路「偏離（紅）」的算術基礎。</p>
+<p class="src">來源：各公司 2026Q3 財報（一手）；發債金額與 S&amp;P 展望為媒體轉引，<b>需核實原文</b></p></div>
+<div class="card"><div class="tag">定價</div><h4>記憶體財報最好、股價最差，這是估值問題</h4>
+<p>10-30 台股 <b>-2.49%</b>（盤中 -1,642 點）收 45,211.83，10 月月線 -5.69%；外資 10 月賣超 <b>9,943.17 億</b>，創單月歷史紀錄。費半當日 -7.20%，SK 海力士 -7.95%、美光 -5.30%、AMD -10.88%。</p>
+<p>而同一天，韓國 10 月半導體出口 <b>+259%</b>（564 億美元）。<b>訂單與股價方向完全相反</b>——這不是基本面問題，是折現率與擁擠度的問題。</p>
+<p class="src">來源：證交所（一手）；韓國產業通商資源部（一手，2026-11-01）；交易所收盤</p></div>
+</div>
+<div class="stat">
+<div class="s"><div class="l">四大 CSP 2026 capex 上限</div><div class="v nt">7,400 億</div><div class="d">較 2025 實際 4,558 億 +62%</div></div>
+<div class="s"><div class="l">Alphabet Q3 自由現金流</div><div class="v dn">-91 億</div><div class="d">capex 514 億；連兩季為負</div></div>
+<div class="s"><div class="l">SK 海力士營益率</div><div class="v nt">80%</div><div class="d">Q3 營收 104.6 兆韓元（+328%）</div></div>
+<div class="s"><div class="l">台股（10-30）</div><div class="v dn">-2.49%</div><div class="d">45,211.83；外資 10 月賣超 9,943 億</div></div>
+</div>
+<div class="note warn"><b>這期的關鍵判斷：</b>L2 的 7,400 億落在 v1.1 的 ±10% 容忍區內（6,900 億 +7.2%），所以判「超越」而不是「偏離」。真正的偏離在<b>右邊</b>——融資端。這個區分很重要：如果我把「capex 太多」判成偏離，等於用股價下跌去否定需求，而下一個月的營收會證明需求是對的。<b>值得注意的是：本週 Microsoft 的「第三方產能延遲」被我當時讀成技術問題，事後看它是供給瓶頸的第一個訊號。</b></div>
+</section>
+<section id="s1"><h2><span class="num">1</span>本期框架狀態圖</h2>
+<p class="lead">色塊為本期判定：<b>綠＝符合預期、藍＝超越預期、紅＝偏離趨勢、橙＝待觀察、灰＝本週無可核實新資訊（不強判）</b>。左側外生變數用實線、框架外用虛線。判定只看基本面，股價漲跌另列於對照表的「市場」欄。</p>
+<div class="svgbox"><svg aria-label="2026-W44 框架狀態圖" role="img" style="min-width:900px" viewbox="0 0 1000 682" width="100%"><defs><marker id="ar" markerheight="7" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#b9c0cc"></path></marker><marker id="arD" markerheight="7" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#d9b27a"></path></marker></defs><text fill="#1b1f2a" font-size="12.5" font-weight="700" x="12" y="19">2026-W44 框架狀態（2026-10-30）</text><rect fill="#1c7f52" height="9" rx="2" width="9" x="556" y="9"></rect><text fill="#4d5666" font-size="9.4" x="569" y="17">符合</text><rect fill="#1f5fa8" height="9" rx="2" width="9" x="640" y="9"></rect><text fill="#4d5666" font-size="9.4" x="653" y="17">超越</text><rect fill="#c8352f" height="9" rx="2" width="9" x="724" y="9"></rect><text fill="#4d5666" font-size="9.4" x="737" y="17">偏離</text><rect fill="#b06a00" height="9" rx="2" width="9" x="808" y="9"></rect><text fill="#4d5666" font-size="9.4" x="821" y="17">待觀察</text><rect fill="#8a93a3" height="9" rx="2" width="9" x="892" y="9"></rect><text fill="#4d5666" font-size="9.4" x="905" y="17">無新資訊</text><text fill="#8a93a3" font-size="9.2" x="12" y="676">左＝外生與框架外／中＝8 層因果鏈（L7a、L7b 分列）／右＝反射性迴路與配套層。箭頭為待驗證的傳導關係，非事實。</text><rect fill="#fdf3e3" height="50" rx="7" stroke="#b06a00" stroke-width="1.1" width="432" x="232" y="44"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="63">L0</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="63">弱訊號入口</text><text fill="#4d5666" font-size="9.7" x="243" y="81">OpenAI 募資僅 110 億／目標 300 億</text><rect fill="#b06a00" height="17" rx="8.5" width="52" x="602" y="53"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="65">觀察</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="94" y2="102"></line><rect fill="#eaf2fb" height="50" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="432" x="232" y="104"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="123">L1</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="123">AI 終端需求</text><text fill="#4d5666" font-size="9.7" x="243" y="141">AWS +39%、Azure +48%、Google Cloud 翻倍</text><rect fill="#1f5fa8" height="17" rx="8.5" width="52" x="602" y="113"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="125">超越</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="154" y2="162"></line><rect fill="#eaf2fb" height="50" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="432" x="232" y="164"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="183">L2</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="183">算力與雲端資本開支</text><text fill="#4d5666" font-size="9.7" x="243" y="201">四大 2026 上限 7,400 億，上緣內</text><rect fill="#1f5fa8" height="17" rx="8.5" width="52" x="602" y="173"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="185">超越</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="214" y2="222"></line><rect fill="#fdf3e3" height="50" rx="7" stroke="#b06a00" stroke-width="1.1" width="432" x="232" y="224"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="243">L3</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="243">AI 芯片</text><text fill="#4d5666" font-size="9.7" x="243" y="261">Intel -28.58%；NVDA 未公布，分化</text><rect fill="#b06a00" height="17" rx="8.5" width="52" x="602" y="233"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="245">觀察</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="274" y2="282"></line><rect fill="#eaf2fb" height="50" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="432" x="232" y="284"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="303">L4</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="303">記憶體與 HBM</text><text fill="#4d5666" font-size="9.7" x="243" y="321">SK 營益率 80%、三星 OP 破 100 兆</text><rect fill="#1f5fa8" height="17" rx="8.5" width="52" x="602" y="293"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="305">超越</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="334" y2="342"></line><rect fill="#e8f5ee" height="50" rx="7" stroke="#1c7f52" stroke-width="1.1" width="432" x="232" y="344"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="363">L5</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="363">先進封裝</text><text fill="#4d5666" font-size="9.7" x="243" y="381">CoWoS 交期 &gt;52 週；法說未見緩解</text><rect fill="#1c7f52" height="17" rx="8.5" width="52" x="602" y="353"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="365">符合</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="394" y2="402"></line><rect fill="#e8f5ee" height="50" rx="7" stroke="#1c7f52" stroke-width="1.1" width="432" x="232" y="404"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="423">L6</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="423">晶圓代工</text><text fill="#4d5666" font-size="9.7" x="243" y="441">台積電 2,370；Q3 財報已由 2026-W43 判定</text><rect fill="#1c7f52" height="17" rx="8.5" width="52" x="602" y="413"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="425">符合</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="454" y2="462"></line><rect fill="#fdf3e3" height="50" rx="7" stroke="#b06a00" stroke-width="1.1" width="432" x="232" y="464"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="483">L7a</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="483">設備（訂單型）</text><text fill="#4d5666" font-size="9.7" x="243" y="501">Lam 受供應短缺拖累；交付遞延非需求</text><rect fill="#b06a00" height="17" rx="8.5" width="52" x="602" y="473"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="485">觀察</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="514" y2="522"></line><rect fill="#fdecea" height="50" rx="7" stroke="#c8352f" stroke-width="1.1" width="432" x="232" y="524"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="543">L7b</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="543">材料（成本型）</text><text fill="#4d5666" font-size="9.7" x="243" y="561">光刻膠、CCL 續漲；成本推升未止</text><rect fill="#c8352f" height="17" rx="8.5" width="52" x="602" y="533"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="545">偏離</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="574" y2="582"></line><rect fill="#f2f4f7" height="50" rx="7" stroke="#8a93a3" stroke-width="1.1" width="432" x="232" y="584"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="603">L8</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="603">電力</text><text fill="#4d5666" font-size="9.7" x="243" y="621">無變壓器交期／表後供電新數據</text><rect fill="#8a93a3" height="17" rx="8.5" width="52" x="602" y="593"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="605">無尺</text><text fill="#1b1f2a" font-size="10.8" font-weight="700" x="12" y="44">外生變數</text><rect fill="#e8f5ee" height="59" rx="7" stroke="#1c7f52" stroke-width="1.1" width="204" x="12" y="52"></rect><text fill="#8a93a3" font-size="9.6" x="22" y="65">外生 01</text><text fill="#1b1f2a" font-size="11.3" font-weight="700" x="22" y="80">利率</text><text fill="#1c7f52" font-size="9.5" font-weight="700" x="46" y="80">｜符合</text><text fill="#4d5666" font-size="9.3" x="22" y="95">FOMC 10-27/28 按兵，3.75～4.00%</text><text fill="#4d5666" font-size="9.3" x="22" y="109">市場定價 2027 年中前升息 &gt;50bp</text><rect fill="#e8f5ee" height="59" rx="7" stroke="#1c7f52" stroke-width="1.1" width="204" x="12" y="124"></rect><text fill="#8a93a3" font-size="9.6" x="22" y="137">外生 02</text><text fill="#1b1f2a" font-size="11.3" font-weight="700" x="22" y="152">出口管制與地緣</text><text fill="#1c7f52" font-size="9.5" font-weight="700" x="103" y="152">｜符合</text><text fill="#4d5666" font-size="9.3" x="22" y="167">本週無新增清單動作</text><text fill="#4d5666" font-size="9.3" x="22" y="181">期中選舉 11-03，尚未生效</text><rect fill="#fdf3e3" height="59" rx="7" stroke="#b06a00" stroke-dasharray="4 3" stroke-width="1.1" width="204" x="12" y="196"></rect><text fill="#8a93a3" font-size="9.6" x="22" y="209">框架外 A</text><text fill="#1b1f2a" font-size="11.3" font-weight="700" x="22" y="224">能源價格與通道</text><text fill="#b06a00" font-size="9.5" font-weight="700" x="103" y="224">｜觀察</text><text fill="#4d5666" font-size="9.3" x="22" y="239">布蘭特 117.64（+2.4%）；WTI 104.12</text><text fill="#4d5666" font-size="9.3" x="22" y="253">已進入 P1 提案的 &gt;100 區間</text><rect fill="#f2f4f7" height="59" rx="7" stroke="#8a93a3" stroke-dasharray="4 3" stroke-width="1.1" width="204" x="12" y="268"></rect><text fill="#8a93a3" font-size="9.6" x="22" y="281">框架外 B</text><text fill="#1b1f2a" font-size="11.3" font-weight="700" x="22" y="296">政策與許可</text><text fill="#8a93a3" font-size="9.5" font-weight="700" x="81" y="296">｜無尺</text><text fill="#4d5666" font-size="9.3" x="22" y="311">期中選舉 11-03；尚無已生效措施</text><text fill="#4d5666" font-size="9.3" x="22" y="325">v1.1 無此列（2026-W45 才立為 P0）</text><line marker-end="url(#arD)" stroke="#d9b27a" stroke-width="1.2" x1="216" x2="230" y1="128" y2="128"></line><line marker-end="url(#arD)" stroke="#d9b27a" stroke-width="1.2" x1="216" x2="230" y1="280" y2="280"></line><text fill="#1b1f2a" font-size="10.8" font-weight="700" x="692" y="44">反射性迴路</text><rect fill="#fdf3e3" height="46" rx="7" stroke="#b06a00" stroke-width="1.1" width="296" x="692" y="52"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="71">敘事</text><text fill="#4d5666" font-size="9.3" x="704" y="86">Anthropic 遞交 S-1 給了一日反彈</text><rect fill="#b06a00" height="15" rx="7.5" width="48" x="930" y="60"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="71">觀察</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.1" x1="840" x2="840" y1="98" y2="106"></line><rect fill="#fdecea" height="46" rx="7" stroke="#c8352f" stroke-width="1.1" width="296" x="692" y="108"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="127">估值</text><text fill="#4d5666" font-size="9.3" x="704" y="142">Alphabet -12%、納指 10 月 -6.45%</text><rect fill="#c8352f" height="15" rx="7.5" width="48" x="930" y="116"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="127">偏離</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.1" x1="840" x2="840" y1="154" y2="162"></line><rect fill="#fdecea" height="46" rx="7" stroke="#c8352f" stroke-width="1.1" width="296" x="692" y="164"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="183">融資</text><text fill="#4d5666" font-size="9.3" x="704" y="198">neocloud 被債市排除、募資不足</text><rect fill="#c8352f" height="15" rx="7.5" width="48" x="930" y="172"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="183">偏離</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.1" x1="840" x2="840" y1="210" y2="218"></line><rect fill="#eaf2fb" height="46" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="296" x="692" y="220"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="239">capex</text><text fill="#4d5666" font-size="9.3" x="704" y="254">四大 2026 上限 7,400 億，仍在加</text><rect fill="#1f5fa8" height="15" rx="7.5" width="48" x="930" y="228"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="239">超越</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.1" x1="840" x2="840" y1="266" y2="274"></line><rect fill="#eaf2fb" height="46" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="296" x="692" y="276"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="295">財報</text><text fill="#4d5666" font-size="9.3" x="704" y="310">AWS +39%、Azure +48%，營收加速</text><rect fill="#1f5fa8" height="15" rx="7.5" width="48" x="930" y="284"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="295">超越</text><rect fill="#fcfcfd" height="60" rx="7" stroke="#dfe3ea" stroke-dasharray="4 3" width="296" x="692" y="334"></rect><text fill="#8a93a3" font-size="9.6" font-weight="700" x="704" y="349">配套層（不立尺，僅記錄）</text><text fill="#4d5666" font-size="9.3" x="704" y="365">配套層隨大盤重挫（費半 -7.20%），無獨立訊號</text><text fill="#4d5666" font-size="9.3" x="704" y="379">液冷本週無新數據</text><rect fill="#f7f9fc" height="72" rx="7" stroke="#dfe6f0" width="296" x="692" y="408"></rect><text fill="#8a93a3" font-size="9.6" x="704" y="423">本期判定分布（13 列）</text><text fill="#1b1f2a" font-size="11.6" font-weight="700" x="704" y="444">綠 4 · 藍 3 · 紅 2 · 橙 3 · 灰 1</text><text fill="#8a93a3" font-size="9.2" x="704" y="461">紅燈在 L7b 與反射性；L8 無一手數據</text><text fill="#8a93a3" font-size="9.2" x="692" y="492">這期迴路第一次出現「capex 藍、融資紅」：</text><text fill="#8a93a3" font-size="9.2" x="692" y="506">花錢的能力還在，借錢的能力在退。</text><text fill="#8a93a3" font-size="9.2" x="692" y="520">neocloud 已被債市排除、OpenAI 募資只到目標</text><text fill="#8a93a3" font-size="9.2" x="692" y="534">三分之一——這兩件事比財報更早反映轉折。</text><text fill="#8a93a3" font-size="9.2" x="12" y="350">實線＝v1.1 有列；虛線＝框架外。</text><text fill="#8a93a3" font-size="9.2" x="12" y="364">7,400 億落在 ±10% 容忍區內（+7.2%），</text><text fill="#8a93a3" font-size="9.2" x="12" y="378">所以判「超越」不是「偏離」——</text><text fill="#8a93a3" font-size="9.2" x="12" y="392">真正的偏離在右邊融資端，不在 capex。</text><text fill="#8a93a3" font-size="9.2" x="12" y="406">能源 117.64 已進入 P1 的 &gt;100 區間。</text><line marker-end="url(#arD)" stroke="#d9b27a" stroke-width="1.2" x1="664" x2="690" y1="300" y2="300"></line></svg></div>
+<p class="cap">圖 1｜2026-W44 框架狀態。全系列唯一一張「右邊比左邊紅」的圖：左側需求（L1）與支出（L2）都是藍燈，右側估值與融資是紅燈。這個組合是 2026-W45 崩跌的前置條件——只是我當時以為傳導會走融資端，實際上是走政策端。</p>
+</section>
+<section id="s2"><h2><span class="num">2</span>新聞 → 框架對照表</h2>
+<p class="lead">逐條歸層。落不進現有 13 列者列「框架外」，只記錄、不判定——硬塞會製造假判定。</p>
+<table><thead><tr><th style="width:74px">日期</th><th>事件</th><th style="width:96px">歸層</th><th style="width:74px">判定</th><th style="width:150px">依據／來源</th></tr></thead><tbody>
+<tr><td class="num">10-28</td><td>SK 海力士 Q3：營收 104.6155 兆韓元（+328%）、營業利益 83.3338 兆（+632%）、營益率 80%</td><td>L4</td><td><span class="j b">藍</span></td><td style="font-size:11.5px;color:#6b7383">公司法說（一手）</td></tr>
+<tr><td class="num">10-29</td><td>三星 Q3：營收 195.3 兆韓元（+126.9%）、營業利益 107.4 兆（+783%），全球首家單季破 100 兆</td><td>L4</td><td><span class="j b">藍</span></td><td style="font-size:11.5px;color:#6b7383">公司法說（一手）</td></tr>
+<tr><td class="num">10-29</td><td>Alphabet Q3：capex 514 億、FCF -91 億、2026 上限 2,050 億；股價 -12%、市值 -5,000 億</td><td>L2／反射性</td><td><span class="j r">紅</span></td><td style="font-size:11.5px;color:#6b7383">財報（一手）＋交易所</td></tr>
+<tr><td class="num">10-29</td><td>Meta Q3：FCF -21 億、capex 上限 1,450 億、擬增發最高 950 億；S&amp;P 展望轉負</td><td>L2／反射性</td><td><span class="j r">紅</span></td><td style="font-size:11.5px;color:#6b7383">財報（一手）＋轉引</td></tr>
+<tr><td class="num">10-30</td><td>Amazon Q3：滚动 FCF -424 億（去年 +148 億）、capex 2,200 億、AWS +39%；股價 -7%</td><td>L2／反射性</td><td><span class="j r">紅</span></td><td style="font-size:11.5px;color:#6b7383">財報（一手）</td></tr>
+<tr><td class="num">10-28</td><td>微軟 Q3：capex 452 億（低於 500 億預期，第三方產能延遲）、FCF +186 億、發債 250 億</td><td>L2／L7a</td><td><span class="j a">橙</span></td><td style="font-size:11.5px;color:#6b7383">財報（一手）</td></tr>
+<tr><td class="num">10-30</td><td>Intel Q4 指引疲弱、客戶運算 -5% 至 81 億；股價 -28.58%（1970 年代以來最差單日）</td><td>L3</td><td><span class="j a">橙</span></td><td style="font-size:11.5px;color:#6b7383">財報（一手）＋交易所</td></tr>
+<tr><td class="num">10-27/28</td><td>FOMC 按兵不動；市場定價 2027 年中前累計升息 &gt;50bp</td><td>外生｜利率</td><td><span class="j g">綠</span></td><td style="font-size:11.5px;color:#6b7383">FOMC 決議（一手）＋轉引</td></tr>
+<tr><td class="num">10-30</td><td>台股 -2.49% 收 45,211.83（週 -1.8%、月 -5.69%）；外資 10 月賣超 9,943.17 億創紀錄</td><td>反射性／L6</td><td><span class="j r">紅</span></td><td style="font-size:11.5px;color:#6b7383">證交所（一手）</td></tr>
+<tr><td class="num">10-30</td><td>布蘭特 117.64（+2.4%）、WTI 104.12；Anthropic 遞交 S-1、OpenAI 募資僅 110 億／目標 300 億</td><td>框架外｜能源／政策</td><td><span class="j n">不判定</span></td><td style="font-size:11.5px;color:#6b7383">媒體轉引，需核實原文</td></tr>
+</tbody></table>
+<div class="note warn"><b>跨層計入的紀律：</b>Alphabet 的 capex 同時影響 L2（需求）與反射性（融資），我在表上標「L2／反射性」但<b>判定只取一次</b>——L2 判藍（支出確實在增加），反射性判紅（現金流確實轉負）。同一件事在兩層得到不同判定，不是矛盾，是<b>同一個事實的兩個面向</b>：對上游是訂單，對股東是現金流出。</div>
+</section>
+<section id="s3"><h2><span class="num">3</span>示警卡區</h2>
+<p class="lead">本期<b>一張紅卡、一張橙卡</b>。紅卡在融資端（已發生），橙卡在設備交付（性質待釐清）。L7b 的紅燈沿用 2026-W42，本期不重複發卡。</p>
+<div class="wcard"><div class="hd"><span class="no">A1</span><b>反射性迴路：capex 已花得比本業賺得多，缺口只能靠債券填</b>　<span class="j r">紅</span></div>
+<dl>
+<dt>方向</dt><dd>偏離趨勢。四大 CSP 2026 支出上限 7,400 億（較 2025 實際 4,558 億 +62%），但五家中有四家 Q3 自由現金流為負；五家 2026 年發債 3,260 億、是去年三倍。</dd>
+<dt>受益</dt><dd>債券承銷與私募信貸；能自籌現金的微軟（FCF +186 億）；上游設備與材料（訂單已落袋）。</dd>
+<dt>受害者</dt><dd>neocloud（CoreWeave、Nebius、Nscale 已被債市排除）、靠增發的 Meta、以及所有以「capex 無上限」做模型的人。</dd>
+<dt>傳導路徑</dt><dd>營收加速但 FCF 轉負 → 只能發債或增發 → 利率高檔＋供給過剩 → 發債成本上升 → capex 遞延 → 設備訂單下修 → 財報下修 → 敘事反轉。<b>目前走到第三步（成本上升），第四步還沒發生。</b></dd>
+<dt>下一步看什麼</dt><dd>① neocloud 債券殖利率（10 月 CoreWeave 已達 14～16%）；② 11 月投資級債發行量與利差；③ 2027 capex 指引是否在下一次法說下修。</dd>
+<dt>來源</dt><dd>各公司 2026Q3 財報（一手）；發債 3,260 億、S&amp;P 展望、neocloud 債市狀況為媒體轉引，<b>需核實原文</b>。</dd>
+</dl></div>
+<div class="wcard amber"><div class="hd"><span class="no">A2</span><b>L7a 設備：交付遞延是「缺料」還是「需求轉弱」？</b>　<span class="j a">橙</span></div>
+<dl>
+<dt>方向</dt><dd>待觀察。微軟 capex 452 億低於 500 億預期，公司明說是<b>第三方產能延遲</b>；Lam 12 月季度展望受供應短缺拖累。兩者都是「供給型遞延」，不是「需求型遞延」。</dd>
+<dt>受益</dt><dd>設備商（訂單沒消失、只是排隊）、有現成產能的代工與封測。</dd>
+<dt>受害者</dt><dd>等不到機台的雲廠與 neocloud（租金收入遞延，但利息照付）。</dd>
+<dt>傳導路徑</dt><dd>缺料／缺工 → 交付遞延 → 客戶營收遞延（但 capex 已計入）→ 若遞延超過 2 季，會出現「錢花了、收入沒到」的現金流缺口。</dd>
+<dt>下一步看什麼</dt><dd>ASML／Lam／應材下季訂單與交期；微軟是否在 2027H1 補回這 48 億缺口。</dd>
+<dt>來源</dt><dd>微軟、Lam 法說（一手，2026-10-28／10-21）。<b>本卡不升級為紅</b>，因為 v1.1 的「出貨遞延＝偏離」沒有區分供給型與需求型——這個區分我已列為提案方向，但未生效。</dd>
+</dl></div>
+</section>
+<section id="s4"><h2><span class="num">4</span>候選修正提案區</h2>
+<p class="lead">本期<b>一項提案</b>（R1），但它與 2026-W45 的 P5 是同一件事——所以這裡只記錄「當時的算術」，<b>正式提案以 2026-W45 的 P5 為準</b>，本稿不另立編號、不重複計數。</p>
+<div class="prop"><div class="hd"><span class="no">R1→P5</span>L2 的「6,900 億」口徑未定義（已由 2026-W45 P5 正式提案）<span class="st">移交 P5</span></div><table><tbody>
+<tr><td>改哪一格</td><td>L2 算力與雲端資本開支｜基準預期欄與容忍區間</td></tr>
+<tr><td>原值 → 建議值</td><td>「五大雲廠 2026 基礎設施支出約 6,900 億美元，容忍 ±10%」→ 需明示：含不含融資租賃、含不含 Oracle。否則分母不固定，判定會漂。</td></tr>
+<tr><td>本期算術</td><td>四家上限合計 7,400 億（Amazon 2,200＋Alphabet 2,050＋Microsoft 約 1,700＋Meta 1,450），對 6,900 億為 <b>+7.2%</b>，落在 ±10% 內 → 判「超越」而非「偏離」。若把 Oracle 計入，約 +19%，<b>直接越過上緣</b>——判定會從藍變紅。</td></tr>
+<tr><td>對既有判定的影響</td><td>本期不受影響（兩種口徑都在容忍區或僅略微越線）。但這是「同一個數字、兩種結論」的結構性問題：口徑不固定，尺就沒有鑑別力。</td></tr>
+<tr><td>我的傾向</td><td>同 2026-W45 P5：先補口徑定義、暫不動數值。</td></tr>
+</tbody></table></div>
+<div class="note red"><b>治理聲明：</b>以上<b>未生效</b>；本期判定一律沿用 <b>v1.1</b>，未改動任何一格數值或容忍區間。R1 與 2026-W45 的 P5 為同一案，正式編號以 P5 為準，本稿不重複計數。</div>
+</section>
+<section id="s5"><h2><span class="num">5</span>本期圖表</h2>
+<p class="lead">三張圖：一日與一月、capex 對照基準、以及十月誰跌得最凶。</p>
+<div class="chartbox"><div class="chart" id="c1"></div><div class="cap">圖 2｜2026-10-30 單日與 10 月整月變動（%）。費半的月線無可核實數據，留空不用估值補。每組上柱＝10-30 單日、下柱＝10 月整月（半透明）；<b>顏色依漲跌，紅漲綠跌</b>。<b>看兩件事：</b>① 單日跌幅以半導體最重（-7.20%），是「AI 交易」的定點打擊；② 月線只有道瓊收紅（+1.16%），錢從科技輪出到價值，不是離開市場。來源：交易所（一手）。</div></div>
+<div class="chartbox"><div class="chart" id="c2"></div><div class="cap">圖 3｜2026 年資本支出上限（十億美元）。虛線為 v1.1 的基準值 690 億美元（=6,900 億）。四家合計 740 億，<b>較基準高 7.2%，在 ±10% 容忍區內</b>——所以判「超越」不是「偏離」。這是本期最重要的一個算術：判定靠的是這條線，不是股價。來源：各公司法說（2026-10-28～30）；Microsoft 為約數。</div></div>
+<div class="chartbox"><div class="chart" id="c3"></div><div class="cap">圖 4｜2026 年 10 月跌幅排行（%）。neocloud（CoreWeave -37%、Nebius -35%）跌得比記憶體 ETF 與大盤多一倍以上，<b>這正是「融資端先斷」的證據</b>：市場先懲罰靠債務擴產的，再懲罰靠訂單的。來源：交易所；ETF 與個股數字為媒體轉引，需核實原文。</div></div>
+</section>
+<section id="s6"><h2><span class="num">6</span>下週查核日曆</h2>
+<p class="lead">時間一律換算台北時間（GMT+8）。「打臉條件」是預先寫好的認錯門檻——事後才編理由不算。</p>
+<table><thead><tr><th style="width:126px">時間（台北）</th><th style="width:180px">事件</th><th>要看的數字</th><th style="width:210px">打臉條件</th></tr></thead><tbody>
+<tr><td>11-01（日）</td><td>韓國 10 月出口（含半導體）</td><td>半導體出口年增（10 月 +259%）、總出口 1,153 億</td><td>半導體出口年增 &lt;150%</td></tr>
+<tr><td>11-03（二）</td><td>美國期中選舉</td><td>參眾兩院席次；資料中心政策相關州級公投</td><td>無（屬框架外，僅記錄）</td></tr>
+<tr><td>11-05（四）05:00</td><td>AMD 2026Q3 法說（美股 11-04 盤後）</td><td>資料中心營收、MI450 出貨、Q4 指引</td><td>資料中心季增 &lt;5%</td></tr>
+<tr><td>11-06（五）收盤</td><td>台股週線與外資</td><td>單週跌幅、外資賣超是否收斂、45,000 點</td><td>外資單週賣超 &gt;2,000 億</td></tr>
+<tr><td>11-10（二）13:30</td><td>台積電 10 月營收</td><td>月增／年增、是否續站 5,000 億</td><td>月減 &gt;10%</td></tr>
+</tbody></table>
+<div class="note calm"><b>本期之後的三個開關：財報（AMD）、政策（11-03 選舉）、營收（台積電 11-10）。</b>我當時認為最可能出事的是財報——結果是政策。這個誤判寫在第 7 節。</div>
+</section>
+<section id="s7"><h2><span class="num">7</span>事後對照（補寫稿專有）</h2>
+<p class="lead">這一節<b>不屬於當時的判定</b>，是補寫時回頭檢查這套尺準不準。放在最後，避免用後見之明污染當時的判斷。</p>
+<div class="wcard"><div class="hd" style="background:#f7f9fc;border-bottom-color:#dfe6f0"><span class="no">事後 01</span><b>我判「傳導走融資端」，實際走的是政策端</b></div><dl>
+<dt>當時判定</dt><dd>反射性迴路判紅，理由是 FCF 轉負與發債成本上升；示警卡寫的傳導路徑是「capex 遞延 → 設備訂單下修 → 財報下修」。</dd>
+<dt>事後事實</dt><dd>11-03 期中選舉民主黨拿下參眾兩院；11-05 德州候任州長 Hinojosa 要求立即暫停資料中心；11-06 費半單日 -12.25%、納指 -5.52%、台股盤中 -8.33%、台積電跌停 2,020。觸發點是「許可」，不是「融資」。</dd>
+<dt>檢討</dt><dd><b>方向對、路徑錯。</b>融資端確實斷了（neocloud 被債市排除），但市場沒有等它傳導到財報，而是被一個 v1.1 根本沒有的變數（政策許可）直接打斷。這件事在 2026-W45 變成 P0 提案——<b>框架外的東西，遲早要用一次崩跌來提醒你它在。</b></dd>
+</dl></div>
+<div class="wcard"><div class="hd" style="background:#f7f9fc;border-bottom-color:#dfe6f0"><span class="no">事後 02</span><b>記憶體「財報最好、股價最差」，我寫了但沒有量化</b></div><dl>
+<dt>當時判定</dt><dd>L4 判藍（SK 營益率 80%、三星 OP 破 100 兆），同時在卡片寫下「訂單與股價方向完全相反」。</dd>
+<dt>事後事實</dt><dd>11-06 崩跌中，SK 海力士、三星、美光同步重挫；記憶體 ETF 10 月 -20%，11 月首週再跌。基本面完全沒有轉壞。</dd>
+<dt>檢討</dt><dd>「方向相反」是觀察，不是量化。應該當時就算「股價隱含的 2027 獲利」——若股價跌 20% 但獲利上修 30%，那是估值壓縮；若兩者同向，才是基本面轉壞。這個算法我在 2026-W45 才做出來（台積電前瞻本益比 16～17 倍）。</dd>
+</dl></div>
+<div class="note">本期是全系列的轉折點：<b>我第一次把紅燈放在右側（迴路），而左側（需求）全是藍燈。</b>這個判斷在四天後被證實——但證實的方式不是我寫的那條路徑。方法論上的教訓：<b>列出傳導路徑不等於預測傳導路徑，框架外的變數可以不經過任何一層就引爆。</b></div>
+<h3>來源與口徑</h3><ul style="font-size:12.6px;color:#4d5666">
+<li><b>一手：</b>SK 海力士 2026Q3 財報（2026-10-28）；三星 2026Q3 財報（2026-10-29）；Microsoft／Alphabet／Meta／Amazon 2026Q3 財報（2026-10-28～30）；Intel 2026Q3 財報（2026-10-30）；FOMC 決議（2026-10-28）；證交所收盤與三大法人（2026-10-30）；韓國產業通商資源部 10 月出口（2026-11-01）。</li>
+<li><b>轉引（需核實原文，不得單獨構成判定依據）：</b>五家 2026 發債 3,260 億（S&amp;P Global Market Intelligence）；S&amp;P 將 Meta 展望轉負；neocloud 被債市排除（WSJ）；OpenAI 募資 110 億／300 億；Anthropic S-1 與黑石對評級的意見；布蘭特 117.64、WTI 104.12。</li>
+<li><b>口徑：</b>韓廠為韓元合併營收（三星 195.3 兆韓元、SK 海力士 104.6 兆韓元），與台廠新台幣、美廠美元不同幣別，未做換算比較。Amazon 的 FCF 為「滚动十二個月」（-424 億），其餘三家為單季，<b>不可直接相加</b>；capex 為公司全年指引上限。</li>
+</ul></section>
+<div class="disc">免責聲明：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</div>
+<footer>阿圖｜每週新聞解析 2026-W44｜判定尺 基準預期表 v1.1（2026-09-21 核定）｜本稿為 2026-11-06 回溯補寫，原未出刊｜所有判定僅引用 v1.1，未修改任何一格數值。</footer>
+</div>
+<script>
+(function(){
+  var c1 = echarts.init(document.getElementById('c1'));
+  c1.setOption({"grid": {"left": 96, "right": 74, "top": 24, "bottom": 36}, "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "formatter": "{b}｜{a0}：{c0}%　{a1}：{c1}%"}, "legend": {"show": false}, "xAxis": {"type": "value", "name": "變動（%）", "nameLocation": "middle", "nameGap": 20, "nameTextStyle": {"color": "#8a93a3", "fontSize": 10.5}, "min": -8, "max": 3, "axisLabel": {"color": "#8a93a3", "fontSize": 10.5, "formatter": "{value}%"}, "splitLine": {"lineStyle": {"color": "#eef1f5"}}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}}, "yAxis": {"type": "category", "data": ["台股加權", "費半 SOX", "那斯達克", "標普 500", "道瓊"], "axisLabel": {"color": "#4d5666", "fontSize": 11}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}, "axisTick": {"show": false}}, "series": [{"name": "10-30 單日", "type": "bar", "barWidth": 11, "barGap": "18%", "data": [{"value": -2.49, "itemStyle": {"color": "#1c7f52"}}, {"value": -7.2, "itemStyle": {"color": "#1c7f52"}}, {"value": -2.86, "itemStyle": {"color": "#1c7f52"}}, {"value": -1.82, "itemStyle": {"color": "#1c7f52"}}, {"value": -1.09, "itemStyle": {"color": "#1c7f52"}}], "label": {"show": true, "position": "outside", "color": "#1c7f52", "fontSize": 9.5, "formatter": "{c}%"}}, {"name": "10 月整月", "type": "bar", "barWidth": 11, "data": [{"value": -5.69, "itemStyle": {"color": "#1c7f52", "opacity": 0.5}}, null, {"value": -6.45, "itemStyle": {"color": "#1c7f52", "opacity": 0.5}}, {"value": -1.85, "itemStyle": {"color": "#1c7f52", "opacity": 0.5}}, {"value": 1.16, "itemStyle": {"color": "#c8352f", "opacity": 0.5}}], "label": {"show": true, "position": "outside", "color": "#4d5666", "fontSize": 9.5, "formatter": "{c}%"}}]});
+  var c2 = echarts.init(document.getElementById('c2'));
+  c2.setOption({"grid": {"left": 108, "right": 62, "top": 26, "bottom": 34}, "tooltip": {"trigger": "axis", "formatter": "{b}：{c} 十億美元"}, "xAxis": {"type": "value", "name": "十億美元", "nameLocation": "middle", "nameGap": 20, "nameTextStyle": {"color": "#8a93a3", "fontSize": 10.5}, "axisLabel": {"color": "#8a93a3", "fontSize": 10.5}, "splitLine": {"lineStyle": {"color": "#eef1f5"}}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}}, "yAxis": {"type": "category", "data": ["四家合計", "Meta", "Microsoft", "Alphabet", "Amazon"], "axisLabel": {"color": "#4d5666", "fontSize": 11}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}, "axisTick": {"show": false}}, "series": [{"type": "bar", "barWidth": 17, "data": [{"value": 740, "itemStyle": {"color": "#1f5fa8"}}, {"value": 145, "itemStyle": {"color": "#c8352f"}}, {"value": 170, "itemStyle": {"color": "#c8352f"}}, {"value": 205, "itemStyle": {"color": "#c8352f"}}, {"value": 220, "itemStyle": {"color": "#c8352f"}}], "label": {"show": true, "position": "outside", "color": "#4d5666", "fontSize": 10.5, "formatter": "{c}"}, "markLine": {"silent": true, "symbol": "none", "lineStyle": {"color": "#b06a00", "type": "dashed", "width": 1.2}, "label": {"formatter": "v1.1 基準 690", "color": "#b06a00", "fontSize": 9.5, "position": "insideEndTop", "rotate": 0}, "data": [{"xAxis": 690}]}}]});
+  var c3 = echarts.init(document.getElementById('c3'));
+  c3.setOption({"grid": {"left": 128, "right": 58, "top": 22, "bottom": 34}, "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "formatter": "{b}：{c}%"}, "xAxis": {"type": "value", "name": "10 月變動（%）", "nameLocation": "middle", "nameGap": 20, "nameTextStyle": {"color": "#8a93a3", "fontSize": 10.5}, "axisLabel": {"color": "#8a93a3", "fontSize": 10.5, "formatter": "{value}%"}, "splitLine": {"lineStyle": {"color": "#eef1f5"}}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}}, "yAxis": {"type": "category", "data": ["台股加權", "那斯達克", "Meta", "iShares AI 主動 ETF", "Roundhill DRAM ETF", "Nebius", "CoreWeave"], "axisLabel": {"color": "#4d5666", "fontSize": 11}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}, "axisTick": {"show": false}}, "series": [{"type": "bar", "barWidth": 17, "data": [{"value": -5.69, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": -6.45, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": -15.0, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": -17.0, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": -20.0, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": -35.0, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": -37.0, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}], "label": {"show": true, "position": "outside", "color": "#4d5666", "fontSize": 10.5, "formatter": "{c}%"}}]});
+  window.addEventListener("resize", function(){
+    c1.resize();
+    c2.resize();
+    c3.resize();
+  });
+})();
+</script>
+</body>
+</html>

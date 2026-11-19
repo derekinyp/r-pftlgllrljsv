@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+<script src="js/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --line:#e3e6ec; --line2:#eef1f5;
+    --ink:#1b1f2a; --ink2:#4d5666; --ink3:#8a93a3;
+    --red:#c8352f; --red-bg:#fdecea; --red-line:#f6cfcb;
+    --green:#1c7f52; --green-bg:#e8f5ee; --green-line:#c9e8d8;
+    --amber:#b06a00; --amber-bg:#fdf3e3; --amber-line:#f2ddb8;
+    --blue:#1f5fa8; --blue-bg:#eaf2fb; --blue-line:#cfe0f4;
+    --purple:#6b3fa0; --purple-bg:#f2ecfa; --purple-line:#ddd0f0;
+    --gray:#7b8494; --gray-bg:#f2f4f7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+    line-height:1.72;font-size:15px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:30px 20px 68px}
+  header.hero{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 28px;margin-bottom:16px}
+  .kicker{font-size:11.5px;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;margin-bottom:9px}
+  h1{margin:0 0 8px;font-size:26px;line-height:1.35;letter-spacing:-.01em}
+  .sub{margin:0;color:var(--ink2);font-size:14px}
+  .metabar{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .chip{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;
+    background:var(--line2);color:var(--ink2);border:1px solid var(--line);white-space:nowrap}
+  .chip.red{background:var(--red-bg);color:var(--red);border-color:var(--red-line)}
+  .chip.green{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+  .chip.amber{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-line)}
+  .chip.blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-line)}
+  .chip.purple{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-line)}
+  .chip.gray{background:var(--gray-bg);color:var(--gray);border-color:var(--line)}
+  .ruler{background:#f7f9fc;border:1px solid #d8e3f2;border-left:4px solid var(--blue);border-radius:0 6px 6px 0;
+    padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--ink2)}
+  .ruler b{color:var(--ink)}
+  .notice{background:var(--amber-bg);border:1px solid var(--amber-line);border-left:4px solid var(--amber);
+    border-radius:0 6px 6px 0;padding:14px 16px;margin-bottom:18px;font-size:13px;color:#6b4100}
+  .notice h3{margin:0 0 6px;font-size:14px;color:#6b4100}
+  section{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:18px}
+  h2{margin:0 0 4px;font-size:19px;letter-spacing:-.005em}
+  h2 .num{color:var(--blue);font-variant-numeric:tabular-nums;margin-right:7px}
+  .lead{margin:0 0 16px;color:var(--ink2);font-size:13.5px}
+  h3{margin:22px 0 9px;font-size:15.5px}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:20px} li{margin:5px 0}
+  .svgbox{width:100%;overflow-x:auto;border:1px solid var(--line2);border-radius:8px;background:#fcfcfd;padding:6px}
+  .chartbox{border:1px solid var(--line2);border-radius:8px;background:#fcfcfd;padding:4px 2px 0;margin-top:10px}
+  .chart{width:100%;height:340px}
+  .chart.tall{height:420px}
+  .cap{font-size:11.5px;color:var(--ink3);padding:6px 12px 10px;line-height:1.65}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f7f8fa;font-weight:600;color:var(--ink2);font-size:12.5px}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  td.c,th.c{text-align:center}
+  tbody tr:nth-child(even){background:#fbfbfc}
+  .up{color:var(--red);font-variant-numeric:tabular-nums}
+  .dn{color:var(--green);font-variant-numeric:tabular-nums}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:9px;padding:14px 16px;background:#fff}
+  .card .tag{font-size:11px;letter-spacing:.08em;color:var(--ink3);text-transform:uppercase}
+  .card h4{margin:5px 0 7px;font-size:15px}
+  .card p{margin:5px 0;font-size:13px;color:var(--ink2)}
+  .alert{border:1px solid var(--line);border-radius:9px;padding:15px 17px;background:#fff;margin:11px 0}
+  .alert.a-red{border-left:4px solid var(--red);background:#fffafa}
+  .alert.a-amber{border-left:4px solid var(--amber);background:#fffdf8}
+  .alert .hd{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+  .alert .code{font-size:11.5px;font-weight:700;color:#fff;background:var(--ink);border-radius:5px;padding:2px 7px}
+  .alert.a-red .code{background:var(--red)} .alert.a-amber .code{background:var(--amber)}
+  .alert .ttl{font-size:15px;font-weight:600}
+  .alert dl{margin:4px 0 0;display:grid;grid-template-columns:64px 1fr;gap:3px 10px;font-size:13px;color:var(--ink2)}
+  .alert dt{color:var(--ink3);font-size:12px} .alert dd{margin:0}
+  .note{background:#f7f9fc;border:1px solid #e0e8f3;border-radius:8px;padding:12px 15px;font-size:13px;color:var(--ink2);margin-top:12px}
+  .note.warn{background:var(--amber-bg);border-color:var(--amber-line);color:#7a4a00}
+  .note.red{background:var(--red-bg);border-color:var(--red-line);color:#8f2622}
+  .note b{color:var(--ink)} .note.warn b{color:#6b4100} .note.red b{color:#8f2622}
+  .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(136px,1fr));gap:10px;margin:12px 0}
+  .stat .s{border:1px solid var(--line);border-radius:8px;padding:11px 13px;background:#fff}
+  .stat .s .l{font-size:11.5px;color:var(--ink3)} .stat .s .v{font-size:18px;font-weight:650;font-variant-numeric:tabular-nums;margin-top:2px}
+  .stat .s .d{font-size:11.5px;color:var(--ink3);margin-top:2px;line-height:1.55}
+  footer{color:var(--ink3);font-size:12px;line-height:1.75;padding:4px 4px}
+  .src{font-size:11.5px;color:var(--ink3);margin-top:5px;line-height:1.6}
+  .disc{margin-top:12px;background:#f7f8fa;border:1px solid var(--line);border-radius:8px;padding:13px 15px;font-size:12.5px;color:var(--ink2)}
+  .prop{border:1px solid var(--line);border-radius:9px;padding:14px 16px;margin:11px 0;background:#fcfcfd}
+  .prop .ph{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+  .prop .pid{font-size:11.5px;font-weight:700;color:#fff;background:var(--purple);border-radius:5px;padding:2px 7px}
+  .prop .pid.new{background:var(--red)}
+  .prop .pt{font-size:14.5px;font-weight:600}
+  .prop table{margin:8px 0 0;font-size:12.5px}
+  .prop td:first-child{width:118px;min-width:118px;color:var(--ink3);background:#fafbfc;white-space:nowrap}
+  .src-tag{font-size:11px;color:var(--ink3)}
+  @media (max-width:720px){
+    .alert dl{grid-template-columns:1fr}
+    .wrap{padding:16px 10px 56px} section{padding:16px 14px}
+    .chart{height:300px} .chart.tall{height:360px}
+    table{font-size:12px}
+  }
+
+  .revnote{margin:8px 0 0;padding:8px 10px;border-left:3px solid #b06a00;background:#fdf3e3;color:#6b4100;font-size:12.5px;line-height:1.65}
+</style>
+<meta name="robots" content="noindex,nofollow"><title>2026-W47（2026-11-11～11-16）</title><style>
+#sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
+#sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+#sb-nav a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
+#sb-nav a:hover{background:#374151;color:#fff}
+#sb-nav a.sb-on{background:#1d4ed8;color:#fff}
+#sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
+#sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
+</style><link rel="stylesheet" href="css/nav.css">
+<script src="js/issues.js" defer></script>
+</head>
+<body><nav id="sb-nav"><div class="sb-inner"><span class="sb-brand">目錄</span><a href="index.html">首頁</a><a href="t.html">入門</a><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="2026-w47.html">週報（2026-W47）</a><a href="index.html#weeks">各期列表</a></noscript><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
+<div class="wrap">
+<header class="hero">
+<div class="kicker">阿圖 · 每週新聞解析 · 第 47 週</div>
+<h1>2026-W47（2026-11-11～11-16）</h1>
+<p class="sub">期間 <b>2026-11-11 ～ 2026-11-16</b>（台北時間）。把本週新聞逐條掛回 8 層因果鏈，判定「符合預期／超越預期／偏離趨勢／待觀察」。<b>上週五還在慶祝費半單週 +8.05%，11-16 一天就跌掉 5.28%。但這週真正變的不是需求——是「誰有資格繼續為 AI 買單」：黃仁勳辭任、BIS 把遠端算力也算成出口、CoreWeave 自認無擔保債市場關門。</b></p>
+<div class="metabar">
+<span class="chip red">示警 6 紅（A5 由橙升紅 · A6 新增）</span>
+<span class="chip green">判定：綠 2 · 藍 6 · 紅 4 · 橙 1 · 灰 0</span>
+<span class="chip amber">框架外 1（治理，升紅）；管制地緣由灰轉紅</span>
+<span class="chip">涵蓋：美／台／韓／中／日／港</span>
+<span class="chip blue">近期查核：11/18 NVIDIA FY27Q3 · 11/19 BIS 生效 · 12 月 FOMC</span>
+</div>
+</header>
+<div class="ruler">
+<b>本期判定尺：基準預期表 v1.1（2026-09-21 核定）</b>｜檔案：<code>基準預期表-v1.1-20260921.html</code>｜13 列（L0～L8、L7a／L7b 分列、外生×2、反射性×1）<br/>
+  本期<b>未修改任何一格數值</b>，所有判定一律以 v1.1 為尺。自 2026-W46（2026-11-10）以來判定尺<b>無版本異動</b>，故本期不另公告 diff。<br/>
+  若我認為基準設錯，一律寫入第 6 節「候選修正提案區」，<b>未經振達同意不得生效，本期判定仍沿用 v1.1</b>。本期新增 P7（管制地緣無可查核門檻）。
+</div>
+<div class="notice">
+<h3>本期三點先講清楚</h3>
+  ① <b>資料截止台北時間 2026-11-17 06:30</b>：美股為 11-16 收盤（已定案），亞股為 11-16 收盤（已定案）。<b>NVIDIA FY27Q3 財報為台北 11-18 05:20，本期截止前尚未公布，只能列查核點，不得以預期值代替</b>。<br/>
+  ② 上期（2026-W46）留給本期的四個查核點<b>已全數開獎</b>：台積電 10 月營收、10 月 CPI、CoreWeave Q3、應材 FY26Q4；另有黃仁勳 11-12 辭任與 BIS 11-16 新規兩件「查核日曆之外的事件」。本文逐一回寫判定，<b>不回溯改判 2026-W46</b>。<br/>
+  ③ 11-16 的跌幅要<b>拆成三個源頭</b>：治理（NVDA CEO）、政策（BIS 遠端算力納管）、融資（自由現金流轉負＋擁擠度瓦解）。把它們合成一句「AI 泡沫破了」，就會漏掉同一週台積電營收 +59.7%、應材營收 +53% 這兩個一手事實。
+</div>
+<section id="s0">
+<h2><span class="num">0</span>首屏：三句話講完這週</h2>
+<p class="lead">順序很重要——先講「上期的四個問號怎麼回答」，再講「新出現的兩個變數」，最後講「為什麼基本面更強、股價反而更弱」。因為這週最容易犯的錯，是把「融資方式被改寫」讀成「需求消失」。</p>
+<div class="grid3">
+<div class="card">
+<div class="tag">判讀 1</div>
+<h4>三個基本面查核點達標；CPI 核心觸發上期打臉條件（A1 升級）</h4>
+<p>台積電 10 月營收 <b class="up">5,868.9 億台幣（YoY +59.7%、MoM +14.7%）</b>創單月新高；應材 FY26Q4 營收 <b class="up">104.09 億美元（+53%）</b>、FY27Q1 指引 111 億；CoreWeave Q3 營收 <b class="up">36.61 億（+168%）</b>、1.85GW 未下調；CPI 核心 <b>+0.3% MoM</b> 達到上期門檻「核心 MoM ≥0.3% → A1 升級」，該項打臉條件成立。<span class="src-tag">（四者皆公司／官方一手）</span></p>
+<p class="revnote">修訂註記（2026-11-19，台北時間，UTC+8）：原文標題為「四個查核點全部達標，沒有一個打臉」，與同卡後句「上期設的『A1 升級』條件已成立」及 2026-W46 打臉條件「核心 MoM ≥0.3% → A1 升級」衝突。本次只改正標題與本句表述；台積電、應材、CoreWeave、CPI 核心 +0.3% MoM 等數字沿用原文，不新增數據。利率列依當時 v1.1 偏離訊號（單次升息 &gt;25bp，或 10Y 美債 &gt;5.5%／&lt;4.5%）維持「符合（貼上緣）」：10Y 為 4.95%，尚未出現單次 50bp 升息。打臉成立的是 A1 升級，不是利率列改判。</p>
+<p><b>基本面沒有轉弱。</b>但 CPI 核心 0.3% 與 10Y 4.95%，代表上期設的「A1 升級」條件已成立——好消息開始被折現率吃掉。</p>
+</div>
+<div class="card">
+<div class="tag">判讀 2</div>
+<h4>治理事件從「股價折價」升級成「政策連鎖」</h4>
+<p>11-12 黃仁勳辭去總裁、CEO 與董事，CFO Colette Kress 暫代，Harvey C. Jones 任首任董事長；公司未說明原因。11-16 BIS 發布臨時最終規則，把<b>第三國資料中心的遠端算力</b>納入出口管制，5 國列高轉運風險，11-19 生效。<span class="src-tag">（NVIDIA 官方聲明／BIS 草案，一手）</span></p>
+<p>兩件事看似無關，實則同一條鏈：<b>治理疑慮提供了管制收緊的政治出口</b>。我把 A5 由橙升紅，並新增 A6（管制框架跳躍）。</p>
+</div>
+<div class="card">
+<div class="tag">判讀 3</div>
+<h4>跌的是「買單能力」，不是「訂單」</h4>
+<p>11-16 台股 <b class="dn">−6.03%</b>（史上第二大跌點）、費半 <b class="dn">−5.28%</b>、KOSPI <b class="dn">−3.59%</b>、NVDA <b class="dn">−4.12%</b> 至 156.14 美元（較 10 月初高點回撤約 35%）。美銀調查科技股淨超配由 10 月 37% 降至 11 月 <b>12%</b>，為 2006 年來最大單月降幅。</p>
+<p>同一週亞馬遜、Meta、Alphabet 單季自由現金流<b>集體轉負</b>（轉引）。市場不再為 capex 規模付錢，改問「誰還付得起」——這是反射性迴路的斷點。</p>
+</div>
+</div>
+<div class="stat">
+<div class="s"><div class="l">台積電 10 月營收</div><div class="v up">+59.7%</div><div class="d">5,868.9 億台幣；單月新高（11-10）</div></div>
+<div class="s"><div class="l">應材 FY26Q4 營收</div><div class="v up">+53%</div><div class="d">104.09 億美元；non-GAAP EPS +92%</div></div>
+<div class="s"><div class="l">CoreWeave Q3 營收</div><div class="v up">+168%</div><div class="d">36.61 億美元；backlog 1,325 億</div></div>
+<div class="s"><div class="l">10 月核心 CPI</div><div class="v up">+0.3%</div><div class="d">MoM，連續三個月；無官方 YoY</div></div>
+<div class="s"><div class="l">11-16 費半</div><div class="v dn">−5.28%</div><div class="d">9,610.65；較 6 月高點低 34.3%</div></div>
+<div class="s"><div class="l">10Y 美債</div><div class="v up">4.95%</div><div class="d">CPI 後 +10bp；2Y 4.71%</div></div>
+</div>
+<div class="note red"><b>一句話收束：</b>本週是「<b>基本面全面達標 → 折現率與管制同時收緊 → 融資通道被改寫</b>」的三段式。八層裡沒有任何一層因基本面降級：L6 與 L7a 甚至因為台積電與應材的一手數字更穩。真正的升級全在側軌——<b>反射性迴路由「分層」惡化為「買單者被篩選」，管制地緣由「逐步收緊」跳到「管制客體擴張」，治理由股價折價變成政策催化劑</b>。這三件事 v1.1 都量不到，所以我用兩張新紅卡與兩項新提案處理，而不是偷改既有格。</div>
+</section>
+<section id="s1">
+<h2><span class="num">1</span>本週框架狀態圖</h2>
+<p class="lead">左＝外生變數與框架外，中＝八層因果鏈（L7 已拆為 L7a／L7b），右＝反射性迴路，下＝配套層。色塊為<b>本期判定</b>，不是股價方向。箭頭是「待驗證的轉換關係」，不是事實。</p>
+<div class="svgbox">
+<svg aria-label="2026-W47 八層因果鏈框架狀態圖" role="img" style="display:block;width:100%" viewbox="0 0 1000 660" width="100%">
+<defs>
+<marker id="ar" markerheight="9" markerwidth="9" orient="auto" refx="7.5" refy="4.5">
+<path d="M0,0 L9,4.5 L0,9 Z" fill="#9aa3b2"></path>
+</marker>
+<marker id="arr" markerheight="9" markerwidth="9" orient="auto" refx="7.5" refy="4.5">
+<path d="M0,0 L9,4.5 L0,9 Z" fill="#c8352f"></path>
+</marker>
+</defs>
+<text fill="#1b1f2a" font-size="13" font-weight="700" x="14" y="22">2026-W47 框架狀態｜2026-11-11 ～ 11-16</text>
+<text fill="#8a93a3" font-size="11" text-anchor="end" x="986" y="22">綠 符合預期｜藍 超越預期｜紅 偏離趨勢｜橙 待觀察｜灰 維持</text>
+<text fill="#8a93a3" font-size="11.5" font-weight="700" x="14" y="44">外生變數／框架外</text>
+<!-- 利率 -->
+<rect fill="#e8f5ee" height="66" rx="6" stroke="#c9e8d8" width="178" x="14" y="52"></rect>
+<text fill="#1c7f52" font-size="12" font-weight="700" x="26" y="70">利率　符合（貼上緣）</text>
+<text fill="#4d5666" font-size="10.5" x="26" y="86">核心 CPI +0.3% MoM 三連</text>
+<text fill="#4d5666" font-size="10.5" x="26" y="100">12 月升息機率 84.2%</text>
+<text fill="#8a93a3" font-size="10.5" x="26" y="114">10Y 4.95%｜2Y 4.71%</text>
+<!-- 管制 -->
+<rect fill="#fdecea" height="66" rx="6" stroke="#c8352f" width="178" x="14" y="124"></rect>
+<text fill="#c8352f" font-size="12" font-weight="700" x="26" y="142">管制／地緣　偏離（新）</text>
+<text fill="#8f2622" font-size="10.5" x="26" y="158">BIS 遠端算力納管</text>
+<text fill="#8f2622" font-size="10.5" x="26" y="172">5 國許可｜11-19 生效</text>
+<text fill="#8a93a3" font-size="10.5" x="26" y="186">由灰轉紅 → A6／P7</text>
+<!-- 匯率 -->
+<rect fill="#f2f4f7" height="54" rx="6" stroke="#e3e6ec" stroke-dasharray="4 3" width="178" x="14" y="196"></rect>
+<text fill="#7b8494" font-size="12" font-weight="700" x="26" y="214">匯率　未立尺</text>
+<text fill="#4d5666" font-size="10.5" x="26" y="230">沿用 11-09：台幣 32.882</text>
+<text fill="#8a93a3" font-size="10.5" x="26" y="244">本期無新一手收盤 → 僅記錄</text>
+<!-- 框架外：政策 -->
+<rect fill="#f2f4f7" height="74" rx="6" stroke="#e3e6ec" stroke-dasharray="5 3" width="178" x="14" y="256"></rect>
+<text fill="#7b8494" font-size="12" font-weight="700" x="26" y="274">框架外：AI 政策與許可</text>
+<text fill="#4d5666" font-size="10.5" x="26" y="290">德州凍結延續，無新行政令</text>
+<text fill="#4d5666" font-size="10.5" x="26" y="304">新增管制已移入外生列</text>
+<text fill="#7b8494" font-size="10.5" font-weight="700" x="26" y="320">→ P0 仍待議</text>
+<!-- 框架外：治理（升紅） -->
+<rect fill="#fdecea" height="74" rx="6" stroke="#c8352f" stroke-dasharray="5 3" stroke-width="1.4" width="178" x="14" y="336"></rect>
+<text fill="#c8352f" font-size="12" font-weight="700" x="26" y="354">框架外：治理（升紅）</text>
+<text fill="#8f2622" font-size="10.5" x="26" y="370">11-12 黃仁勳辭任</text>
+<text fill="#8f2622" font-size="10.5" x="26" y="384">CFO 暫代｜新任主席</text>
+<text fill="#c8352f" font-size="10.5" font-weight="700" x="26" y="400">→ A5 橙升紅、仍不判層</text>
+<!-- 左→中 -->
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.3" x1="192" x2="206" y1="85" y2="85"></line>
+<line marker-end="url(#arr)" stroke="#c8352f" stroke-dasharray="4 3" stroke-width="1.4" x1="192" x2="206" y1="157" y2="157"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.3" x1="192" x2="206" y1="293" y2="293"></line>
+<line marker-end="url(#arr)" stroke="#c8352f" stroke-dasharray="4 3" stroke-width="1.4" x1="192" x2="206" y1="373" y2="373"></line>
+<!-- L0 -->
+<rect fill="#fdf3e3" height="40" rx="5" stroke="#f2ddb8" width="470" x="210" y="52"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="77">L0　弱訊號入口</text>
+<text fill="#4d5666" font-size="10.5" x="342" y="77">無新弱訊號｜3D DRAM 仍紙面</text>
+<rect fill="#b06a00" height="26" rx="13" width="70" x="600" y="59"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="76">待觀察</text>
+<!-- L1 -->
+<rect fill="#e8f5ee" height="40" rx="5" stroke="#c9e8d8" width="470" x="210" y="98"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="123">L1　AI 終端需求</text>
+<text fill="#4d5666" font-size="10.5" x="342" y="123">本期無新一手需求讀數</text>
+<rect fill="#1c7f52" height="26" rx="13" width="70" x="600" y="105"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="122">符合</text>
+<!-- L2 -->
+<rect fill="#eaf2fb" height="40" rx="5" stroke="#cfe0f4" width="470" x="210" y="144"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="169">L2　算力／雲 capex</text>
+<text fill="#4d5666" font-size="10.5" x="342" y="169">七大 capex +78%｜FCF 轉負</text>
+<rect fill="#1f5fa8" height="26" rx="13" width="70" x="600" y="151"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="168">超越</text>
+<!-- L3 -->
+<rect fill="#eaf2fb" height="40" rx="5" stroke="#cfe0f4" width="470" x="210" y="190"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="215">L3　AI 芯片</text>
+<text fill="#4d5666" font-size="10.5" x="342" y="215">11-18 財報前維持｜治理不改判</text>
+<rect fill="#1f5fa8" height="26" rx="13" width="70" x="600" y="197"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="214">超越</text>
+<!-- L4 -->
+<rect fill="#eaf2fb" height="40" rx="5" stroke="#cfe0f4" width="470" x="210" y="236"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="261">L4　記憶體／HBM</text>
+<text fill="#4d5666" font-size="10.5" x="342" y="261">無新成交價｜P6 口徑仍失效</text>
+<rect fill="#1f5fa8" height="26" rx="13" width="70" x="600" y="243"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="260">超越</text>
+<!-- L5 -->
+<rect fill="#eaf2fb" height="40" rx="5" stroke="#cfe0f4" width="470" x="210" y="282"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="307">L5　先進封裝</text>
+<text fill="#4d5666" font-size="10.5" x="342" y="307">應材 EPIC 15 項｜無新交期數</text>
+<rect fill="#1f5fa8" height="26" rx="13" width="70" x="600" y="289"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="306">超越</text>
+<!-- L6 -->
+<rect fill="#eaf2fb" height="40" rx="5" stroke="#cfe0f4" width="470" x="210" y="328"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="353">L6　晶圓代工</text>
+<text fill="#4d5666" font-size="10.5" x="342" y="353">10 月營收 +59.7% 創新高</text>
+<rect fill="#1f5fa8" height="26" rx="13" width="70" x="600" y="335"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="352">超越</text>
+<!-- L7a -->
+<rect fill="#eaf2fb" height="40" rx="5" stroke="#cfe0f4" width="470" x="210" y="374"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="399">L7a　設備</text>
+<text fill="#4d5666" font-size="10.5" x="342" y="399">應材 +53%｜Q1 指引 111 億</text>
+<rect fill="#1f5fa8" height="26" rx="13" width="70" x="600" y="381"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="398">超越</text>
+<!-- L7b -->
+<rect fill="#fdecea" height="40" rx="5" stroke="#c8352f" width="470" x="210" y="420"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="445">L7b　材料</text>
+<text fill="#8f2622" font-size="10.5" x="342" y="445">漲價擴散｜本期無新增量測</text>
+<rect fill="#c8352f" height="26" rx="13" width="70" x="600" y="427"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="444">偏離</text>
+<!-- L8 -->
+<rect fill="#fdecea" height="40" rx="5" stroke="#c8352f" width="470" x="210" y="466"></rect>
+<text fill="#1b1f2a" font-size="12.5" font-weight="700" x="222" y="491">L8　電力</text>
+<text fill="#8f2622" font-size="10.5" x="342" y="491">1.85GW 維持｜許可仍凍結</text>
+<rect fill="#c8352f" height="26" rx="13" width="70" x="600" y="473"></rect>
+<text fill="#fff" font-size="11" font-weight="700" text-anchor="middle" x="635" y="490">偏離</text>
+<!-- 縱向箭頭 -->
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.2" x1="296" x2="296" y1="92" y2="97"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.2" x1="296" x2="296" y1="138" y2="143"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.2" x1="296" x2="296" y1="184" y2="189"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.2" x1="296" x2="296" y1="230" y2="235"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.2" x1="296" x2="296" y1="276" y2="281"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.2" x1="296" x2="296" y1="322" y2="327"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.2" x1="296" x2="296" y1="368" y2="373"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.2" x1="296" x2="296" y1="414" y2="419"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.2" x1="296" x2="296" y1="460" y2="465"></line>
+<!-- 中央→右 -->
+<line marker-end="url(#arr)" stroke="#c8352f" stroke-width="1.4" x1="680" x2="696" y1="236" y2="236"></line>
+<!-- 反射性迴路 -->
+<rect fill="#fffafa" height="454" rx="7" stroke="#f6cfcb" width="286" x="700" y="52"></rect>
+<text fill="#c8352f" font-size="12" font-weight="700" x="714" y="72">反射性迴路　偏離（惡化）</text>
+<rect fill="#fff" height="36" rx="5" stroke="#e3e6ec" width="120" x="714" y="86"></rect>
+<text fill="#1b1f2a" font-size="11.5" text-anchor="middle" x="774" y="109">敘事</text>
+<rect fill="#fdecea" height="36" rx="5" stroke="#c8352f" stroke-width="1.2" width="118" x="854" y="86"></rect>
+<text fill="#c8352f" font-size="11.5" font-weight="700" text-anchor="middle" x="913" y="109">估值</text>
+<rect fill="#fdecea" height="36" rx="5" stroke="#c8352f" stroke-width="1.4" width="120" x="714" y="148"></rect>
+<text fill="#c8352f" font-size="11.5" font-weight="700" text-anchor="middle" x="774" y="171">融資</text>
+<rect fill="#fdecea" height="36" rx="5" stroke="#c8352f" stroke-width="1.2" width="118" x="854" y="148"></rect>
+<text fill="#c8352f" font-size="11.5" font-weight="700" text-anchor="middle" x="913" y="171">capex</text>
+<rect fill="#fff" height="36" rx="5" stroke="#e3e6ec" width="120" x="714" y="210"></rect>
+<text fill="#1b1f2a" font-size="11.5" text-anchor="middle" x="774" y="233">財報</text>
+<rect fill="#fdecea" height="36" rx="5" stroke="#c8352f" stroke-width="1.2" width="118" x="854" y="210"></rect>
+<text fill="#c8352f" font-size="11.5" font-weight="700" text-anchor="middle" x="913" y="233">回到敘事 ↺</text>
+<line marker-end="url(#arr)" stroke="#c8352f" stroke-dasharray="4 3" stroke-width="1.4" x1="834" x2="853" y1="104" y2="104"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.3" x1="913" x2="913" y1="122" y2="147"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.3" x1="854" x2="835" y1="166" y2="166"></line>
+<line marker-end="url(#ar)" stroke="#9aa3b2" stroke-width="1.3" x1="774" x2="774" y1="184" y2="209"></line>
+<line marker-end="url(#arr)" stroke="#c8352f" stroke-dasharray="4 3" stroke-width="1.4" x1="834" x2="853" y1="228" y2="228"></line>
+<text fill="#1b1f2a" font-size="10" font-weight="700" x="714" y="266">本週鏈條</text>
+<text fill="#8f2622" font-size="10" x="714" y="282">11/09~13 費半 +8.05%（反彈）</text>
+<text fill="#8f2622" font-size="10" x="714" y="296">11/16 費半 −5.28%、台股 −6.03%</text>
+<text fill="#8f2622" font-size="10" x="714" y="310">CRWV 自認 2027 前不發無擔保債</text>
+<text fill="#8f2622" font-size="10" x="714" y="324">科技股淨超配 37%→12%（2006 來最大）</text>
+<text fill="#8f2622" font-size="10" x="714" y="338">→ 斷點由「分層」到「買單者被篩選」</text>
+<line stroke="#f6cfcb" x1="714" x2="972" y1="348" y2="348"></line>
+<text fill="#1b1f2a" font-size="10" font-weight="700" x="714" y="366">偏離依據（v1.1 門檻）</text>
+<text fill="#4d5666" font-size="10" x="714" y="382">・融資成本：CRWV Q4 利息 10.5~11.5 億</text>
+<text fill="#4d5666" font-size="10" x="714" y="396">・發債受阻：母公司無擔保債關門</text>
+<text fill="#4d5666" font-size="10" x="714" y="410">・擁擠度：淨超配單月 −25pp</text>
+<text fill="#4d5666" font-size="10" x="714" y="424">・新增：三大雲廠 FCF 集體轉負</text>
+<rect fill="#fff" height="58" rx="5" stroke="#f6cfcb" width="256" x="714" y="436"></rect>
+<text fill="#c8352f" font-size="10" font-weight="700" x="724" y="454">判定：三項門檻全數成立</text>
+<text fill="#4d5666" font-size="10" x="724" y="468">且由「neocloud 被關門」擴散到</text>
+<text fill="#4d5666" font-size="10" x="724" y="482">「投資級買單者也被要求證明現金流」。</text>
+<!-- 配套層 -->
+<text fill="#8a93a3" font-size="11.5" font-weight="700" x="210" y="524">配套層（v1.1 無對應列，僅記錄）</text>
+<rect fill="#f2f4f7" height="44" rx="5" stroke="#e3e6ec" stroke-dasharray="4 3" width="470" x="210" y="532"></rect>
+<text fill="#4d5666" font-size="10.5" x="222" y="551">11-16 光模組／PCB／液冷同步殺跌，無一手量可查</text>
+<text fill="#8a93a3" font-size="10.5" x="222" y="567">方向跟隨融資端而非訂單端 → 維持不判定（P4）</text>
+<text fill="#8a93a3" font-size="10.5" x="210" y="598">※ 色塊為「本期判定」，非股價方向。股價漲跌一律紅漲綠跌，另列市場定價欄。</text>
+<text fill="#8a93a3" font-size="10.5" x="210" y="614">※ L7a 與 L7b 分開判定：設備為落後 capex 6～12 個月的訂單型，材料為當期成本推升型，不得混判。</text>
+<text fill="#8a93a3" font-size="10.5" x="210" y="630">※ 灰色虛線框＝v1.1 無此列。治理事件已升紅但仍不判層；管制地緣本期由灰轉紅。</text>
+</svg>
+</div>
+<p class="cap">圖 1｜2026-W47 框架狀態。本期判定分布：<b>綠 2（L1、利率）· 藍 6（L2、L3、L4、L5、L6、L7a）· 紅 4（L7b、L8、管制地緣、反射性迴路）· 橙 1（L0）· 灰 0</b>，另有框架外 1（治理，由橙升紅）＋匯率未立尺。與 2026-W46 相比：<b>八層判定全部不變</b>（L6／L7a 由新一手數據鞏固「超越」），但<b>外生「管制／地緣」由灰轉紅、反射性迴路由「分層」惡化為「買單者被篩選」、治理由橙升紅</b>。這正是本週的核心：風險全部集中在側軌，不在因果鏈本體。</p>
+</section>
+<section id="s2">
+<h2><span class="num">2</span>新聞 → 框架對照表</h2>
+<p class="lead">逐條歸層，落不進 13 列者另列「框架外」——<b>不硬塞</b>。每列都寫明對照 v1.1 的哪一格、哪個容忍區間。上期四個查核點的開獎結果置前。</p>
+<table>
+<thead>
+<tr>
+<th style="width:62px">日期</th>
+<th style="width:31%">新聞（來源／性質）</th>
+<th style="width:66px">歸層</th>
+<th style="width:74px">判定</th>
+<th>對照 v1.1 的依據</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11-10</td>
+<td>台積電 10 月營收 <b class="up">5,868.9 億台幣（MoM +14.7%、YoY +59.7%）</b>，單月歷史新高；1～10 月累計 44,856.2 億、<b class="up">+43.3% YoY</b>。<span class="src-tag">（公司公告，一手）</span></td>
+<td>L6</td>
+<td><span class="chip blue">超越</span></td>
+<td>上期打臉條件「月減 &gt;5% 且年增 &lt;25%」完全未成立，反而是月增且年增 &gt;35% → 維持超越、Q4 指引 523~543 億美元上修機率升高。毛利率 66.4% 仍 &gt;60% 容忍上緣。</td>
+</tr>
+<tr>
+<td>11-10</td>
+<td>美國 10 月 CPI 整體 <b>+0.4% MoM</b>（預期 0.3%、前值 0.6%）、核心 <b>+0.3% MoM</b>（預期 0.2%，連續三個月 0.3%）；因 2025 年政府停擺<b>無官方年率</b>；10Y 美債 4.95%（+10bp）、2Y 4.71%（+16bp），12 月升息機率 <b>84.2%</b>；沃勒稱若核心 ≥0.3% 可能支持升 50bp。<span class="src-tag">（BLS／CME 一手；沃勒談話為官方發言）</span></td>
+<td>外生<br/>利率</td>
+<td><span class="chip green">符合<br/>（貼上緣）</span></td>
+<td>年底路徑 4.00~4.25% 仍在容忍 ±25bp 內；10Y 4.95% 未破 5.5% 偏離線。<b>但上期設的「核心 ≥0.3% → A1 升級」已觸發，故利率維持綠、A1 升級</b>。美銀插值估核心 YoY 約 2.7% 為模型推演，非官方，不引用為判定。</td>
+</tr>
+<tr>
+<td>11-11<br/>（台北）</td>
+<td>CoreWeave 2026Q3：營收 <b class="up">36.61 億美元（+168% YoY）</b>，指引上調至 130~133 億；調整後營業利益指引 12.75~13.75 億；backlog <b>1,325 億</b>；年底活躍電力 <b>1.85GW 維持</b>（當前 &gt;1.7GW、簽約 &gt;4.6GW）；2026 capex 370~390 億；Q4 利息 10.5~11.5 億；未來 3 個月客戶預付款與押金約 90 億；CFO 稱<b>以當前殖利率，2027 年前不打算再發母公司層級無擔保債</b>。<span class="src-tag">（公司財報與電話會，一手）</span></td>
+<td>反射性<br/>／L8</td>
+<td><span class="chip red">偏離<br/>（升級）</span></td>
+<td>上期兩大打臉條件<b>都未成立</b>：1.85GW 未下調、capex 低端僅微調。但「2027 前不發無擔保債」等於公司親口確認<b>無擔保債市場對其關門</b>——v1.1「發債受阻」訊號由推論變為一手事實，A1 由「分層」升級為「買單者被篩選」。</td>
+</tr>
+<tr>
+<td>11-12<br/>（台灣<br/>11-13）</td>
+<td>應用材料 FY26Q4（截至 10-25）：營收 <b class="up">104.09 億美元（+53% YoY）</b>、non-GAAP EPS <b>4.16（+92%）</b>、營益率 35.1%；全年 344.46 億（+21%）；FY27Q1 指引 111 億 ±5 億、EPS 4.35 ±0.2；CEO 稱 2026 日曆年半導體事業成長 &gt;40%；EPIC 伙伴增至 15 家、入股 Besi 至約 20%。<span class="src-tag">（公司財報，一手）</span></td>
+<td>L7a</td>
+<td><span class="chip blue">超越</span></td>
+<td>上期打臉條件「訂單年增轉負或下修 2027 展望」未成立；營收 YoY 遠超容忍 ±15%，且指引上調。設備落後 capex 6~12 個月的傳導仍在加速，維持藍燈。</td>
+</tr>
+<tr>
+<td>11-12</td>
+<td>NVIDIA 官方聲明：<b>黃仁勳辭去總裁、CEO 及董事職務，即刻生效</b>；CFO Colette Kress 任臨時 CEO（續兼 CFO），董事會啟動正式遴選（內外部並行）；Harvey C. Jones 任首任董事會主席；公司未說明離職原因，稱營運與產品路線圖不中斷；FY27Q3 財報仍按原訂 11-17 13:20 PT 公布。<span class="src-tag">（公司官方聲明，一手）</span></td>
+<td><b>框架外</b><br/>治理</td>
+<td><span class="chip red">不判層<br/>（A5 升紅）</span></td>
+<td>v1.1 無「關鍵人物／治理」列。<b>事件已由「股價折價」升級為「政策催化劑」</b>（見 11-16 BIS），故 A5 由橙升紅；但仍不以它改 L3 判定——L3 的尺是財報，不是 CEO。</td>
+</tr>
+<tr>
+<td>11-16</td>
+<td>美國商務部 BIS 發布臨時最終規則草案，<b>預計 11-19 生效</b>：第三國資料中心若向總部在中國（含澳門）的企業提供 &gt;1,200 萬 TPP 算力（約 700~800 塊 H100），出口商須申請許可、逐案審查；生效前已營業者 90 日內補辦；印尼、馬來西亞、新加坡、泰國、巴西列高轉運風險國；限縮晶圓廠／OSAT 豁免。<span class="src-tag">（BIS 草案／經濟部說明，一手）</span></td>
+<td>外生<br/>管制</td>
+<td><span class="chip red">偏離<br/>（新）</span></td>
+<td>v1.1 基準為「維持既有框架、逐步收緊」。本次是<b>管制客體擴張</b>（遠端算力也算出口）＋許可國別擴增＋豁免縮減，已超出「逐步」語義 → 出示警卡 A6。同時該列<b>無可查核門檻</b>，屬基準設錯，另提 P7。兩者分開處理，不混為一談。</td>
+</tr>
+<tr>
+<td>11-16</td>
+<td>全球 AI 硬體同步重估：台股 <b class="dn">−6.03%</b> 至 41,040.08（−2,635.04 點，史上第二大跌點，83 家跌停）、櫃買 −6.80%；KOSPI <b class="dn">−3.59%</b>（SK 海力士 −7.89%、三星 −4.47%）；日經 −2.42%（愛德萬 −11.12%、東京電子 −7.05%）；費半 <b class="dn">−5.28%</b> 至 9,610.65（30 檔全跌，NVDA −4.12%、美光 −7.62%、台積電 −6.34%、AMD −5.6%）；道瓊 −1.41%、標普 −1.92%、納指 −2.49%；上證 −0.87%、恒指 +0.49%。<span class="src-tag">（各交易所收盤，一手）</span></td>
+<td>市場<br/>定價</td>
+<td><span class="chip gray">不改層級判定</span></td>
+<td>依 v1.1 規則股價只列市場定價。但<b>跨市場同步性</b>（亞洲設備／記憶體跌幅深於歐美指數）本身是反射性迴路「擁擠度」的一手證據，計入 A1，不用來改 L3～L7。</td>
+</tr>
+<tr>
+<td>11-06<br/>～11-12</td>
+<td>美銀全球基金經理調查（169 人、管理 4,610 億美元）：科技股淨超配由 10 月 <b>37%</b> 降至 11 月 <b>12%</b>，單月 −25pp，<b>2006 年 6 月以來最大降幅</b>。<span class="src-tag">（美銀調查，一手）</span></td>
+<td>反射性</td>
+<td><span class="chip red">偏離</span></td>
+<td>v1.1 偏離訊號之一為「擁擠度達歷史極值」。本期是<b>反向實現</b>——不是極值本身，而是極值瓦解。兩者都是同一風險的兩面：擁擠交易一旦反向，融資與估值同時受壓。</td>
+</tr>
+<tr>
+<td>11-18<br/>（轉引）</td>
+<td>2026 年七大 AI 基建主體合計 capex 預估 <b>6,400~7,750 億美元（+78% YoY）</b>；高盛估 2026 全球 AI capex 7,650 億、2027 達 1.2 兆；<b>亞馬遜、Meta、Alphabet 單季自由現金流集體轉負</b>。<span class="src-tag">（媒體彙整與研報轉引，<b>需核實原文</b>）</span></td>
+<td>L2／<br/>反射性</td>
+<td><span class="chip blue">超越<br/>（轉引佐證）</span></td>
+<td>capex 規模支持 L2 超越；但 FCF 轉負是 A1 的核心機制。<b>此條為轉引且不得單獨構成示警依據</b>——A1 升級另以 CoreWeave 電話會（一手）為主證，本條只作補充。</td>
+</tr>
+<tr>
+<td>11-09<br/>～11-13</td>
+<td>上週美股收高：道瓊 <b class="up">+2.07%</b>、標普 +2.51%、納指 +2.27%（均為 8 月以來最大單週漲幅）、費半 <b class="up">+8.05%</b>；但 11-13 當日納指 −0.91%、費半 −3.43%。<span class="src-tag">（交易所收盤，一手）</span></td>
+<td>市場<br/>定價</td>
+<td><span class="chip gray">不改層級判定</span></td>
+<td>11-16 的 −5.28% 吃掉上週反彈大部分；費半較 6-22 高點仍低 34.3%，技術性熊市。<b>「一週反彈」與「單日崩跌」都是同一融資條件的兩次定價</b>，不能分開解讀為風險解除。</td>
+</tr>
+<tr>
+<td>11-16</td>
+<td>中國商務部與外交部先後表示強烈不滿，稱 BIS 新規濫用出口管制、將採取必要措施；台灣經濟部表示台廠依客戶訂單代工，若涉新規由美系客戶向 BIS 申請許可。<span class="src-tag">（官方表態，一手）</span></td>
+<td>外生<br/>管制</td>
+<td><span class="chip amber">待觀察</span></td>
+<td>反制措施尚未具體化，不構成新的偏離；但<b>台灣代工被捲入許可鏈</b>是新變數，須觀察是否影響 L6 出貨節奏。列入查核日曆。</td>
+</tr>
+</tbody>
+</table>
+<div class="note warn"><b>歸層紀律說明：</b>本期有兩條我刻意分開記帳：① <b>BIS 新規</b>同時是「事實偏離」（管制超出逐步收緊）與「基準設錯」（該列無可查核門檻），所以一邊出 A6 紅卡、一邊提 P7，<b>不能用提案取代示警，也不能用示警掩蓋尺的缺口</b>。② <b>CoreWeave 的好與壞</b>：營收／backlog／1.85GW 是一手利多，無擔保債關門是一手利空，兩者都真實，不能只取其一說「融資已修復」或「需求已斷」。</div>
+</section>
+<section id="s3">
+<h2><span class="num">3</span>示警卡區</h2>
+<p class="lead">升級規則：凡判定「偏離」，或幅度顯著「超越」且伴隨傳導風險者，升級為示警卡。<b>本週六張紅卡中，三張延續、一張升級（A5）、一張質變（A1）、一張新增（A6）</b>——請注意「延續」不等於「惡化」。</p>
+<div class="alert a-red">
+<div class="hd"><span class="code">A6</span><span class="ttl">管制框架跳躍：遠端算力被定義為出口，台灣代工被捲入許可鏈</span><span class="chip red">紅</span><span class="chip">本期新增</span></div>
+<dl>
+<dt>方向</dt><dd>負向，且是<b>規則改變</b>而非單一事件。v1.1 假設管制是「逐步收緊既有框架」，11-16 BIS 草案把管制客體從「晶片本身」擴張到「提供算力的服務」。</dd>
+<dt>證據</dt><dd>BIS 11-16 臨時最終規則草案、預計 11-19 生效：第三國資料中心對中國（含澳門）企業提供 &gt;1,200 萬 TPP 算力（約 700~800 塊 H100）須逐案許可；既有業者 90 日內補辦；印尼／馬來西亞／新加坡／泰國／巴西列高轉運風險；晶圓廠與 OSAT 豁免限縮（前端設計商在該六地者不適用）。中國外交部 11-17 稱將反制；台灣經濟部 11-17 表示由美系客戶向 BIS 申請。<span class="src-tag">（BIS 草案、兩國官方表態為一手；TPP 換算為摩根士丹利轉引，需核實原文）</span></dd>
+<dt>受益</dt><dd>已取得 BIS 許可或位於低風險國家的資料中心；具合規能量的美系雲廠；中國境內已有 GPU 庫存的大型互聯網平台（野村轉引觀點）；合規顧問與Audit服務。</dd>
+<dt>受害</dt><dd>東南亞 neocloud與第三國 rented-GPU 模式；中國獨立大模型新創（訓練迭代變慢）；台灣代工與封測（許可不確定性轉為出貨排程風險）；依賴轉運的二級經銷。</dd>
+<dt>傳導</dt><dd>管制客體擴張 → 第三國算力租賃須許可 → 中國模型訓練成本上升／時程後移 → GPU 租賃需求下修 → 間接影響 L3 拉貨。<b>與 A4 的「美國國內許可凍結」是兩個不同瓶頸：一個擋在需求端落地，一個擋在供給端跨境。</b></dd>
+<dt>下一步</dt><dd>① 11-19 規則生效後首批許可核發與駁回比例；② 中方反制具體內容（是否鎖稀土或半導體材料）；③ 台積電／封測是否被客戶要求調整出貨地或標註終端用途；④ 東南亞資料中心租賃報價是否上升。</dd>
+</dl>
+</div>
+<div class="alert a-red">
+<div class="hd"><span class="code">A1</span><span class="ttl">反射性迴路質變：從「neocloud 被關門」到「買單者要證明現金流」</span><span class="chip red">紅</span><span class="chip">2026-W45 已紅 → 本期質變（上期門檻已觸發）</span></div>
+<dl>
+<dt>方向</dt><dd>負向，機制再升級。上期是「投資級照借、neocloud 被關門」；本期是<b>連投資級買單者都被要求證明自由現金流</b>，且龍頭 neocloud 自己承認無擔保市場關閉。</dd>
+<dt>證據</dt><dd><b>一手：</b>CoreWeave Q3 營收 36.61 億（+168%）、backlog 1,325 億、年底 1.85GW 維持、capex 370~390 億、Q4 利息 10.5~11.5 億（Q3 淨利息約 8.46~8.5 億）；CFO 明言<b>以當前殖利率 2027 年前不打算再發母公司無擔保債</b>；未來 3 個月客戶預付款與押金約 90 億（11-11）。美銀調查科技股淨超配 37%→12%、單月 −25pp、2006 年來最大（11-06～12）。10Y 美債 4.95%、核心 CPI 連續三季 0.3%、12 月升息機率 84.2%（11-10）。<b>轉引：</b>亞馬遜／Meta／Alphabet 單季 FCF 集體轉負；2026 七大主體 capex 6,400~7,750 億（+78%）；CRWV 2031 券二級殖利率 16.3%、CDS 約 1,155bp（11-06，需核實原文）。<span class="src-tag">（公司財報與電話會、BLS、美銀調查為一手；其餘轉引）</span></dd>
+<dt>受益</dt><dd>現金流自足且能用客戶預付款融資的模式（CRWV 的 90 億押金）；投資級利差仍開的 Meta／Alphabet；已通電站點持有者；資產層級擔保債市場。</dd>
+<dt>受害</dt><dd>高槓桿 neocloud（無擔保債市場對其關閉）；以 GPU 抵押的融資戶；依賴外部融資的二線資料中心 REIT；高 beta 的亞洲設備與記憶體供應鏈（11-16 跌幅深於歐美指數）。</dd>
+<dt>傳導</dt><dd>核心 CPI 0.3% → 12 月升息鎖定 → 折現率上行 → 無擔保債成本 &gt;16% → <b>公司主動切換融資通道</b>（母公司債 → 客戶預付款＋資產擔保債）→ 新案遞延 → 設備與電力認列後移。<b>關鍵變化：這不再是市場單方面關閉融資，而是公司自己承認並改變行為。</b></dd>
+<dt>下一步</dt><dd>① 11-18 NVIDIA 財報後，CAPEX 與 FCF 是否被分析師直接對照；② 2032 券殖利率是否回落 15% 以下；③ CRWV 90 億預付款是否如期入帳；④ 是否有第二家 neocloud 跟進宣布暫停無擔保發債。</dd>
+</dl>
+</div>
+<div class="alert a-red">
+<div class="hd"><span class="code">A5</span><span class="ttl">治理事件升級：已由折價因素變成政策催化劑（但仍不判層）</span><span class="chip red">紅</span><span class="chip">2026-W46 橙 → 本期升紅</span></div>
+<dl>
+<dt>方向</dt><dd>不確定性大幅上升，且<b>外溢到管制</b>。我仍然<b>不用它改 L3</b>——L3 的判定尺是季度財報，不是執行長；但它在反射性迴路與外生管制上已產生可觀察影響。</dd>
+<dt>證據</dt><dd>11-12 NVIDIA 官方聲明：黃仁勳辭去總裁／CEO／董事，即刻生效；CFO Colette Kress 暫代 CEO 並續兼 CFO；Harvey C. Jones 任首任董事會主席；董事會啟動內外部並行遴選；<b>公司未說明離職原因</b>。11-16 NVDA <b class="dn">−4.12%</b> 至 156.14 美元，自 10 月初高點回撤約 35%、市值蒸發約 2 兆美元。NPR 將人事風波與「疑似中國情報人員」link 至 Megaspeed 採購案；<b>中國否認、NPR 未獨立證實，此為轉引，不構成判定依據</b>。<span class="src-tag">（公司聲明與股價為一手；動機與情報指控為轉引，需核實原文）</span></dd>
+<dt>受益</dt><dd>AMD、博通、Google TPU 等在「第二供應商」策略下取得切入機會；以「穩定管理」為訴求的機構投資人。</dd>
+<dt>受害</dt><dd>NVDA 股東；以 NVDA 為高權重的 ETF；與其綁定的亞洲代工／記憶體／設備供應鏈（11-16 跌幅放大）；依賴執行長個人承諾的長期客戶。</dd>
+<dt>傳導</dt><dd>治理真空 → 決策鏈變慢＋政策阻力下降 → BIS 新規 4 天後發布（<b>時間相關，但無證據顯示因果，僅標註關聯</b>）→ 估值折價 → 融資條件惡化。<b>目前只走到「股價＋政策」，尚未見訂單或產品路線圖改變。</b></dd>
+<dt>下一步</dt><dd>① <b>11-18 05:20（台北）財報由誰主持、是否公布繼任時程</b>；② 財測口徑是否因交接而調整；③ 雲廠客戶是否在法說會被問到供應集中度；④ 正式 CEO 人選與是否延續既有產品路線圖。</dd>
+</dl>
+</div>
+<div class="alert a-red">
+<div class="hd"><span class="code">A2</span><span class="ttl">利潤池轉移：記憶體吃掉 GPU 與終端毛利（延續，本期無新增量測）</span><span class="chip red">紅</span><span class="chip">2026-W46 新增 → 本期延續</span></div>
+<dl>
+<dt>方向</dt><dd>結構性、雙向。對 L4 是定價權（正向），對 L3 是成本（負向），對 L1 是需求彈性（負向）。</dd>
+<dt>證據</dt><dd><b>本期無新增一手讀數</b>，沿用 2026-W46 已查核事實：Vera Rubin BOM 口徑爭議（Digitimes：HBM＋DRAM 約 62%／GPU 約 26%；The Information：記憶體 29%，<b>需核實原文，兩者差一倍</b>）；HBM4 單價 17~18 → 31~32 美元/GB（≈4~5 美元/Gb）；NVIDIA 毛利率 75% → Q3 約 74% → Q4 指引 71~72%；高通手機芯片 −26% 並明言受記憶體漲價拖累。<b>本期新增的關聯：應材 EPIC 伙伴的策略方向是「材料、設備、製程並行開發以縮短週期」，這是產業對成本壓力的結構性回應。</b><span class="src-tag">（毛利率與高通為一手；BOM 與單價為轉引）</span></dd>
+<dt>受益</dt><dd>三星、SK 海力士、美光；南亞科、華邦電；環球晶、台勝科；具長約預付款能力的材料商。</dd>
+<dt>受害</dt><dd>NVIDIA（毛利與 BOM 主導權）；二線 GPU／ASIC；手機與 PC OEM；二線代工與封測。</dd>
+<dt>傳導</dt><dd>HBM 合約重議 → 記憶體佔 BOM 上升 → GPU 廠漲價或降規 → 系統成本上升 → 終端出貨下修 → 回頭壓縮 GPU 拉貨。目前走到第四步（高通）。</dd>
+<dt>下一步</dt><dd>① <b>11-18 NVIDIA 毛利率是否跌破 72%、Q4 指引是否 &gt;1,200 億</b>（本期最重要的單一查核點）；② 12 月 HBM4 LTA 簽約價；③ 手機與 PC 品牌 2027 出貨下修幅度。</dd>
+</dl>
+</div>
+<div class="alert a-red">
+<div class="hd"><span class="code">A3</span><span class="ttl">L7b 材料：漲價從化學品擴散到晶圓基材（延續）</span><span class="chip red">紅</span><span class="chip">2026-W43 已紅 → 本期無新增</span></div>
+<dl>
+<dt>方向</dt><dd>負向（成本推升）。本期<b>沒有新的漲價讀數</b>，維持上期判定，不為了「這週也要有事」而硬編新證據。</dd>
+<dt>證據</dt><dd>沿用 2026-W46：光刻膠全品項 +15%、高階 ArF +16~22%（10-01 起）；環球晶 11-03 法稱 12 吋滿載、客戶願把 2027 調價提前至 Q4、美光認購 5 億美元可轉債鎖料；投顧估 2027 矽晶圓 ASP +11~13%、12 吋 +10~20%（轉引，需核實原文）。<b>本期新關聯：BIS 新規限縮 OSAT 豁免，可能使材料合規成本再上一層，但尚無報價證據，不計入。</b></dd>
+<dt>受益</dt><dd>環球晶、台勝科、合晶；JSR／東京應化／信越；有長約預付款能力的材料商。</dd>
+<dt>受害</dt><dd>台積電（Q4 毛利率指引 65~67%）；二線代工與封測；NVIDIA；終端系統廠。</dd>
+<dt>傳導</dt><dd>材料漲 → 晶圓製造成本上升 → 代工 ASP 調漲 → 晶片 ASP → 系統成本 → 需求彈性。目前走到第二步，終端證據為高通。</dd>
+<dt>下一步</dt><dd>① 12 月矽晶圓長約簽約價是否 &gt;15%；② 台積電 Q4 實際毛利率是否跌破 65%；③ 中方若反制稀土／光刻膠，是否形成第二波成本衝擊。</dd>
+</dl>
+</div>
+<div class="alert a-red">
+<div class="hd"><span class="code">A4</span><span class="ttl">L8 電力：1.85GW 守住，但許可凍結未解（延續，略緩）</span><span class="chip red">紅</span><span class="chip">2026-W43 轉紅 → 本期略緩</span></div>
+<dl>
+<dt>方向</dt><dd>負向，但<b>流動性風險下降</b>。CoreWeave 維持 1.85GW 且簽約電力升至 &gt;4.6GW，上期最大的打臉條件沒有發生。</dd>
+<dt>證據</dt><dd>CoreWeave Q3（11-11）：年底活躍電力 <b>1.85GW 維持</b>、當前 &gt;1.7GW、簽約電力 <b>&gt;4.6GW</b>（上期為 4.2GW）；未來 3 個月客戶預付款與押金約 90 億，降低短期流動性壓力。負面仍在：德州許可凍結延續、無新的行政令鬆綁；2028 年前美國資料中心毛缺口 70GW（摩根士丹利轉引）。<span class="src-tag">（公司電話會為一手；缺口為研報轉引）</span></dd>
+<dt>受益</dt><dd>已取得併網權的存量站點；表後供電設備；電網設備——受益者是「已下單者」。</dd>
+<dt>受害</dt><dd>2027 年要上線的新案；需通電時程才能認列的 GPU 拉貨；新建案融資。</dd>
+<dt>傳導</dt><dd>許可凍結 → 併網排隊延長 → 通電時程後移 → 機櫃上線遞延 → GPU 拉貨後移（時間損失，不是量的消失）。</dd>
+<dt>下一步</dt><dd>① 12 月 ERCOT 互連審計；② CoreWeave 4.6GW 簽約電力中，有多少在 2027 前可通電；③ 若無擔保債關門，表後供電是否改由客戶出資（那是需求繞路，不是消失）。</dd>
+</dl>
+</div>
+<div class="note"><b>為什麼 L2 判「超越」而不是「偏離」：</b>v1.1 的 L2 是「五大雲廠 2026 基礎設施支出約 6,900 億美元，容忍 ±10%」，本週轉引的七大主體 6,400~7,750 億（+78%）仍在上緣附近；<b>超出預算規模是「超越」，不是「偏離」</b>。真正的問題是自由現金流轉負——那是反射性迴路的偏離訊號，已記在 A1。<b>把 L2 也判紅，就是把同一個現金流問題算兩次。</b></div>
+</section>
+<section id="s4">
+<h2><span class="num">4</span>四張圖看本週</h2>
+<p class="lead">圖 2 看 11-16 單日跨市場跌幅（誰被賣最重）、圖 3 看個股層級的差異、圖 4 看 HBM 單價階梯、圖 5 看資金成本分層。<b>圖 2～3 跌一律綠、漲一律紅（台股慣例）</b>；圖 4～5 為中性資料視覺。</p>
+<h3>圖 2｜11-16 單日：全球 AI 硬體同步重估，亞洲比歐美更重</h3>
+<div class="chartbox">
+<div class="chart" id="chart-mkt"></div>
+<p class="cap">口徑：<b>2026-11-16 單日收盤</b>，各交易所當地收盤價，未換匯。<b>櫃買 −6.80%、台股加權 −6.03%（−2,635.04 點，史上第二大跌點）</b>，費半 −5.28%、KOSPI −3.59%；美股三大指數跌幅較小（道瓊 −1.41%、標普 −1.92%、納指 −2.49%）；上證 −0.87%、<b>恒指 +0.49% 是唯一收紅</b>。香港上漲與中國資產 AI 硬體相關性低一致。來源：各交易所（2026-11-16）。</p>
+</div>
+<h3>圖 3｜11-16 個股：設備與記憶體跌幅深於龍頭</h3>
+<div class="chartbox">
+<div class="chart tall" id="chart-stock"></div>
+<p class="cap">同一天、同一方向，但<b>跌序不是隨機的</b>：愛德萬 −11.12%、東京電子 −7.05%（兩家合計拖累日經 1,072 點，佔當日跌點七成以上）；SK 海力士 −7.89%、美光 −7.62%；台積電 −6.34%、AMD −5.6%；<b>NVDA −4.12% 反而跌幅較淺</b>，自 10 月初高點累計回撤約 35%、市值蒸發約 2 兆美元。跨市場口徑：日股／韓股／台股為原股，美光／AMD／NVDA 為美股；財年各異（NVDA FY27、其餘 2026 自然年或 FY2026），幣別未換算。來源：各交易所收盤（2026-11-16）。</p>
+</div>
+<h3>圖 4｜HBM 單價階梯：$1.5 → $2.0 → $4~5／Gb（沿用 2026-W46）</h3>
+<div class="chartbox">
+<div class="chart" id="chart-hbm"></div>
+<p class="cap">單位統一為<b>美元/Gb</b>（虛線＝HBM3E 基準 1.5）。HBM3E 約 1.5 是現行合約／現貨混合口徑；HBM4 2026H2 約 2.0 是量產初期價；2027 年的 4.0 與 5.0 是<b>談判區間而非成交價</b>；摩根大通對 2027 混合 ASP 估 2.8（+42%），另有「+96%」表述，兩者口徑不同不可相加。<b>本期無新成交價，此圖沿用 2026-W46，仍對應 P6 的尺失效問題。</b>來源：Digitimes／The Information／摩根大通轉引（2026-11-04～07），<b>需核實原文</b>。</p>
+</div>
+<h3>圖 5｜資金成本分層：無擔保債 16% 與投資級 5.85% 並存</h3>
+<div class="chartbox">
+<div class="chart" id="chart-debt"></div>
+<p class="cap">殖利率（%），皆為 2026-11-06 前後口徑，<b>10Y 更新為 11-10 的 4.95%</b>。Meta 11-03 新發 2031 券 5.85%（投資級新發）；CoreWeave 三檔無擔保債 15.5~17.41%（票面 8.5~9.75%，二級市場）。一張是新發、一張是二手，本來不該直接比；但 10 個百分點的距離已不能用發行方式解釋。<b>本期最關鍵的不是利率數字，而是 CoreWeave 11-11 親口說「2027 年前不打算再發母公司無擔保債」——16% 不再是恐慌價，而是定價的結果。</b>來源：FINRA TRACE／CNBC 轉引（11-06）、CoreWeave 電話會（11-11）、CME（11-10）。</p>
+</div>
+</section>
+<section id="s5">
+<h2><span class="num">5</span>候選修正提案區</h2>
+<p class="lead">以下八項是我認為<b>基準可能設錯</b>的地方（不是事實偏離）。依六步協議寫成提案，<b>全部未經振達同意，不得生效；本期判定仍沿用 v1.1</b>。P0～P6 為前期留檔，本期補新證據；<b>P7 為本期新增</b>。</p>
+<div class="prop">
+<div class="ph"><span class="pid new">P7</span><span class="pt">外生｜管制地緣需設可查核門檻（本期新增）</span><span class="chip purple">待議</span></div>
+<table>
+<tr><td>改哪一格</td><td>外生「管制／地緣」列的基準預期欄與偏離訊號欄（v1.1 目前只有一句「維持既有框架、逐步收緊」，<b>無容忍區間、無偏離訊號</b>）</td></tr>
+<tr><td>原值 → 建議值</td><td>「出口管制維持既有框架、逐步收緊」→ 維持原基準文字，另增：<b>① 管制客體清單</b>（實體晶片／雲端算力／設計服務／設備材料）；<b>② 可查核偏離訊號</b>：新增「遠端算力、訂閱式 access 或第三國資料中心」被納入許可，或許可國別增加 ≥3 國，或既有豁免被限縮，任一成立即判偏離。</td></tr>
+<tr><td>依據</td><td>BIS 11-16 臨時最終規則草案：遠端算力納管、5 國列高轉運風險、晶圓廠／OSAT 豁免限縮、11-19 生效。中國外交部與商務部 11-17 表示將反制；台灣經濟部 11-17 表示由美系客戶申請許可。<b>時點：2026-11-16～11-17</b></td></tr>
+<tr><td>性質判定</td><td><b>兩件事同時發生，必須分開：</b>事實面已達「偏離」（故出 A6 紅卡）；尺度面「逐步收緊」無法查核、無法設定容忍（故提本提案）。<b>不能用提案取代示警，也不能只出示警就假裝尺還能用。</b></td></tr>
+<tr><td>影響面</td><td>若立此門檻，未來的管制事件可直接判層，不必每次都落框架外或靠「我覺得超出逐步」的主觀描述；也能把 A4（國內許可）與 A6（跨境管制）分成兩個可分別追蹤的訊號，不再互相混淆。</td></tr>
+<tr><td>我的傾向</td><td>建議先補<b>定義與偏離訊號</b>，<b>暫不改動基準文字與任何數值</b>。待 11-19 生效後觀察首批許可實務，再決定是否需量化容忍。</td></tr>
+</table>
+</div>
+<div class="prop">
+<div class="ph"><span class="pid new">P0</span><span class="pt">新增「外生｜AI 政策與許可」一列（2026-W45 新增，本期重新定位）</span><span class="chip purple">待議</span></div>
+<table>
+<tr><td>改哪一格</td><td>新增第 14 列（v1.1 目前 13 列）</td></tr>
+<tr><td>原值 → 建議值</td><td><b>無此列</b> → 建議：聯邦與州層級的資料中心許可、AI 監管狀態。<b>偏離訊號</b>：主要州新建凍結持續 &gt;3 個月；或聯邦立法限制資料中心用電／審批。</td></tr>
+<tr><td>依據（新增）</td><td>本期德州凍結延續但<b>無新行政令</b>；11-16 BIS 新規已<b>另列</b>外生管制（A6／P7），不再算作本列證據。<b>時點：2026-11-11～11-16</b></td></tr>
+<tr><td>影響面</td><td><b>本期把它降回「待議優先」而非「急件」</b>：真正造成定價衝擊的是跨境管制（P7）與治理（A5），不是州級許可。若現在立列，門檻仍應設在「已生效的行政措施」而非「當選人喊話」。</td></tr>
+</table>
+</div>
+<div class="prop">
+<div class="ph"><span class="pid new">P6</span><span class="pt">L4 容忍區間已失去鑑別力：須區分「同世代合約價」與「世代轉換跳升」</span><span class="chip purple">待議</span></div>
+<table>
+<tr><td>改哪一格</td><td>L4 基準預期欄、容忍區間欄</td></tr>
+<tr><td>原值 → 建議值</td><td>「合約價 QoQ +5~25%」→ 拆成兩把尺：① 同世代合約價 QoQ 維持 +5~25%；② 世代轉換（HBM3E→HBM4）不計入 QoQ，改以<b>每 bit 成本</b>與<b>每美元 token 產出</b>衡量。</td></tr>
+<tr><td>依據</td><td>HBM3E 約 1.5 → HBM4 2027 談判 4~5 美元/Gb（+167~233%）；摩根大通 2027 混合 ASP +42%／另一表述 +96%；TrendForce +121%；產業會議稱 11~12 月 LTA 到期重議 60~70%。<b>本期無新成交價，證據沿用 2026-W46。</b></td></tr>
+<tr><td>性質判定</td><td><b>基準設錯，不是事實偏離。</b>QoQ 是為同規格漲價設計的，遇到世代轉換會把「升級」誤記成「漲價」。</td></tr>
+<tr><td>影響面</td><td>若不改，L4 在 2027 年全年都會是「超越」，失去分辨「真的缺貨」與「只是換代」的能力；A2 的成本衝擊也無法量化。</td></tr>
+<tr><td>我的傾向</td><td>先做口徑定義補正、暫不動數值，等 2027Q1 HBM4 實際簽約價落地後再校準。<b>11-18 NVIDIA 財報的 HBM 成本說法是下一個觀察點。</b></td></tr>
+</table>
+</div>
+<div class="prop">
+<div class="ph"><span class="pid">P1</span><span class="pt">新增「外生｜能源價格與通道」一列（2026-W43 留檔）</span><span class="chip purple">待議</span></div>
+<table>
+<tr><td>改哪一格</td><td>新增列（與 P0 競合，可合併為「外生｜政策與能源」兩子欄）</td></tr>
+<tr><td>原值 → 建議值</td><td><b>無此列</b> → 建議：布蘭特 &gt;100 美元且持續 4 週視為成本推升訊號；偏離 &gt;120 或荷姆茲封鎖。</td></tr>
+<tr><td>依據（新增）</td><td>本期無新一手油價讀數；10 月 CPI 能源分項 <b>+0.7% MoM</b>（較 9 月 +5.2% 大幅回落），整體 CPI 降溫主要來自能源。<b>未達門檻，維持待議、不觸發。</b></td></tr>
+<tr><td>影響面</td><td>油價同時推升 PPI 與材料／運輸成本，目前被拆散判定；CPI 能源分項是這個缺口的可查核入口。</td></tr>
+</table>
+</div>
+<div class="prop">
+<div class="ph"><span class="pid">P2</span><span class="pt">L7a 時滯 6～12 個月 → 3～9 個月，並區分「供給型／需求型遞延」</span><span class="chip purple">待議</span></div>
+<table>
+<tr><td>改哪一格</td><td>L7a 基準預期欄 ＋ 偏離訊號欄</td></tr>
+<tr><td>原值 → 建議值</td><td>「落後 capex <b>6～12 個月</b>」→「<b>3～9 個月</b>」；「出貨遞延」→ 拆「供給型遞延（缺料／缺工，不算偏離）」與「需求型遞延（砍單／改期，算偏離）」。</td></tr>
+<tr><td>依據（新增）</td><td>應材 FY26Q4 營收 +53%、FY27Q1 指引 111 億 ±5 億、CEO 稱 2026 日曆年半導體事業 &gt;40%（11-12，一手）；TEL FY27Q2 營益 +86.4%、TOWA 訂單創新高（11-09，一手）。<b>全部是供給型緊缺，不是需求轉弱。</b></td></tr>
+<tr><td>影響面</td><td>若不拆，「出貨遞延」會把缺料誤判為需求轉弱。本期 L7a 判超越，但規則缺口仍在。</td></tr>
+</table>
+</div>
+<div class="prop">
+<div class="ph"><span class="pid">P3</span><span class="pt">L4 偏離訊號增列「技術架構破局」</span><span class="chip purple">待議</span></div>
+<table>
+<tr><td>改哪一格</td><td>L4 偏離訊號欄（<b>增列，不移除</b>現有三項）</td></tr>
+<tr><td>原值 → 建議值</td><td>增列「非韓系廠商在先進 DRAM 架構（4F² 及以下、3D DRAM）取得<b>量產驗證</b>並進入伺服器客戶」。</td></tr>
+<tr><td>依據</td><td>NVIDIA 要求台積電評估 3D DRAM（The Information 11-07 轉引，需核實原文）；長鑫 DRAM 份額 3%→8%、HBM3 試產。<b>11-16 的新聞是「管制迫使我國中立廠商分工重組」，不是量產驗證，故本期仍不觸發。</b></td></tr>
+<tr><td>影響面</td><td>門檻須設在「量產驗證」而非「評估」，否則會過度反應。</td></tr>
+</table>
+</div>
+<div class="prop">
+<div class="ph"><span class="pid">P4</span><span class="pt">配套層（光模組／PCB／液冷）是否應獨立立尺</span><span class="chip purple">待議</span></div>
+<table>
+<tr><td>改哪一格</td><td>新增三列，或正式宣告「不立尺、僅記錄」</td></tr>
+<tr><td>原值 → 建議值</td><td>①立三列（光模組出貨 YoY、PCB 交期、液冷滲透率）；或 ②宣告不立尺並從框架圖移除。</td></tr>
+<tr><td>依據（新增）</td><td>11-16 配套層同步殺跌但<b>無一手量可查</b>；11-09 曾 +10~16%，方向反覆。這正好說明它跟的是融資端而非訂單端。</td></tr>
+<tr><td>影響面</td><td>治理缺口，非判定錯誤。仍傾向 ②，理由不變：可查核一手指標尚未穩定。</td></tr>
+</table>
+</div>
+<div class="prop">
+<div class="ph"><span class="pid">P5</span><span class="pt">L2 基準值口徑未定義，已失去鑑別力</span><span class="chip purple">待議</span></div>
+<table>
+<tr><td>改哪一格</td><td>L2 基準預期欄與容忍區間</td></tr>
+<tr><td>原值 → 建議值</td><td>「五大 CSP 2026 基礎設施支出約 <b>6,900 億美元</b>，容忍 ±10%」→ 明確列示四家＋Oracle，口徑統一為<b>含融資租賃</b>，基準更新為約 <b>8,200 億美元</b>，容忍 ±10%。</td></tr>
+<tr><td>依據（新增）</td><td>本期七大主體 capex 6,400~7,750 億（+78%）、高盛估 7,650 億／2027 達 1.2 兆，<b>均為轉引需核實</b>；四大 7,300 億＋Oracle 900~950 億（前期已列）；亞馬遜／Meta／Alphabet FCF 轉負影響會計科目。</td></tr>
+<tr><td>影響面</td><td>照現值判定，L2 會永久停在「超越上緣」，無法分辨「真的超支」與「口徑不同」。</td></tr>
+</table>
+</div>
+<div class="note red"><b>治理聲明：</b>以上八項<b>全部未生效</b>。本期所有判定一律沿用 <b>v1.1</b>，未改動任何一格數值或容忍區間。若振達同意其中任一項，才依六步協議推進至 v1.2，並在下一期週報公告 diff；未獲同意的提案留檔，下期再議。<b>P7 有時效性</b>——BIS 新規 11-19 生效，首批許可實務會決定門檻該怎麼設。</div>
+<div class="note"><b>為什麼我沒有為「關鍵人物／治理」提立尺：</b>提了會變成一個無法查核的條目——「CEO 是否離職／被調查」不是可量化指標。本期事件已升紅，但我仍不以它改 L3；<b>如果當初立了尺，現在就必須用一個會計無法驗證的動機去改寫一個用財報判定的層級，那才是真正的判準污染。</b>寧可承認框架有缺口，也不要塞一個假門檻進去。</div>
+</section>
+<section id="s6">
+<h2><span class="num">6</span>近期查核日曆（11/18～12 月，台北時間 GMT+8）</h2>
+<p class="lead">每一項都寫明「要看的數字」與「打臉條件」——打臉條件成立時，對應層級的判定就要改，不是再解釋一次。美股 11 月已結束夏令時間，盤後財報時間按冬令時換算（ET＋13 小時）。上期查核點已全數開獎，本節改列下一段。</p>
+<table>
+<thead>
+<tr>
+<th style="width:112px">日期（台北）</th>
+<th style="width:170px">事件</th>
+<th>要看的數字</th>
+<th style="width:230px">打臉條件（成立即改判）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><b>11/18（三）</b><br/>05:20<br/><span style="font-size:11px;color:#8a93a3">（11/17 美股盤後）</span></td>
+<td>NVIDIA FY27Q3</td>
+<td>營收 vs 1,080 億指引、資料中心占比（&gt;85%）、<b>Q4 指引是否 &gt;1,200 億</b>、毛利率是否守住 72%、HBM 成本與 3D DRAM 說法、<b>由誰主持電話會／是否公布繼任時程</b></td>
+<td>Q4 指引 &lt;1,200 億、毛利率 &lt;72%、或資料中心占比 &lt;85% → <b>L3 由「超越」轉「待觀察」</b>；治理若影響財測口徑 → A5 維持紅並檢討是否波及 L3。<span class="revnote">修訂註記（2026-11-19，台北時間，UTC+8）：原寫毛利率 &lt;71%；經核准統一為 &lt;72%（與 2026-W45 一致）。公司財測原文「Q4 指引 71~72%」未改。</span></td>
+</tr>
+<tr>
+<td><b>11/19（四）</b></td>
+<td>BIS 臨時最終規則生效</td>
+<td>首批許可核發／駁回、&gt;1,200 TPP 門檻實務認定、90 日補辦細則、台廠代工是否被要求標註終端用途</td>
+<td>若許可普遍核發且豁免實質保留 → <b>A6 由紅降橙、管制回到「逐步收緊」</b>；若中方反制稀土／材料 → A3 與 A6 合流為成本＋供給雙重衝擊。</td>
+</tr>
+<tr>
+<td><b>11/20 前</b><br/><span style="font-size:11px;color:#8a93a3">（時點未定）</span></td>
+<td>中國反制措施</td>
+<td>是否針對稀土、光刻膠、矽晶圓或資料中心服務；是否影響 L7b 價格與 L6 出貨</td>
+<td>若具體措施觸及材料出口 → <b>A3 升級、L7b 偏離幅度擴大</b>；若僅外交表態 → 維持待觀察，不改判定。</td>
+</tr>
+<tr>
+<td><b>11 月下旬</b><br/><span style="font-size:11px;color:#8a93a3">（觀察窗口）</span></td>
+<td>無擔保債市場復盤</td>
+<td>CoreWeave 2032 券殖利率是否回落 &lt;15%、90 億客戶預付款是否入帳、是否出現第二家 neocloud 跟進暫停發債</td>
+<td>殖利率回落且預付款入帳 → <b>A1 由「買單者被篩選」降回「分層」</b>；若更多公司跟進 → A1 升為結構性斷裂。</td>
+</tr>
+<tr>
+<td><b>12 月 FOMC</b><br/><span style="font-size:11px;color:#8a93a3">（確切日程待官方）</span></td>
+<td>政策利率決議</td>
+<td>是否升息 25bp 至 4.00~4.25%、是否出現 50bp、點陣圖年底中值是否偏離 4.1% ±25bp</td>
+<td>升息 50bp 或點陣圖中值 &gt;4.35% → <b>外生利率由「符合」轉「偏離」</b>，A1 再度升級；維持 25bp → 現行判定不變。</td>
+</tr>
+</tbody>
+</table>
+<div class="note warn"><b>時程提醒：</b>本週最密集的是 <b>11/18 05:20 NVIDIA 財報</b>，它同時是 L3 判定、A2 毛利率傳導、A5 治理主持人的交會點——<b>一份財報要回答三個問題</b>。其次為 11/19 BIS 生效，這是 P7 門檻設計的實務依據。另：Nebius Q3、美國 10 月 PPI 已於 11/12～13 公布，本期未列為主要查核點，若後續發現與 A1／A3 矛盾，會在下期補記。</div>
+</section>
+<section id="s7">
+<h2><span class="num">7</span>反面證據與自我檢視</h2>
+<p class="lead">本週有明確偏離（L7b、L8、管制、反射性），不是「多數訊號符合預期」的一週；但紅卡增加到六張時，更要找反證。以下五條是我能想到最強的反面證據，其中兩條直接打到我自己。</p>
+<div class="grid2">
+<div class="card">
+<div class="tag">反證 1</div>
+<h4>CoreWeave 的利多是真的，不是公關</h4>
+<p>營收 +168%、backlog 1,325 億、全年指引上調、1.85GW <b>未</b>下調、簽約電力還從 4.2GW 升到 &gt;4.6GW。上期我擔心「融資收緊會砍電力目標」，<b>這個預測被一手數據打臉了</b>。如果只看無擔保債關門就寫「擴產停擺」，那是選擇性解讀。</p>
+</div>
+<div class="card">
+<div class="tag">反證 2</div>
+<h4>治理事件的因果我不能證明</h4>
+<p>BIS 新規在黃仁勳辭任後 4 天發布，時間上接近，但<b>我沒有任何一手證據顯示兩者有因果關係</b>。NPR 提到財長先前就想切斷 Megaspeed 取水，代表管制動機可能早就存在。A5 的文字我已標「僅標註關聯」，這條反證提醒我不要越線。</p>
+</div>
+<div class="card">
+<div class="tag">反證 3</div>
+<h4>11-16 的跌可能是部位，不是展望</h4>
+<p>美銀調查淨超配單月降 25pp，說明賣壓很大一部份是<b>部位調整</b>。11-09～13 費半才剛 +8.05%，兩週合計仍接近平盤。若 11-18 財報強，這波可能被回顧為「換手」而非「轉向」——我的 A1 就偏重了。</p>
+</div>
+<div class="card">
+<div class="tag">反證 4</div>
+<h4>恒指 +0.49% 與台股 −6.03% 同城不同命</h4>
+<p>同一天、同一個亞洲時區，中國資產沒跟跌。這說明<b>市場不是在賣「AI」，是在賣「AI 資本開支的融資槓桿」</b>——中國資產因槓桿較低而相對免疫。支持我的 A1 機制，但也提醒我不要把「AI 類股」當成同質群體。</p>
+</div>
+<div class="card">
+<div class="tag">反證 5（打我自己）</div>
+<h4>我的尺在管制列根本不存在</h4>
+<p>v1.1 寫「逐步收緊」但沒有容忍、沒有門檻。所以我判 A6 偏離時，用的是<b>語義判斷</b>而非尺——這正是我批評別人的「只給結論不給口徑」。我把修正寫成 P7，<b>但在振達核准前，A6 的紅色仍然建立在一個主觀判斷上</b>，這點我必須自己承認。</p>
+</div>
+</div>
+<div class="note"><b>我最可能犯的錯（自我點名）：</b>把「治理＋管制＋融資」三件事打包成一個「AI 見頂」敘事。事實上本期八層判定<b>全部不變</b>，L6 與 L7a 還更穩。真正的風險在側軌的定價與融資機制，不在訂單。另一個風險是重複計數：CPI 核心 0.3% 同時推升 10Y 與壓抑估值，若我在利率列與反射性列都給滿權重，會高估整體風險。<b>我的處理是：利率維持綠、只在 A1 記一次；讀者若覺得這太寬鬆，那是可辯論的判斷，不是口徑錯誤。</b></div>
+<h3>框架外清單（只記錄、不判定）</h3>
+<table>
+<thead><tr><th style="width:160px">變數</th><th style="width:132px">本期狀態</th><th>為什麼不塞進既有層</th></tr></thead>
+<tbody>
+<tr><td><b>關鍵人物／治理</b></td><td><span class="chip red">升紅 · CEO 交接</span></td><td>無法設可查核門檻；寫進判定尺會讓任何個人事件都能觸發改判。→ 不提案，僅在財報時檢查「決策是否延遲」。</td></tr>
+<tr><td><b>AI 政策與許可</b></td><td><span class="chip gray">德州凍結延續</span></td><td>v1.1「管制／地緣」專指出口管制，此為美國<b>國內</b>基建許可。本期無新行政令，降回待議。→ P0</td></tr>
+<tr><td><b>匯率（台幣）</b></td><td><span class="chip gray">沿用 11-09：32.882</span></td><td>本期無新一手收盤，不編造數值。v1.1 無匯率列，台幣貶值對台積電是營收順風、對外資是匯損逆風。</td></tr>
+<tr><td><b>跨層成本傳導</b></td><td><span class="chip amber">高通已示範</span></td><td>v1.1 是分層判定，沒有「L4 漲價 → L3 毛利 → L1 需求」的傳導欄，只能拆三段記帳。</td></tr>
+<tr><td><b>許可／管制動機</b></td><td><span class="chip amber">時間相關，因果未證</span></td><td>治理風波與 BIS 新規相隔 4 天，但無一手因果證據；只記關聯，不寫成「因為…所以…」。</td></tr>
+</tbody>
+</table>
+</section>
+<footer>
+<div><b>製作：</b>阿圖｜<b>期間：</b>2026-11-11 ～ 2026-11-16｜<b>資料截止：</b>台北時間 2026-11-17 06:30（美股 11-16 收盤、亞股 11-16 收盤；NVIDIA FY27Q3 財報尚未公布）｜<b>框架版本：</b>v3｜<b>判定尺：</b>基準預期表 v1.1（2026-09-21 核定，本期未修改）</div>
+<div style="margin-top:8px"><b>一手來源：</b>台積電 10 月營收公告（11-10）、BLS 10 月 CPI（11-10）、CoreWeave 2026Q3 財報與電話會（11-11）、應用材料 FY26Q4 財報（11-12）、NVIDIA CEO 交接官方聲明（11-12）、美國 BIS 臨時最終規則草案（11-16）、中國外交部／商務部與台灣經濟部表態（11-17）、美銀全球基金經理調查（11-06～12）、各交易所收盤（11-13／11-16）、CME FedWatch。</div>
+<div style="margin-top:6px"><b>轉引（需核實原文，不得單獨構成示警依據）：</b>摩根士丹利 TPP 換算與電力缺口、高盛 AI capex 預測、七大主體 capex 6,400~7,750 億與三大雲廠 FCF 轉負（11-18 媒體彙整）、FINRA TRACE／CNBC CoreWeave 債券與 CDS（11-06）、Digitimes／The Information HBM4 單價與 BOM（11-04～07）、NPR 關於人事與 Megaspeed 的關聯報導（中國否認、未獨立證實）、野村與花旗／瑞銀對 CPI 與中國 AI 的解讀。<b>A1 升級另以 CoreWeave 電話會、BLS 與美銀調查（皆一手）佐證；A6 另以 BIS 草案與兩國官方表態（一手）佐證。</b></div>
+<div style="margin-top:6px"><b>口徑提醒：</b>跨市場比較須逐處注意財年與幣別——NVIDIA 為 FY27Q3（截至 11-17 盤後公布）、應材為 FY26Q4（截至 2026-10-25）、台積電／三星／SK 海力士為 2026Q3 自然年、CoreWeave 為 2026Q3；日圓、韓元、台幣、美元未統一換算者已逐處標註原幣。10 月 CPI <b>無官方年率</b>（2025 年政府停擺缺基期），本文只引用 MoM；美銀插值估整體 3.8%／核心 2.7% 為模型推演，非官方統計。HBM 單價的「美元/Gb」與「美元/GB」不可互換（1GB≈8Gb）。股價漲跌採台股慣例紅漲綠跌，與判定語意用色（符合綠／超越藍／偏離紅／待觀察橙）分開。</div>
+<div class="disc"><b>免責聲明</b>：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</div>
+</footer>
+</div>
+<script>
+(function () {
+  var C = {
+    red: '#c8352f', green: '#1c7f52', blue: '#1f5fa8', amber: '#b06a00',
+    ink: '#1b1f2a', ink2: '#4d5666', ink3: '#8a93a3', line: '#e3e6ec'
+  };
+  var charts = [];
+
+  function init(id, option) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var c = echarts.init(el);
+    c.setOption(option);
+    charts.push(c);
+  }
+
+  function barColor(v) {
+    return {
+      value: v,
+      itemStyle: { color: v >= 0 ? C.red : C.green, borderRadius: v >= 0 ? [0, 3, 3, 0] : [3, 0, 0, 3] },
+      label: {
+        show: true,
+        position: v >= 0 ? 'right' : 'left',
+        formatter: (v > 0 ? '+' : '') + v + '%',
+        color: v >= 0 ? C.red : C.green,
+        fontSize: 11
+      }
+    };
+  }
+
+  /* 圖 2：11-16 單日各市場 */
+  var mkt = [
+    { n: '櫃買指數（台）', v: -6.80 },
+    { n: '台股加權（台）', v: -6.03 },
+    { n: '費城半導體（美）', v: -5.28 },
+    { n: 'KOSPI（韓）', v: -3.59 },
+    { n: '納斯達克（美）', v: -2.49 },
+    { n: '日經 225（日）', v: -2.42 },
+    { n: '標普 500（美）', v: -1.92 },
+    { n: '道瓊（美）', v: -1.41 },
+    { n: '上證指數（中）', v: -0.87 },
+    { n: '恒生指數（港）', v: 0.49 }
+  ];
+  init('chart-mkt', {
+    animationDuration: 700,
+    grid: { left: 142, right: 74, top: 24, bottom: 60 },
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      formatter: function (p) { return p[0].name + '：' + p[0].value + '%'; }
+    },
+    xAxis: {
+      type: 'value',
+      nameTextStyle: { color: C.ink3, fontSize: 11 },
+      axisLabel: { color: C.ink3, fontSize: 11, formatter: '{value}%' },
+      splitLine: { lineStyle: { color: '#eef1f5' } },
+      axisLine: { lineStyle: { color: C.line } }
+    },
+    yAxis: {
+      type: 'category',
+      data: mkt.map(function (d) { return d.n; }).reverse(),
+      axisLabel: { color: C.ink2, fontSize: 11 },
+      axisLine: { lineStyle: { color: C.line } },
+      axisTick: { show: false }
+    },
+    series: [{
+      type: 'bar', barWidth: 16,
+      data: mkt.map(function (d) { return barColor(d.v); }).reverse(),
+      markLine: {
+        silent: true, symbol: 'none',
+        lineStyle: { color: C.ink3, type: 'dashed', width: 1 },
+        data: [{ xAxis: 0 }],
+        label: { show: false }
+      }
+    }]
+  });
+
+  /* 圖 3：11-16 個股跌幅 */
+  var stock = [
+    { n: '愛德萬測試（日）', v: -11.12 },
+    { n: 'SK 海力士（韓）', v: -7.89 },
+    { n: '美光（美）', v: -7.62 },
+    { n: '東京電子（日）', v: -7.05 },
+    { n: '台積電（台）', v: -6.34 },
+    { n: 'AMD（美）', v: -5.60 },
+    { n: '費半指數', v: -5.28 },
+    { n: '三星電子（韓）', v: -4.47 },
+    { n: 'NVIDIA（美）', v: -4.12 }
+  ];
+  init('chart-stock', {
+    animationDuration: 700,
+    grid: { left: 140, right: 76, top: 30, bottom: 56 },
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      formatter: function (p) { return p[0].name + '：' + p[0].value + '%'; }
+    },
+    xAxis: {
+      type: 'value', min: -13, max: 2,
+      axisLabel: { color: C.ink3, fontSize: 11, formatter: '{value}%' },
+      splitLine: { lineStyle: { color: '#eef1f5' } },
+      axisLine: { lineStyle: { color: C.line } }
+    },
+    yAxis: {
+      type: 'category',
+      data: stock.map(function (d) { return d.n; }).reverse(),
+      axisLabel: { color: C.ink2, fontSize: 11 },
+      axisLine: { lineStyle: { color: C.line } },
+      axisTick: { show: false }
+    },
+    series: [{
+      type: 'bar', barWidth: 18,
+      data: stock.map(function (d) { return barColor(d.v); }).reverse(),
+      markLine: {
+        silent: true, symbol: 'none',
+        lineStyle: { color: C.ink3, type: 'dashed', width: 1 },
+        data: [{ xAxis: 0 }],
+        label: { show: false }
+      }
+    }]
+  });
+
+  /* 圖 4：HBM 單價階梯 */
+  init('chart-hbm', {
+    animationDuration: 700,
+    grid: { left: 58, right: 30, top: 40, bottom: 52 },
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      formatter: function (p) { return p[0].name + '：' + p[0].value + ' 美元/Gb'; }
+    },
+    xAxis: {
+      type: 'category',
+      data: ['HBM3E\n現行', 'HBM4\n2026H2', 'HBM4\n2027 混合 ASP\n(JPM 估)', 'HBM4\n2027 談判\n(下緣)', 'HBM4\n2027 談判\n(上緣)'],
+      axisLabel: { color: C.ink2, fontSize: 10.5, interval: 0, lineHeight: 14 },
+      axisLine: { lineStyle: { color: C.line } },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value', name: '美元 / Gb', nameTextStyle: { color: C.ink3, fontSize: 11 },
+      max: 5.6, min: 0,
+      axisLabel: { color: C.ink3, fontSize: 11 },
+      splitLine: { lineStyle: { color: '#eef1f5' } },
+      axisLine: { show: false }
+    },
+    series: [{
+      type: 'bar', barWidth: 42,
+      data: [
+        { value: 1.5, itemStyle: { color: '#9ec9b3', borderRadius: [3, 3, 0, 0] } },
+        { value: 2.0, itemStyle: { color: '#6fa8d6', borderRadius: [3, 3, 0, 0] } },
+        { value: 2.8, itemStyle: { color: C.blue, borderRadius: [3, 3, 0, 0] } },
+        { value: 4.0, itemStyle: { color: '#d98a52', borderRadius: [3, 3, 0, 0] } },
+        { value: 5.0, itemStyle: { color: C.red, borderRadius: [3, 3, 0, 0] } }
+      ],
+      label: {
+        show: true, position: 'top', color: C.ink2, fontSize: 11.5,
+        formatter: function (p) { return p.value.toFixed(1); }
+      },
+      markLine: {
+        silent: true, symbol: 'none',
+        lineStyle: { color: C.amber, type: 'dashed', width: 1.2 },
+        data: [{ yAxis: 1.5, label: { show: false } }]
+      }
+    }]
+  });
+
+  /* 圖 5：資金成本分層 */
+  init('chart-debt', {
+    animationDuration: 700,
+    grid: { left: 62, right: 90, top: 30, bottom: 60 },
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      formatter: function (p) { return p[0].name + '：' + p[0].value + '%'; }
+    },
+    xAxis: {
+      type: 'category',
+      data: ['10Y 美債\n(11-10)', 'Meta 2031\n新發', 'CRWV 2032\n票面 8.5%', 'CRWV 2032\n票面 9.625%', 'CRWV 2031\n票面 9.75%'],
+      axisLabel: { color: C.ink2, fontSize: 10.5, interval: 0, lineHeight: 14 },
+      axisLine: { lineStyle: { color: C.line } },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value', name: '殖利率（%）', nameTextStyle: { color: C.ink3, fontSize: 11 },
+      max: 20, min: 0,
+      axisLabel: { color: C.ink3, fontSize: 11, formatter: '{value}%' },
+      splitLine: { lineStyle: { color: '#eef1f5' } },
+      axisLine: { show: false }
+    },
+    series: [{
+      type: 'bar', barWidth: 40,
+      data: [
+        { value: 4.95, itemStyle: { color: '#b9c0cc', borderRadius: [3, 3, 0, 0] } },
+        { value: 5.85, itemStyle: { color: C.blue, borderRadius: [3, 3, 0, 0] } },
+        { value: 15.50, itemStyle: { color: '#e08a84', borderRadius: [3, 3, 0, 0] } },
+        { value: 16.00, itemStyle: { color: '#d4645d', borderRadius: [3, 3, 0, 0] } },
+        { value: 17.41, itemStyle: { color: C.red, borderRadius: [3, 3, 0, 0] } }
+      ],
+      label: {
+        show: true, position: 'top', color: C.ink2, fontSize: 11.5,
+        formatter: function (p) { return p.value.toFixed(2) + '%'; }
+      },
+      markLine: {
+        silent: true, symbol: 'none',
+        lineStyle: { color: C.ink3, type: 'dashed', width: 1 },
+        data: [{ yAxis: 4.95, label: { formatter: '無風險利率', color: C.ink3, fontSize: 10, position: 'insideEndTop' } }]
+      }
+    }]
+  });
+
+  window.addEventListener('resize', function () {
+    charts.forEach(function (c) { c.resize(); });
+  });
+})();
+</script>
+</body>
+</html>

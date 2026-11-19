@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+<script src="js/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --line:#e3e6ec; --line2:#eef1f5;
+    --ink:#1b1f2a; --ink2:#4d5666; --ink3:#8a93a3;
+    --red:#c8352f; --red-bg:#fdecea; --red-line:#f6cfcb;
+    --green:#1c7f52; --green-bg:#e8f5ee; --green-line:#c9e8d8;
+    --amber:#b06a00; --amber-bg:#fdf3e3; --amber-line:#f2ddb8;
+    --blue:#1f5fa8; --blue-bg:#eaf2fb; --blue-line:#cfe0f4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+    line-height:1.72;font-size:15px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:30px 22px 64px}
+  header.hero{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 30px;margin-bottom:18px}
+  .kicker{font-size:11.5px;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;margin-bottom:9px}
+  h1{margin:0 0 8px;font-size:26px;line-height:1.35;letter-spacing:-.01em}
+  .sub{margin:0;color:var(--ink2);font-size:14.5px}
+  .metabar{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+  .chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12.5px;
+    background:var(--line2);color:var(--ink2);border:1px solid var(--line)}
+  .chip.red{background:var(--red-bg);color:var(--red);border-color:var(--red-line)}
+  .chip.green{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+  .chip.amber{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-line)}
+  .chip.blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-line)}
+  .chip.gray{background:#f2f4f7;color:#6b7383;border-color:#dfe3ea}
+  section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 28px;margin-bottom:18px}
+  h2{margin:0 0 5px;font-size:19px;letter-spacing:-.005em}
+  h2 .num{color:var(--blue);font-variant-numeric:tabular-nums;margin-right:8px}
+  .lead{margin:0 0 16px;color:var(--ink2);font-size:13.8px}
+  h3{margin:22px 0 9px;font-size:15.5px}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:21px} li{margin:5px 0}
+  .svgbox{width:100%;overflow-x:auto;border:1px solid var(--line2);border-radius:10px;background:#fcfcfd;padding:6px}
+  .chartbox{border:1px solid var(--line2);border-radius:10px;background:#fcfcfd;padding:4px 2px 0;margin:12px 0 18px}
+  .chart{width:100%;height:330px}
+  .cap{font-size:12px;color:var(--ink3);padding:6px 12px 10px;line-height:1.62}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f7f8fa;font-weight:600;color:var(--ink2);font-size:12.5px}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tbody tr:nth-child(even){background:#fbfbfc}
+  .up{color:var(--red);font-variant-numeric:tabular-nums}
+  .dn{color:var(--green);font-variant-numeric:tabular-nums}
+  .flat{color:var(--ink2);font-variant-numeric:tabular-nums}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:13px}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .card{border:1px solid var(--line);border-radius:11px;padding:15px 17px;background:#fff}
+  .card .tag{font-size:11px;letter-spacing:.08em;color:var(--ink3);text-transform:uppercase}
+  .card h4{margin:5px 0 7px;font-size:15px;line-height:1.45}
+  .card p{margin:5px 0;font-size:13.3px;color:var(--ink2)}
+  .src{font-size:11.5px;color:var(--ink3);margin-top:8px;line-height:1.55}
+  .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin:14px 0 4px}
+  .s{border:1px solid var(--line2);border-radius:9px;padding:10px 12px;background:#fcfcfd}
+  .s .l{font-size:11.5px;color:var(--ink3)}
+  .s .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em;margin:1px 0}
+  .s .v.up{color:var(--red)} .s .v.dn{color:var(--green)} .s .v.nt{color:var(--ink)}
+  .s .d{font-size:11.5px;color:var(--ink3);line-height:1.5}
+  .note{background:#f7f9fc;border:1px solid #dfe6f0;border-left:3px solid var(--blue);
+    border-radius:8px;padding:11px 14px;font-size:13px;color:var(--ink2);margin:14px 0}
+  .note.warn{background:var(--amber-bg);border-color:var(--amber-line);border-left-color:var(--amber)}
+  .note.red{background:var(--red-bg);border-color:var(--red-line);border-left-color:var(--red)}
+  .note.calm{background:#f4f7f5;border-color:#d9e6de;border-left-color:var(--green)}
+  .ruler{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);
+    border-radius:10px;padding:13px 18px;margin-bottom:18px;font-size:13px;color:var(--ink2);line-height:1.7}
+  .ruler b{color:var(--ink)}
+  .j{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;white-space:nowrap}
+  .j.g{background:var(--green-bg);color:var(--green);border:1px solid var(--green-line)}
+  .j.b{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-line)}
+  .j.r{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+  .j.a{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-line)}
+  .j.n{background:#f2f4f7;color:#6b7383;border:1px solid #dfe3ea}
+  .wcard{border:1px solid var(--red-line);border-radius:11px;overflow:hidden;margin:14px 0;background:#fff}
+  .wcard.amber{border-color:var(--amber-line)}
+  .wcard .hd{padding:11px 16px;background:var(--red-bg);border-bottom:1px solid var(--red-line)}
+  .wcard.amber .hd{background:var(--amber-bg);border-bottom-color:var(--amber-line)}
+  .wcard .hd b{font-size:14.5px}
+  .wcard .hd .no{font-size:11px;letter-spacing:.08em;color:var(--ink3);margin-right:8px}
+  .wcard dl{margin:0;padding:13px 16px}
+  .wcard dt{display:block;font-size:11px;letter-spacing:.06em;color:var(--ink3);margin-top:9px;white-space:nowrap}
+  .wcard dt:first-child{margin-top:0}
+  .wcard dd{margin:2px 0 0;font-size:13.2px;color:var(--ink2)}
+  .prop{border:1px solid var(--line);border-radius:11px;margin:13px 0;background:#fff;overflow:hidden}
+  .prop .hd{padding:10px 16px;background:#f7f8fa;border-bottom:1px solid var(--line);font-size:14px;font-weight:600}
+  .prop .hd .no{color:var(--blue);margin-right:8px;font-variant-numeric:tabular-nums}
+  .prop .hd .st{float:right;font-size:11.5px;font-weight:400;color:var(--amber)}
+  .prop table{margin:0;font-size:12.8px}
+  .prop td{border:0;border-bottom:1px solid var(--line2);padding:8px 16px}
+  .prop td:first-child{width:104px;color:var(--ink3);background:#fafbfc;font-size:11.5px;letter-spacing:.04em}
+  .prop tr:last-child td{border-bottom:0}
+  footer{color:var(--ink3);font-size:11.8px;line-height:1.75;padding:20px 6px 0;border-top:1px solid var(--line);margin-top:8px}
+  .disc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 18px;font-size:12px;color:#6b7383;margin-top:16px}
+  @media(max-width:700px){
+    .wrap{padding:16px 10px 48px} section{padding:16px 14px}
+    .chart{height:290px} table{font-size:11.8px} h1{font-size:21px}
+  }
+</style>
+<meta name="robots" content="noindex,nofollow"><title>2026-W41（2026-09-29～10-05）</title><style>
+#sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
+#sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+#sb-nav a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
+#sb-nav a:hover{background:#374151;color:#fff}
+#sb-nav a.sb-on{background:#1d4ed8;color:#fff}
+#sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
+#sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
+</style><link rel="stylesheet" href="css/nav.css">
+<script src="js/issues.js" defer></script>
+</head>
+<body><nav id="sb-nav"><div class="sb-inner"><span class="sb-brand">目錄</span><a href="index.html">首頁</a><a href="t.html">入門</a><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="2026-w47.html">週報（2026-W47）</a><a href="index.html#weeks">各期列表</a></noscript><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
+<div class="wrap">
+<header class="hero">
+<div class="kicker">阿圖 · 每週新聞解析 · 第 41 週 · 回溯補寫稿</div>
+<h1>2026-W41（2026-09-29～10-05）</h1>
+<p class="sub">期間 <b>2026-09-29 ～ 10-05</b>（台北時間）。記憶體交出了本輪最強的一手讀數——美光單季營收 <b>542.3 億（+379%）</b>、毛利率 <b>87.0%</b>，下一季指引 615 億對共識 570 億。我判它「超越」，但在同一頁寫下：<b>87% 是週期高點，不是新常態</b>。四天後，費半從這裡開始連跌八個交易日。</p>
+<div class="metabar">
+<span class="chip green">判定：綠 7 · 藍 2 · 紅 0 · 橙 2 · 灰 2</span>
+<span class="chip amber">示警 0 紅 1 橙</span>
+<span class="chip">涵蓋：美／台／日／韓</span>
+<span class="chip red">台股創新高 48,475.74</span>
+</div></header>
+<div class="ruler"><b>本期判定尺：基準預期表 v1.1（2026-09-21 核定）</b>｜檔案：<code>基準預期表-v1.1-20260921.html</code>｜13 列（L0～L8、L7a／L7b 分列、外生×2、反射性×1）<br/>
+本期<b>未修改任何一格數值</b>；所有判定以 v1.1 為尺。v1.0→v1.1 之變更公告已於 2026-W43（2026-10-19）正式發布，本補寫稿不重複公告、不回改其文字。
+</div>
+<div class="note warn"><b>回溯補寫聲明（必讀）：</b>本報告<b>原未出刊</b>，於 2026-11-06 回溯補寫。判定只採用「2026-10-05 收盤時」已可取得的資訊；10-06 之後的事件全部隔離在第 7 節「事後對照」，不進入層級判定。</div>
+<section id="s0"><h2><span class="num">0</span>首屏：本期三句話</h2>
+<p class="lead">先給結論，再看證據。三句話分別對應「基本面」、「成本」、「定價」三條線。</p>
+<div class="grid3">
+<div class="card"><div class="tag">基本面</div><h4>記憶體給出最強讀數，但這是週期高點</h4>
+<p>美光 FY26Q4（截至 09-03）：營收 <b>542.3 億</b>（+31% QoQ、<b>+379% YoY</b>）、非 GAAP 毛利率 <b>87.0%</b>（去年同期 22.5%）、EPS 33.42。全面超越指引上緣與共識（510.7 億）。</p>
+<p>FQ1 指引 <b>615 億</b> vs 共識 570 億；2027 年 HBM 產能 <b>75% 已被長約（SCA）鎖定</b>，已開始談 2028。這是本輪最硬的一手證據，所以我判 L4「超越」。</p>
+<p>但 87% 要放在歷史上讀：記憶體毛利率長期在 20～50%，景氣最好也只到六成。<b>87% 是異常值</b>，而異常值不會是常態。</p>
+<p class="src">來源：美光 FY26Q4 財報與法說（一手，2026-09-30）</p></div>
+<div class="card"><div class="tag">成本</div><h4>管理層自己說：下季毛利率是未來一年的谷底</h4>
+<p>FQ1 毛利率指引 <b>86.2%</b>，管理層稱這是 2027 財年的低點。原因是約 10 億美元的一次性成本（獎金計入存貨、新廠啟動費用）落到下季。</p>
+<p>「毛利率下行、營收上行」＝成本推升的定義。這正是 L7b 的傳導路徑：材料漲價 → 成本 → 毛利率。10-01 日系光刻膠調價，是這條路徑的第一個觀察點。</p>
+<p class="src">來源：美光法說（一手，2026-09-30）；材料調價為廠商漲價函轉引，<b>需核實原文</b></p></div>
+<div class="card"><div class="tag">定價</div><h4>台股創新高，但外資期貨還在空</h4>
+<p>台股 10-02 收 <b>48,475.74</b>（+0.25%，週 +0.94%、週 K 連三紅），台積電 2,500 元，外資現貨買超 26.22 億；但外資台指期淨空單仍逾 <b>8 萬口</b>。</p>
+<p><b>現貨回補、期貨避險同時存在</b>——這不是「外資看多」，是「現貨不能空、期貨先避」。指數由中小型 AI 周邊（被動元件、ABF 載板、矽光子）接棒，權值股反而收黑。</p>
+<p class="src">來源：證交所收盤與三大法人（一手，2026-10-02）；期貨未平倉為媒體轉引</p></div>
+</div>
+<div class="stat">
+<div class="s"><div class="l">美光 FQ4 營收</div><div class="v up">542.3 億</div><div class="d">+379% YoY；超越指引上緣 520 億</div></div>
+<div class="s"><div class="l">美光 FQ4 毛利率</div><div class="v nt">87.0%</div><div class="d">去年同期 22.5%；歷史區間 20～50%</div></div>
+<div class="s"><div class="l">台股加權（10-02）</div><div class="v up">48,475.74</div><div class="d">收盤新高；週 +0.94%、週 K 連三紅</div></div>
+<div class="s"><div class="l">9 月非農 / 失業率</div><div class="v nt">+2.9 萬</div><div class="d">失業率 4.2%；低於市場預期</div></div>
+</div>
+<div class="note"><b>怎麼讀：</b>L4 判「超越」是<b>事實</b>（營收、指引、鎖單都是硬數字）；「87% 是週期高點」是<b>推論</b>；「所以股價危險」是<b>假設</b>——三層我分開寫。本週我沒有把第三層寫進判定，因為 v1.1 的 C1 明文規定「股價漲幅不作為層級判定依據」。但紀律不該變成藉口：下一節的示警卡就是寫給第三層的。</div>
+</section>
+<section id="s1"><h2><span class="num">1</span>本期框架狀態圖</h2>
+<p class="lead">色塊為本期判定：<b>綠＝符合預期、藍＝超越預期、紅＝偏離趨勢、橙＝待觀察、灰＝本週無可核實新資訊（不強判）</b>。左側外生變數用實線、框架外用虛線。判定只看基本面，股價漲跌另列於對照表的「市場」欄。</p>
+<div class="svgbox"><svg aria-label="2026-W41 框架狀態圖" role="img" style="min-width:900px" viewbox="0 0 1000 682" width="100%"><defs><marker id="ar" markerheight="7" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#b9c0cc"></path></marker><marker id="arD" markerheight="7" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#d9b27a"></path></marker></defs><text fill="#1b1f2a" font-size="12.5" font-weight="700" x="12" y="19">2026-W41 框架狀態（2026-10-09）</text><rect fill="#1c7f52" height="9" rx="2" width="9" x="556" y="9"></rect><text fill="#4d5666" font-size="9.4" x="569" y="17">符合</text><rect fill="#1f5fa8" height="9" rx="2" width="9" x="640" y="9"></rect><text fill="#4d5666" font-size="9.4" x="653" y="17">超越</text><rect fill="#c8352f" height="9" rx="2" width="9" x="724" y="9"></rect><text fill="#4d5666" font-size="9.4" x="737" y="17">偏離</text><rect fill="#b06a00" height="9" rx="2" width="9" x="808" y="9"></rect><text fill="#4d5666" font-size="9.4" x="821" y="17">待觀察</text><rect fill="#8a93a3" height="9" rx="2" width="9" x="892" y="9"></rect><text fill="#4d5666" font-size="9.4" x="905" y="17">無新資訊</text><text fill="#8a93a3" font-size="9.2" x="12" y="676">左＝外生與框架外／中＝8 層因果鏈（L7a、L7b 分列）／右＝反射性迴路與配套層。箭頭為待驗證的傳導關係，非事實。</text><rect fill="#e8f5ee" height="50" rx="7" stroke="#1c7f52" stroke-width="1.1" width="432" x="232" y="44"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="63">L0</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="63">弱訊號入口</text><text fill="#4d5666" font-size="9.7" x="243" y="81">美股科技與中概背離；無 AI 需求新訊號</text><rect fill="#1c7f52" height="17" rx="8.5" width="52" x="602" y="53"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="65">符合</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="94" y2="102"></line><rect fill="#e8f5ee" height="50" rx="7" stroke="#1c7f52" stroke-width="1.1" width="432" x="232" y="104"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="123">L1</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="123">AI 終端需求</text><text fill="#4d5666" font-size="9.7" x="243" y="141">蘋果／微軟續強；無 AI 營收一手數據</text><rect fill="#1c7f52" height="17" rx="8.5" width="52" x="602" y="113"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="125">符合</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="154" y2="162"></line><rect fill="#f2f4f7" height="50" rx="7" stroke="#8a93a3" stroke-width="1.1" width="432" x="232" y="164"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="183">L2</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="183">算力與雲端資本開支</text><text fill="#4d5666" font-size="9.7" x="243" y="201">CSP capex 下一讀數 10-28～30</text><rect fill="#8a93a3" height="17" rx="8.5" width="52" x="602" y="173"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="185">無尺</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="214" y2="222"></line><rect fill="#e8f5ee" height="50" rx="7" stroke="#1c7f52" stroke-width="1.1" width="432" x="232" y="224"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="243">L3</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="243">AI 芯片</text><text fill="#4d5666" font-size="9.7" x="243" y="261">費半週 +3.69%；NVDA 無財報，沿用指引</text><rect fill="#1c7f52" height="17" rx="8.5" width="52" x="602" y="233"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="245">符合</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="274" y2="282"></line><rect fill="#eaf2fb" height="50" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="432" x="232" y="284"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="303">L4</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="303">記憶體與 HBM</text><text fill="#4d5666" font-size="9.7" x="243" y="321">美光 +379%、毛利率 87%、指引超共識</text><rect fill="#1f5fa8" height="17" rx="8.5" width="52" x="602" y="293"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="305">超越</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="334" y2="342"></line><rect fill="#e8f5ee" height="50" rx="7" stroke="#1c7f52" stroke-width="1.1" width="432" x="232" y="344"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="363">L5</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="363">先進封裝</text><text fill="#4d5666" font-size="9.7" x="243" y="381">CoWoS 交期 &gt;52 週；台積電法說 10-15</text><rect fill="#1c7f52" height="17" rx="8.5" width="52" x="602" y="353"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="365">符合</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="394" y2="402"></line><rect fill="#eaf2fb" height="50" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="432" x="232" y="404"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="423">L6</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="423">晶圓代工</text><text fill="#4d5666" font-size="9.7" x="243" y="441">台股創新高、台積 2,500；9 月營收 10-08</text><rect fill="#1f5fa8" height="17" rx="8.5" width="52" x="602" y="413"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="425">超越</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="454" y2="462"></line><rect fill="#e8f5ee" height="50" rx="7" stroke="#1c7f52" stroke-width="1.1" width="432" x="232" y="464"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="483">L7a</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="483">設備（訂單型）</text><text fill="#4d5666" font-size="9.7" x="243" y="501">ASML 財報 10-14；本週無訂單數據</text><rect fill="#1c7f52" height="17" rx="8.5" width="52" x="602" y="473"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="485">符合</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="514" y2="522"></line><rect fill="#fdf3e3" height="50" rx="7" stroke="#b06a00" stroke-width="1.1" width="432" x="232" y="524"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="543">L7b</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="543">材料（成本型）</text><text fill="#4d5666" font-size="9.7" x="243" y="561">矽晶圓報價回升預期；年漲幅未達 15%</text><rect fill="#b06a00" height="17" rx="8.5" width="52" x="602" y="533"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="545">觀察</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.2" x1="448" x2="448" y1="574" y2="582"></line><rect fill="#f2f4f7" height="50" rx="7" stroke="#8a93a3" stroke-width="1.1" width="432" x="232" y="584"></rect><text fill="#8a93a3" font-size="9.8" font-weight="700" x="243" y="603">L8</text><text fill="#1b1f2a" font-size="11.8" font-weight="700" x="266" y="603">電力</text><text fill="#4d5666" font-size="9.7" x="243" y="621">無變壓器交期／表後供電新數據</text><rect fill="#8a93a3" height="17" rx="8.5" width="52" x="602" y="593"></rect><text fill="#fff" font-size="9.4" font-weight="700" text-anchor="middle" x="628" y="605">無尺</text><text fill="#1b1f2a" font-size="10.8" font-weight="700" x="12" y="44">外生變數</text><rect fill="#fdf3e3" height="59" rx="7" stroke="#b06a00" stroke-width="1.1" width="204" x="12" y="52"></rect><text fill="#8a93a3" font-size="9.6" x="22" y="65">外生 01</text><text fill="#1b1f2a" font-size="11.3" font-weight="700" x="22" y="80">利率</text><text fill="#b06a00" font-size="9.5" font-weight="700" x="46" y="80">｜觀察</text><text fill="#4d5666" font-size="9.3" x="22" y="95">10Y 5.277%、30Y 5.48%</text><text fill="#4d5666" font-size="9.3" x="22" y="109">非農 +2.9 萬＋核心 PCE 3.0%</text><rect fill="#e8f5ee" height="59" rx="7" stroke="#1c7f52" stroke-width="1.1" width="204" x="12" y="124"></rect><text fill="#8a93a3" font-size="9.6" x="22" y="137">外生 02</text><text fill="#1b1f2a" font-size="11.3" font-weight="700" x="22" y="152">出口管制與地緣</text><text fill="#1c7f52" font-size="9.5" font-weight="700" x="103" y="152">｜符合</text><text fill="#4d5666" font-size="9.3" x="22" y="167">維持既有框架、逐步收緊</text><text fill="#4d5666" font-size="9.3" x="22" y="181">本週無新增清單動作</text><rect fill="#fdf3e3" height="59" rx="7" stroke="#b06a00" stroke-dasharray="4 3" stroke-width="1.1" width="204" x="12" y="196"></rect><text fill="#8a93a3" font-size="9.6" x="22" y="209">框架外 A</text><text fill="#1b1f2a" font-size="11.3" font-weight="700" x="22" y="224">能源價格與通道</text><text fill="#b06a00" font-size="9.5" font-weight="700" x="103" y="224">｜觀察</text><text fill="#4d5666" font-size="9.3" x="22" y="239">布蘭特維持 95～100 區間</text><text fill="#4d5666" font-size="9.3" x="22" y="253">荷姆茲風險未解；v1.1 無此列</text><rect fill="#f2f4f7" height="59" rx="7" stroke="#8a93a3" stroke-dasharray="4 3" stroke-width="1.1" width="204" x="12" y="268"></rect><text fill="#8a93a3" font-size="9.6" x="22" y="281">框架外 B</text><text fill="#1b1f2a" font-size="11.3" font-weight="700" x="22" y="296">財政與長債供給</text><text fill="#8a93a3" font-size="9.5" font-weight="700" x="103" y="296">｜無尺</text><text fill="#4d5666" font-size="9.3" x="22" y="311">聯邦債務 &gt;40 兆，長債供給續增</text><text fill="#4d5666" font-size="9.3" x="22" y="325">與 AI 企業發債爭同一批買盤</text><line marker-end="url(#arD)" stroke="#d9b27a" stroke-width="1.2" x1="216" x2="230" y1="128" y2="128"></line><line marker-end="url(#arD)" stroke="#d9b27a" stroke-width="1.2" x1="216" x2="230" y1="280" y2="280"></line><text fill="#1b1f2a" font-size="10.8" font-weight="700" x="692" y="44">反射性迴路</text><rect fill="#eaf2fb" height="46" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="296" x="692" y="52"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="71">敘事</text><text fill="#4d5666" font-size="9.3" x="704" y="86">HBM 售罄到 2027，敘事最強的一週</text><rect fill="#1f5fa8" height="15" rx="7.5" width="48" x="930" y="60"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="71">超越</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.1" x1="840" x2="840" y1="98" y2="106"></line><rect fill="#eaf2fb" height="46" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="296" x="692" y="108"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="127">估值</text><text fill="#4d5666" font-size="9.3" x="704" y="142">台股創新高；30Y 5.48% 未鬆動</text><rect fill="#1f5fa8" height="15" rx="7.5" width="48" x="930" y="116"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="127">超越</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.1" x1="840" x2="840" y1="154" y2="162"></line><rect fill="#e8f5ee" height="46" rx="7" stroke="#1c7f52" stroke-width="1.1" width="296" x="692" y="164"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="183">融資</text><text fill="#4d5666" font-size="9.3" x="704" y="198">投資級債仍有買盤，未受阻</text><rect fill="#1c7f52" height="15" rx="7.5" width="48" x="930" y="172"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="183">符合</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.1" x1="840" x2="840" y1="210" y2="218"></line><rect fill="#eaf2fb" height="46" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="296" x="692" y="220"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="239">capex</text><text fill="#4d5666" font-size="9.3" x="704" y="254">美光 2,500 億建兩座 HBM 園區</text><rect fill="#1f5fa8" height="15" rx="7.5" width="48" x="930" y="228"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="239">超越</text><line marker-end="url(#ar)" stroke="#b9c0cc" stroke-width="1.1" x1="840" x2="840" y1="266" y2="274"></line><rect fill="#eaf2fb" height="46" rx="7" stroke="#1f5fa8" stroke-width="1.1" width="296" x="692" y="276"></rect><text fill="#1b1f2a" font-size="11.4" font-weight="700" x="704" y="295">財報</text><text fill="#4d5666" font-size="9.3" x="704" y="310">美光營收 +379%，全鏈最強讀數</text><rect fill="#1f5fa8" height="15" rx="7.5" width="48" x="930" y="284"></rect><text fill="#fff" font-size="8.8" font-weight="700" text-anchor="middle" x="954" y="295">超越</text><rect fill="#fcfcfd" height="60" rx="7" stroke="#dfe3ea" stroke-dasharray="4 3" width="296" x="692" y="334"></rect><text fill="#8a93a3" font-size="9.6" font-weight="700" x="704" y="349">配套層（不立尺，僅記錄）</text><text fill="#4d5666" font-size="9.3" x="704" y="365">光通訊／ABF 載板接棒；被動元件漲停數檔</text><text fill="#4d5666" font-size="9.3" x="704" y="379">液冷本週無新數據</text><rect fill="#f7f9fc" height="72" rx="7" stroke="#dfe6f0" width="296" x="692" y="408"></rect><text fill="#8a93a3" font-size="9.6" x="704" y="423">本期判定分布（13 列）</text><text fill="#1b1f2a" font-size="11.6" font-weight="700" x="704" y="444">綠 7 · 藍 2 · 紅 0 · 橙 2 · 灰 2</text><text fill="#8a93a3" font-size="9.2" x="704" y="461">無紅燈；利率與 L7b 為橙，方向對未越線</text><text fill="#8a93a3" font-size="9.2" x="692" y="492">本期迴路四節點同時亮藍（敘事／估值／capex／</text><text fill="#8a93a3" font-size="9.2" x="692" y="506">財報），這是本輪最「一致」的一週——</text><text fill="#8a93a3" font-size="9.2" x="692" y="520">而一致本身就是風險：四個都到位時，</text><text fill="#8a93a3" font-size="9.2" x="692" y="534">下一個邊際變化只能往下。配套層無尺，僅記錄。</text><text fill="#8a93a3" font-size="9.2" x="12" y="350">實線＝v1.1 有列；虛線＝框架外。</text><text fill="#8a93a3" font-size="9.2" x="12" y="364">利率橙燈的理由不是水準，是組合：</text><text fill="#8a93a3" font-size="9.2" x="12" y="378">就業轉弱＋通膨不降＝停滯性；</text><text fill="#8a93a3" font-size="9.2" x="12" y="392">這種組合對高估值資產最不利。</text><text fill="#8a93a3" font-size="9.2" x="12" y="406">但它還沒觸及 v1.1 的 5.5% 門檻。</text><line marker-end="url(#arD)" stroke="#d9b27a" stroke-width="1.2" x1="664" x2="690" y1="300" y2="300"></line></svg></div>
+<p class="cap">圖 1｜2026-W41 框架狀態。這是全系列裡最漂亮的一張圖：四個節點同時藍、沒有紅燈、台股創新高、記憶體鎖單到 2027。但圖上有一個灰色——L2（CSP capex）本週完全沒有新數據，而它才是整條鏈的付款人。「不知道」被畫成灰色，而不是被假設成綠色。</p>
+</section>
+<section id="s2"><h2><span class="num">2</span>新聞 → 框架對照表</h2>
+<p class="lead">逐條歸層。落不進現有 13 列者列「框架外」，只記錄、不判定——硬塞會製造假判定。</p>
+<table><thead><tr><th style="width:74px">日期</th><th>事件</th><th style="width:96px">歸層</th><th style="width:74px">判定</th><th style="width:150px">依據／來源</th></tr></thead><tbody>
+<tr><td class="num">09-30</td><td>美光 FY26Q4 營收 542.3 億（+379% YoY、+31% QoQ）、非 GAAP 毛利率 87.0%、EPS 33.42</td><td>L4</td><td><span class="j b">藍</span></td><td style="font-size:11.5px;color:#6b7383">公司法說（一手）</td></tr>
+<tr><td class="num">09-30</td><td>美光 FQ1 指引 615 億（共識 570 億）、毛利率 86.2% 為 2027 財年谷底</td><td>L4</td><td><span class="j b">藍</span></td><td style="font-size:11.5px;color:#6b7383">公司法說（一手）</td></tr>
+<tr><td class="num">09-30</td><td>美光：2027 年 HBM 產能 75% 已被 SCA 鎖定、26 份長約、客戶承諾 320 億</td><td>L4</td><td><span class="j b">藍</span></td><td style="font-size:11.5px;color:#6b7383">公司法說（一手）</td></tr>
+<tr><td class="num">09-30</td><td>美光資本支出 2,500 億建兩座 HBM 園區（紐約克萊、愛達荷博伊西）</td><td>L2</td><td><span class="j n">灰</span></td><td style="font-size:11.5px;color:#6b7383">公司公告（一手）；屬廠商 capex，非 CSP</td></tr>
+<tr><td class="num">10-02</td><td>9 月非農僅 +2.9 萬、失業率 4.2%；8 月核心 PCE +3.0%</td><td>外生｜利率</td><td><span class="j a">橙</span></td><td style="font-size:11.5px;color:#6b7383">BLS／BEA（一手）</td></tr>
+<tr><td class="num">10-02</td><td>費半週 +3.69% 收 13,136.67；道瓊 -1.26%、標普 -0.27%、那指 +0.45%</td><td>L3</td><td><span class="j g">綠</span></td><td style="font-size:11.5px;color:#6b7383">交易所（一手）</td></tr>
+<tr><td class="num">10-02</td><td>台股收 48,475.74 創新高（週 +0.94%）、台積電 2,500、外資買超 26.22 億</td><td>L6</td><td><span class="j b">藍</span></td><td style="font-size:11.5px;color:#6b7383">證交所（一手）</td></tr>
+<tr><td class="num">10-02</td><td>日經 -0.94%（前日大漲 2,200 點後獲利了結）、KOSPI +0.46%</td><td>框架外｜區域風險偏好</td><td><span class="j n">不判定</span></td><td style="font-size:11.5px;color:#6b7383">交易所（一手）</td></tr>
+<tr><td class="num">10-02</td><td>矽晶圓與成熟製程同步走強（環球晶、漢磊、中美晶、合晶）</td><td>L7b</td><td><span class="j a">橙</span></td><td style="font-size:11.5px;color:#6b7383">媒體轉引，需核實原文</td></tr>
+</tbody></table>
+<div class="note"><b>一個刻意的處理：</b>美光的 2,500 億資本支出我放 L2 但判「灰」，不是「藍」。因為 v1.1 的 L2 量的是<b>雲廠</b>基礎設施支出，記憶體廠的 capex 是供給端而不是需求端——把它算進 L2 會讓「需求超預期」與「供給要追上来」混為一談。跨層引用不等於跨層計入。</div>
+</section>
+<section id="s3"><h2><span class="num">3</span>示警卡區</h2>
+<p class="lead">本期<b>沒有紅燈</b>，一張橙卡。它不是基本面問題，是分母（折現率）問題——而分母問題在財報最好的那一週最容易被忽略。</p>
+<div class="wcard amber"><div class="hd"><span class="no">A1</span><b>利率：就業轉弱＋通膨不降，這是最不利於高估值資產的組合</b>　<span class="j a">橙</span></div>
+<dl>
+<dt>方向</dt><dd>利率上行風險未解。10Y 5.277%、30Y 5.48%；同時 9 月非農僅 +2.9 萬、失業率 4.2%，核心 PCE 仍 +3.0%。「該降息的時候通膨不讓降」＝停滯性組合。</dd>
+<dt>受益</dt><dd>現金、短天期債、價值股、能源。</dd>
+<dt>受害者</dt><dd>高本益比成長股、靠債務融資的 neocloud、以 2030 年現金流折現的 AI 資產。</dd>
+<dt>傳導路徑</dt><dd>就業轉弱 → 市場押降息 → 核心通膨 3.0% 阻止降息 → 長端不下來 → 高估值資產分母不降；同時 AI 企業大量發債排擠長債買盤 → 期限溢價上升。</dd>
+<dt>下一步看什麼</dt><dd>10-14 美國 9 月 CPI（核心預期 2.5%）；10-28 FOMC；neocloud 債券殖利率是否突破 15%（當時尚未）。</dd>
+<dt>來源</dt><dd>BLS／BEA（一手）；殖利率與 30Y 新高為媒體轉引，<b>需核實原文</b>。依治理規則，本卡不以轉引單獨成立——v1.1 的 10Y 門檻 5.5% 尚未觸及，故只升到橙。</dd>
+</dl></div>
+</section>
+<section id="s4"><h2><span class="num">4</span>候選修正提案區</h2>
+<p class="lead">本期<b>一項提案</b>（R1），屬「基準設錯」而非「事實偏離」。R1 為補寫稿留檔，<b>不佔用正式提案序列</b>（正式序列以 2026-W43 的 P1～P4、2026-W45 的 P0～P5 為準）。</p>
+<div class="prop"><div class="hd"><span class="no">R1</span>L4 的「合約價季增 5～25%」應按產品分列<span class="st">待議</span></div><table><tbody>
+<tr><td>改哪一格</td><td>L4 記憶體與 HBM｜基準預期欄</td></tr>
+<tr><td>原值 → 建議值</td><td>「HBM 供不應求、合約價季增 5～25%」→ 建議拆為三列：<b>HBM 合約價</b>（季增 5～25%）、<b>傳統 DRAM 合約價</b>（季增 0～20%）、<b>NAND 合約價</b>（季增 -5～15%）。或至少註明「以 DRAM 合約價為準」。</td></tr>
+<tr><td>依據與時點</td><td>美光 FY26Q4（2026-09-30）：DRAM 營收 397.71 億（+343%），ASP 季增「兩位數」；NAND 營收 141.02 億，<b>ASP 季增 30%</b>——已超出單一區間的上緣 25%。兩者彈性來源不同（DRAM 受 HBM 排擠供給，NAND 受企業級 SSD 拉貨）。</td></tr>
+<tr><td>對既有判定的影響</td><td>本期 L4 判「超越」不受影響（三項都在上行）。但若未來 DRAM 與 NAND 分化（例如 NAND 先鬆），單一區間會給出模糊訊號：一個越線、一個在區間內，而 v1.1 沒有規則處理「部分越線」。</td></tr>
+<tr><td>我的傾向</td><td>建議拆列，但<b>不急</b>。可等下一次 TrendForce 季報確認 NAND 30% 是單季現象還是趨勢，再一併改；單季一次就改尺，會重犯 L1「5 倍」那種錯。</td></tr>
+</tbody></table></div>
+<div class="note red"><b>治理聲明：</b>以上<b>未生效</b>；本期判定一律沿用 <b>v1.1</b>，未改動任何一格數值或容忍區間。R1 為補寫稿留檔，未經振達同意不得生效。</div>
+</section>
+<section id="s5"><h2><span class="num">5</span>本期圖表</h2>
+<p class="lead">三張圖：一週的資金流向、美光的絕對數字、以及 87% 在歷史上的位置。</p>
+<div class="chartbox"><div class="chart" id="c1"></div><div class="cap">圖 2｜2026-10-02 週線變動（%）。費半為週線（+3.69%）；日經／KOSPI 為 10-02 <b>單日</b>，非週線，已於標籤註明。台股為 10-02 當週（+0.94%）。注意：道瓊 -1.26% 與費半 +3.69% 同週——這不是全面多頭，是資金往半導體集中。來源：交易所（一手）。</div></div>
+<div class="chartbox"><div class="chart" id="c2"></div><div class="cap">圖 3｜美光單季營收（億美元）。FQ4 實際 542.3 超越指引上緣 520 與共識 510.7；FQ1 指引 615 高於共識 570.2，幅度約 +8%。<b>這是「超越」判定的算術基礎</b>——不是感覺，是指引與共識的差。來源：美光財報（一手，2026-09-30）；共識為 LSEG 彙整（轉引）。</div></div>
+<div class="chartbox"><div class="chart" id="c3"></div><div class="cap">圖 4｜美光毛利率在歷史上的位置。淺色帶為記憶體業長期區間 20～50%（景氣最好可到六成）；2025 年同期 22.5%，本季 <b>87.0%</b>。管理層指引下季 86.2%，並稱是 2027 財年谷底。<b>毛利率下行、營收上行＝成本推升。</b>這是 L7b 紅燈的前置條件，也是我沒有把 L4 的藍燈解讀成「可以追價」的原因。</div></div>
+</section>
+<section id="s6"><h2><span class="num">6</span>下週查核日曆</h2>
+<p class="lead">時間一律換算台北時間（GMT+8）。「打臉條件」是預先寫好的認錯門檻——事後才編理由不算。</p>
+<table><thead><tr><th style="width:126px">時間（台北）</th><th style="width:180px">事件</th><th>要看的數字</th><th style="width:210px">打臉條件</th></tr></thead><tbody>
+<tr><td>10-08（四）13:30</td><td>台積電 9 月營收</td><td>月增（8 月 5,148 億為歷史高）、年增、Q3 是否超財測上緣</td><td>月減 &gt;10%</td></tr>
+<tr><td>10-08（四）美股</td><td>費半能否守住 13,000</td><td>連跌天數、成交量</td><td>單日反彈 &gt;3%（代表我對利率的擔憂過度）</td></tr>
+<tr><td>10-14（三）20:30</td><td>美國 9 月 CPI</td><td>年增（預期 3.7%）、核心（預期 2.5%）</td><td>核心 ≤2.5% 且 10Y 回落 &lt;5.0%</td></tr>
+<tr><td>10-14（三）21:00</td><td>ASML 2026Q3 財報</td><td>新增訂單、2027／2028 產能規劃</td><td>訂單季減 &gt;20%</td></tr>
+<tr><td>10-15（四）14:00</td><td>台積電 2026Q3 法說</td><td>Q4 指引、毛利率 65～67%、2027 先進製程報價</td><td>Q4 指引低於共識 6% 或不提價</td></tr>
+</tbody></table>
+<div class="note calm"><b>本週的三個開關全在下週：</b>台積電 9 月營收（10-08）、CPI（10-14）、台積電法說（10-15）。美光的 87% 毛利率能不能延續，答案在這三場裡面。注意 10-14 是 CPI 與 ASML 同一天——利率與設備訂單會在同一天給答案。</div>
+</section>
+<section id="s7"><h2><span class="num">7</span>事後對照（補寫稿專有）</h2>
+<p class="lead">這一節<b>不屬於當時的判定</b>，是補寫時回頭檢查這套尺準不準。放在最後，避免用後見之明污染當時的判斷。</p>
+<div class="wcard"><div class="hd" style="background:#f7f9fc;border-bottom-color:#dfe6f0"><span class="no">事後 01</span><b>「87% 是週期高點」我寫對了，但沒有翻譯成「股價最危險」</b></div><dl>
+<dt>當時判定</dt><dd>L4 判「超越」（藍燈）、L6 判「超越」；示警卡只有一張橙（利率）。卡片裡明確寫了「87% 是異常值，異常值不會是常態」。</dd>
+<dt>事後事實</dt><dd>10-07 起費半連跌八個交易日，10-16 收 11,137.29（週 -11.41%），距 6-22 高點 -23.9%；美光 10-16 單日 -5.63%；台股 10 月外資賣超 9,943 億創單月紀錄。</dd>
+<dt>檢討</dt><dd><b>層級判定對，風險語言不足。</b>我在同一頁寫了「週期高點」，卻只把它當成 L7b 的前置條件，沒有寫成「這是股價最危險的一週」。v1.1 的 C1 規定「股價不作為層級判定依據」是對的，但紀律不能變成「不看股價」的藉口——判層級與講風險是兩件事，我當時只做了前一件。</dd>
+</dl></div>
+<div class="wcard"><div class="hd" style="background:#f7f9fc;border-bottom-color:#dfe6f0"><span class="no">事後 02</span><b>台股創新高，我只列了「外資期貨還有空單」</b></div><dl>
+<dt>當時判定</dt><dd>L6 判「超越」，依據是台股收盤新高與台積電 2,500；外資現貨買超 26.22 億、期貨淨空逾 8 萬口，兩者並列但未量化。</dd>
+<dt>事後事實</dt><dd>10-30 台股收 45,211.83（單日 -1,156.5 點、-2.49%），10 月月線 -5.69%；外資 10-30 單日賣超 1,124.67 億，全月 9,943.17 億創紀錄。</dd>
+<dt>檢討</dt><dd>「現貨買超 26 億」與「期貨淨空 8 萬口」是兩個量級完全不同的數字，我並列卻沒換算。8 萬口台指期約當現貨市值數千億——<b>避險部位遠大於現貨買超，方向其實偏空</b>。下次遇到這種組合，應該直接算「期貨隱含的現貨等值」再下筆。</dd>
+</dl></div>
+<div class="note">本期兩個檢討都指向同一件事：<b>判定是對的，但把判定翻譯成風險的力氣不夠。</b>這也是我後來在 2026-W43、2026-W45 把「市場定價」欄獨立出來的原因。</div>
+<h3>來源與口徑</h3><ul style="font-size:12.6px;color:#4d5666">
+<li><b>一手：</b>美光 FY26Q4 財報與法說（2026-09-30）；BLS 9 月非農、BEA 8 月 PCE（2026-10-02）；NYSE／Nasdaq 收盤（2026-10-02）；證交所收盤與三大法人（2026-10-02）。</li>
+<li><b>轉引（需核實原文，不得單獨構成判定依據）：</b>LSEG 共識（FQ4 510.7 億、FQ1 570.2 億）；美光歷史毛利率區間；矽晶圓報價回升（2026-10-02 台媒）；外資台指期淨空單逾 8 萬口；30Y 5.48% 與 10Y 5.277%。</li>
+<li><b>口徑：</b>美光財年 FQ4 截至 2026-09-03，與日曆年不同；營收為美元。台股為新台幣、加權指數。費半為美元指數。跨市場比較未做幣別換算。</li>
+</ul></section>
+<div class="disc">免責聲明：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</div>
+<footer>阿圖｜每週新聞解析 2026-W41｜判定尺 基準預期表 v1.1（2026-09-21 核定）｜本稿為 2026-11-06 回溯補寫，原未出刊｜所有判定僅引用 v1.1，未修改任何一格數值。</footer>
+</div>
+<script>
+(function(){
+  var c1 = echarts.init(document.getElementById('c1'));
+  c1.setOption({"grid": {"left": 128, "right": 58, "top": 22, "bottom": 34}, "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}, "formatter": "{b}：{c}%"}, "xAxis": {"type": "value", "name": "週線漲跌（%）", "nameLocation": "middle", "nameGap": 20, "nameTextStyle": {"color": "#8a93a3", "fontSize": 10.5}, "axisLabel": {"color": "#8a93a3", "fontSize": 10.5, "formatter": "{value}%"}, "splitLine": {"lineStyle": {"color": "#eef1f5"}}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}}, "yAxis": {"type": "category", "data": ["道瓊（週）", "日經（10-02 單日）", "標普 500（週）", "羅素 2000（週）", "那斯達克（週）", "KOSPI（10-02 單日）", "台股（週）", "費半（週）"], "axisLabel": {"color": "#4d5666", "fontSize": 11}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}, "axisTick": {"show": false}}, "series": [{"type": "bar", "barWidth": 17, "data": [{"value": -1.26, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": -0.94, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": -0.27, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": -0.16, "itemStyle": {"color": "#1c7f52", "borderRadius": [3, 0, 0, 3]}}, {"value": 0.45, "itemStyle": {"color": "#c8352f", "borderRadius": [0, 3, 3, 0]}}, {"value": 0.46, "itemStyle": {"color": "#c8352f", "borderRadius": [0, 3, 3, 0]}}, {"value": 0.94, "itemStyle": {"color": "#c8352f", "borderRadius": [0, 3, 3, 0]}}, {"value": 3.69, "itemStyle": {"color": "#c8352f", "borderRadius": [0, 3, 3, 0]}}], "label": {"show": true, "position": "outside", "color": "#4d5666", "fontSize": 10.5, "formatter": "{c}%"}}]});
+  var c2 = echarts.init(document.getElementById('c2'));
+  c2.setOption({"grid": {"left": 62, "right": 30, "top": 30, "bottom": 48}, "tooltip": {"trigger": "axis", "formatter": "{b}：{c} 億美元"}, "xAxis": {"type": "category", "data": ["FQ4 實際", "FQ4 指引", "FQ4 共識", "FQ1 指引", "FQ1 共識"], "axisLabel": {"color": "#4d5666", "fontSize": 10.5, "interval": 0}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}}, "yAxis": {"type": "value", "name": "億美元", "nameTextStyle": {"color": "#8a93a3", "fontSize": 10.5}, "axisLabel": {"color": "#8a93a3", "fontSize": 10.5}, "splitLine": {"lineStyle": {"color": "#eef1f5"}}}, "series": [{"type": "bar", "barWidth": 44, "data": [{"value": 542.3, "itemStyle": {"color": "#c8352f"}}, {"value": 520, "itemStyle": {"color": "#b9c0cc"}}, {"value": 510.7, "itemStyle": {"color": "#8a93a3"}}, {"value": 615, "itemStyle": {"color": "#c8352f"}}, {"value": 570.2, "itemStyle": {"color": "#8a93a3"}}], "label": {"show": true, "position": "top", "color": "#4d5666", "fontSize": 11, "formatter": "{c}"}}]});
+  var c3 = echarts.init(document.getElementById('c3'));
+  c3.setOption({"grid": {"left": 62, "right": 26, "top": 34, "bottom": 40}, "tooltip": {"trigger": "axis"}, "legend": {"top": 4, "textStyle": {"color": "#4d5666", "fontSize": 11}}, "xAxis": {"type": "category", "data": ["FQ4-25 同期", "FQ4-26 本季", "FQ1-27 指引"], "axisLabel": {"color": "#4d5666", "fontSize": 10.5, "interval": 0}, "axisLine": {"lineStyle": {"color": "#e3e6ec"}}}, "yAxis": {"type": "value", "name": "毛利率（%）", "nameTextStyle": {"color": "#8a93a3", "fontSize": 10.5}, "axisLabel": {"color": "#8a93a3", "fontSize": 10.5, "formatter": "{value}%"}, "splitLine": {"lineStyle": {"color": "#eef1f5"}}}, "series": [{"type": "bar", "barWidth": 60, "data": [{"value": 22.5, "itemStyle": {"color": "#8a93a3"}}, {"value": 87.0, "itemStyle": {"color": "#c8352f"}}, {"value": 86.2, "itemStyle": {"color": "#e0a3a0"}}], "label": {"show": true, "position": "top", "color": "#4d5666", "fontSize": 11.5, "formatter": "{c}%"}, "markArea": {"silent": true, "itemStyle": {"color": "rgba(176,106,0,0.07)"}, "label": {"show": true, "position": "insideTopLeft", "color": "#b06a00", "fontSize": 9.5, "formatter": "記憶體長期區間 20～50%"}, "data": [[{"yAxis": 20}, {"yAxis": 50}]]}}]});
+  window.addEventListener("resize", function(){
+    c1.resize();
+    c2.resize();
+    c3.resize();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 /* 頂端導覽的週報下拉（原生 select，不依賴 hover） */
-.sb-week{display:inline-flex;align-items:center;gap:6px;margin:0 2px}
+.sb-week{display:inline-flex;align-items:center;gap:6px;margin:0 2px;flex-wrap:wrap}
+.sb-week-lab{display:inline-flex;align-items:center}
 .sb-week-k{color:#93c5fd;font-weight:600;font-size:13px;white-space:nowrap}
 .sb-week select{
   appearance:auto;
@@ -13,3 +14,5 @@
 .sb-week select:focus{outline:2px solid #93c5fd;outline-offset:1px}
 .sb-noscript a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
 #sb-issues{display:inline-flex;align-items:center}
+#sb-nav a.sb-brand:hover{background:#374151;color:#fff}
+#sb-nav a.sb-latest{white-space:nowrap}

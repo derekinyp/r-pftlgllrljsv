@@ -1,8 +1,10 @@
 /* 出刊步驟：在下方 ISSUES 陣列「最前面」新增一筆（最新期在上）。
    欄位：id＝期數鍵（如 2026-W48）、year＝年度、href＝中性檔名（如 2026-w48.html）、span＝期間。
    選單以年度 optgroup 分組，選項顯示「2026-W48　期間」，倒序。
+   「最新週報」連結由 ISSUES[0] 推導，不必改各頁導覽列。
+   下拉預設為不可選的「選擇期數…」，任一期（含最新）一選就跳轉。
    試跑版（例如「2026-W47 試跑（截止 2026-11-19）」）不得寫入本清單，也不得佔用正式檔名。
-   不必改各頁導覽列。說明見 skill references/deliverables.md「出刊步驟」。
+   說明見 skill references/deliverables.md「出刊步驟」。
    歷史期數鍵 2026-W39～2026-W47 沿用既有 W 編號，不依覆蓋期間重編 ISO 週；詳見 deliverables「期數鍵與 ISO 週」。 */
 (function () {
   var ISSUES = [
@@ -26,20 +28,29 @@
     var host = document.getElementById('sb-issues');
     if (!host) return;
     var cur = currentFile();
-    var match = null;
-    for (var i = 0; i < ISSUES.length; i++) {
-      if (ISSUES[i].href === cur) { match = ISSUES[i]; break; }
+    var latest = ISSUES[0];
+    var wrap = document.createElement('span');
+    wrap.className = 'sb-week';
+    if (latest) {
+      var latestA = document.createElement('a');
+      latestA.className = 'sb-latest';
+      latestA.href = latest.href;
+      latestA.textContent = '最新週報';
+      if (latest.href === cur) latestA.className += ' sb-on';
+      wrap.appendChild(latestA);
     }
-    var selected = match || ISSUES[0];
     var lab = document.createElement('label');
-    lab.className = 'sb-week';
+    lab.className = 'sb-week-lab';
     lab.setAttribute('for', 'sb-week-sel');
-    var k = document.createElement('span');
-    k.className = 'sb-week-k';
-    k.textContent = '週報';
     var sel = document.createElement('select');
     sel.id = 'sb-week-sel';
     sel.setAttribute('aria-label', '選擇週報期數');
+    var ph = document.createElement('option');
+    ph.value = '';
+    ph.textContent = '選擇期數…';
+    ph.disabled = true;
+    ph.selected = true;
+    sel.appendChild(ph);
     var lastYear = null;
     var og = null;
     for (var j = 0; j < ISSUES.length; j++) {
@@ -53,16 +64,15 @@
       var o = document.createElement('option');
       o.value = it.href;
       o.textContent = it.id + '　' + it.span;
-      if (it.href === selected.href) o.selected = true;
       og.appendChild(o);
     }
     sel.addEventListener('change', function () {
       if (sel.value && sel.value !== currentFile()) location.href = sel.value;
     });
-    lab.appendChild(k);
     lab.appendChild(sel);
+    wrap.appendChild(lab);
     host.innerHTML = '';
-    host.appendChild(lab);
+    host.appendChild(wrap);
   }
 
   window.SB_ISSUES = ISSUES;

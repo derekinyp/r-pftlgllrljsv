@@ -1,5 +1,5 @@
-/* zd-tokens.css —— 振達設計規範 Workshop 1.0.0（git tag v1.0.0）tokens.css 的站用副本，請勿手改；來源 /workspace/design-system/tokens/tokens.json。DRAFT 可用版 */
-/* 由 tools/build_tokens.py 自 tokens/tokens.json 產生，請勿手改。振達設計規範 Workshop（工坊） 1.0.0 */
+/* zd-tokens.css —— 振達設計規範 Workshop 1.0.1 tokens.css 的站用副本，請勿手改；來源 design-system/tokens/tokens.json。定稿 */
+/* 由 tools/build_tokens.py 自 tokens/tokens.json 產生，請勿手改。振達設計規範 Workshop（工坊） 1.0.1 */
 /* primitive（--p-*）只供本檔引用；產出請只用 semantic 變數。 */
 :root{
   --p-color-birch-50: #FFFDF8;
@@ -90,9 +90,9 @@
   --color-chart-heat-low: var(--p-color-heat-low); /* 熱圖低端（灰青）：低於基準；不是燈號 */
   --color-chart-heat-mid: var(--p-color-heat-mid); /* 熱圖中點 */
   --color-chart-heat-high: var(--p-color-heat-high); /* 熱圖高端（紫）：高於基準；不是燈號 */
-  --font-sans: Figtree, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif; /* Figtree 管拉丁與數字，Noto Sans TC 管中文 */
-  --font-display: Figtree, "Noto Sans TC", sans-serif;
-  --font-mono: "IBM Plex Mono", "Noto Sans TC", ui-monospace, monospace;
+  --font-sans: Figtree, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif; /* Figtree 管拉丁與數字，Noto Sans TC 管中文；網頁字型未載入或缺字（罕用字、單檔模式）時依序退回 PingFang TC（Apple）、微軟正黑體（Windows）、Noto Sans CJK TC（Linux） */
+  --font-display: Figtree, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif; /* 與 sans 同一串退回字型（1.0.1 補齊系統中文字型） */
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", monospace; /* 等寬拉丁先退系統等寬字，中文再退系統中文字型 */
   --text-xs: 12px; /* 註記、圖表軸標（最小字級） */
   --text-sm: 14px; /* 表格、輔助說明 */
   --text-md: 16px; /* 正文 */

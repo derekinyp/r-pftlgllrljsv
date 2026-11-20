@@ -1,0 +1,94 @@
+/* zd-baseline.css —— 振達設計規範 Workshop 1.0.0：基準表。由舊檔 css/baseline.css 轉換（色碼→tokens、字級→--zd-font-*），舊檔保留以便回滾。 */
+/* 現行基準表：桌機表格、窄屏卡片；錨點避開頂端導覽 */
+.wrap-b{max-width:1180px}
+.b-lead{margin:0 0 18px;color:var(--color-text-muted);max-width:46em}
+.b-ver{font-size:var(--zd-font-caption);font-weight:600;color:var(--color-text-muted);letter-spacing:.02em;margin-top:4px}
+.b-name{font-weight:700;color:var(--color-text-default)}
+.b-table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;font-size:var(--zd-font-table);margin:0 0 28px}
+.b-table th,.b-table td{border:1px solid var(--color-border-default);padding:10px 11px;text-align:left;vertical-align:top}
+/* 表頭不可 sticky：表格包在 .tblscroll（overflow-x:auto，y 會一併算成 auto）裡，
+   sticky 包含塊變成表格容器而非視窗。先前 top:48px 在未捲動時就把 thead th
+   往下推約 48px，與 L0 列重疊；該 48px 也不等於實際導覽列高度（約 53px）。 */
+.b-table thead th{background:var(--color-surface-zebra);font-weight:700;color:var(--color-text-default);position:static}
+.b-table tbody th{background:var(--color-surface-default);width:13rem}
+.b-table tbody tr,.b-alias,.b-quick tbody tr{scroll-margin-top:72px}
+.b-table tbody tr:target,.b-quick tbody tr:target{
+  background:var(--color-signal-watch-bg);
+  box-shadow:inset 4px 0 0 var(--color-signal-watch-solid)}
+.b-table tbody tr:target th{background:var(--color-signal-watch-bg)}
+.b-quick{width:100%;border-collapse:separate;border-spacing:0;background:#fff;font-size:var(--zd-font-small);margin:0 0 20px}
+.b-quick th,.b-quick td{border:1px solid var(--color-border-default);padding:8px 10px;text-align:left;vertical-align:top}
+.b-quick thead th{background:var(--color-surface-zebra);font-weight:700;color:var(--color-text-default)}
+.b-quick tbody th{background:var(--color-surface-default);white-space:nowrap}
+.b-quick tbody th:has(.b-hist),.b-quick tbody th:has(.l2-note){white-space:normal;min-width:11em;overflow-wrap:anywhere}
+.l2-note,.b-hist{overflow-wrap:anywhere;word-break:break-word}
+.b-quick b{font-weight:700;color:var(--color-text-default)}
+.b-hist{margin-top:6px;font-size:var(--zd-font-caption);color:var(--color-text-muted);line-height:1.5}
+.vtag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:var(--zd-font-caption);font-weight:700;text-decoration:none;line-height:1.4}
+.vtag:hover,.vtag:focus-visible{text-decoration:underline;outline:none}
+.vtag-g{background:var(--color-signal-ok-bg);color:var(--color-signal-ok-text)}
+.vtag-b{background:var(--color-signal-up-bg);color:var(--color-signal-up-text)}
+.vtag-r{background:var(--color-signal-off-bg);color:var(--color-signal-off-text)}
+.vtag-a{background:var(--color-signal-watch-bg);color:var(--color-signal-watch-text)}
+.vtag-n{background:var(--color-surface-zebra);color:var(--color-text-default)}
+.b-scale-note{margin:0 0 16px}
+.b-foot-note{margin:0 0 18px;color:var(--color-text-muted);font-size:var(--zd-font-small);max-width:50em}
+.l2-note{display:block;margin-top:4px;font-size:var(--zd-font-caption);color:var(--color-text-muted);line-height:1.55}
+details.b-full{margin:8px 0 28px;background:#fff;border:1px solid var(--color-border-default);border-radius:10px;padding:4px 14px 8px}
+details.b-full>summary{cursor:pointer;font-weight:700;padding:10px 0;color:var(--color-text-default)}
+@media (max-width:640px){
+  .b-quick thead{display:none}
+  .b-quick,.b-quick tbody,.b-quick tr,.b-quick th,.b-quick td,.b-quick tbody th{
+    display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+  .b-quick tr{background:#fff;border:1px solid var(--color-border-default);border-radius:14px;margin:0 0 12px;padding:12px}
+  .b-quick tbody th,.b-quick th,.b-quick td,.l2-note,.b-hist{
+    border:0;padding:6px 0;white-space:normal;overflow-wrap:anywhere;word-break:break-word;max-width:100%}
+  .b-quick td::before{content:attr(data-label);display:block;font-weight:700;color:var(--color-text-default);font-size:var(--zd-font-caption);margin:0 0 2px}
+}
+.b-table .prov{display:inline-block;margin-right:6px;padding:1px 7px;border-radius:999px;background:var(--color-signal-watch-bg);color:var(--color-signal-watch-text);font-size:var(--zd-font-caption);font-weight:700}
+.b-table .none{color:var(--color-text-muted)}
+.b-table a.in{color:var(--color-signal-up-text);font-weight:600;text-decoration:none}
+.b-table a.in:hover,.b-table a.in:focus{text-decoration:underline}
+.b-note-inline{margin:8px 0 0;color:var(--color-text-muted);font-size:var(--zd-font-caption);line-height:1.6}
+.b-sec{font-size:var(--zd-font-body);margin:8px 0 12px;color:var(--color-text-default)}
+.b-link{font-size:var(--zd-font-caption);font-weight:700;color:var(--color-signal-up-text);text-decoration:none;white-space:nowrap;margin-left:6px}
+.b-link:hover,.b-link:focus-visible{text-decoration:underline;outline:none}
+.b-schematic{background:#fff;border:1px solid var(--color-border-default);border-radius:14px;padding:16px 16px 10px;margin:8px 0 32px}
+.b-schematic h2{margin:0 0 6px}
+.b-schematic .b-cap{margin:0 0 12px;color:var(--color-text-muted);font-size:var(--zd-font-small)}
+.b-schematic svg{display:block;width:100%;height:auto}
+.b-schematic a:focus-visible rect,.b-schematic a:focus-visible ellipse{stroke:var(--color-signal-up-solid);stroke-width:2}
+
+@media (max-width:640px){
+  /* 取消 s.css .tblscroll table{min-width:880px} 與 th{white-space:nowrap}，
+     否則卡片仍約 880px 寬，文字右側被切掉。 */
+  .wrap-b .tblscroll{overflow:visible;max-width:100%}
+  .wrap-b .tblscroll table,.b-table,.b-table tbody,.b-table tr{
+    min-width:0;max-width:100%;width:100%;box-sizing:border-box}
+  .b-table thead{display:none}
+  .b-table,.b-table tbody{display:block;border:0;background:transparent}
+  .b-table tr{display:block;background:#fff;border:1px solid var(--color-border-default);border-radius:14px;margin:0 0 14px;padding:14px 14px 8px;box-shadow:0 1px 0 rgba(15,23,42,.03)}
+  .b-table tbody th,.b-table td{
+    display:block;width:100%;max-width:100%;min-width:0;border:0;padding:0 0 10px;
+    background:transparent;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  .b-table tbody th{padding-bottom:10px;border-bottom:1px solid var(--color-surface-canvas);margin-bottom:8px}
+  .b-table td{border-top:1px solid var(--color-surface-canvas);padding-top:10px}
+  .b-table td::before{content:attr(data-label);display:block;font-weight:700;color:var(--color-text-default);font-size:var(--zd-font-caption);margin:0 0 4px}
+}
+
+/* 速查表新增判色規則欄：桌面可換行，避免把頁面撑出水平捲軸 */
+.b-quick td[data-label="判色規則"]{font-size:var(--zd-font-table);line-height:1.45;white-space:normal;min-width:14em}
+@media (max-width:640px){
+  .b-quick td[data-label="判色規則"]{max-width:none}
+}
+
+/* ---- Workshop 設計層 ---- */
+.zd-site .b-lead{color:var(--color-text-muted);font-size:var(--zd-font-lead)}
+.zd-site .b-table,.zd-site .b-quick{font-size:var(--zd-font-table);border-radius:var(--radius-sm)}
+.zd-site .b-table thead th,.zd-site .b-quick thead th{background:var(--color-surface-sunken);font-size:var(--zd-font-caption)}
+.zd-site .b-table tbody th,.zd-site .b-quick tbody th{background:var(--color-surface-zebra)}
+.zd-site .b-table tbody tr:target,.zd-site .b-quick tbody tr:target,.zd-site .b-table tbody tr:target th{background:var(--color-brand-tint);box-shadow:inset 4px 0 0 var(--color-brand-default)}
+.zd-site .vtag{font-size:var(--zd-font-label);border-radius:var(--radius-pill);padding:2px 10px}
+.zd-site .vtag-n{background:var(--color-signal-na-bg);color:var(--color-signal-na-text)}
+.zd-site .vtag-g::before{content:"● ";content:"● " / ""}.zd-site .vtag-b::before{content:"▲ ";content:"▲ " / ""}.zd-site .vtag-r::before{content:"◆ ";content:"◆ " / ""}
+.zd-site .vtag-a::before{content:"◐ ";content:"◐ " / ""}.zd-site .vtag-n::before{content:"○ ";content:"○ " / ""}

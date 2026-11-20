@@ -5,20 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>綜覽</title>
-<style>
-#sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;
-  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
-  font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
-#sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
-#sb-nav a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
-#sb-nav a:hover{background:#374151;color:#fff}
-#sb-nav a.sb-on{background:#1d4ed8;color:#fff}
-#sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
-#sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
-</style>
-<link rel="stylesheet" href="css/s.css">
-<link rel="stylesheet" href="css/nav.css">
-<link rel="stylesheet" href="css/heatmap.css">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/zd-tokens.css">
+<link rel="stylesheet" href="css/zd-components.css">
+<link rel="stylesheet" href="css/zd-nav.css">
+<link rel="stylesheet" href="css/zd-site.css">
+<link rel="stylesheet" href="css/zd-heatmap.css">
 <script src="js/issues.js" defer></script>
 <script src="js/latest-brief.js" defer></script>
 <script src="js/site-copy.js" defer></script>
@@ -26,9 +18,9 @@
 <script src="js/heatmap.js" defer></script>
 <script src="js/o.js" defer></script>
 </head>
-<body>
+<body class="zd zd-site">
 <nav id="sb-nav"><div class="sb-inner"><a href="index.html">首頁</a><div class="sb-dd" id="sb-guide"><button type="button" class="sb-dd-btn" aria-expanded="false" aria-haspopup="true" aria-controls="sb-guide-menu" id="sb-guide-btn">框架入門</button><div class="sb-dd-menu" id="sb-guide-menu" role="menu" hidden><a href="q.html" role="menuitem">一頁圖解</a><a href="t.html" role="menuitem">逐步推導</a></div></div><a href="o.html" class="sb-on">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="index.html#weeks">各期週報</a></noscript></div></nav>
-<div class="wrap wrap-o">
+<main class="wrap wrap-o">
 
 <h1>綜覽</h1>
 <p class="lead">各層時間變化與最新已刊期記分卡。燈號顯示統一為符合／超越／偏離／觀察／不判；滑鼠移到格子上看當時原文。詞彙解釋見 <a class="in" href="t.html#vocab">名詞對照表</a>。</p>
@@ -37,7 +29,7 @@
 <p class="o-kpi-compact" id="o-kpi-compact"></p>
 <section id="lights">
 <h2>各層時間變化（判定燈號）</h2>
-<ul class="legend" style="display:flex;flex-wrap:wrap;gap:8px 16px;padding:0;margin:0 0 10px;list-style:none;font-size:13px;color:#4d5666">
+<ul class="legend" style="display:flex;flex-wrap:wrap;gap:8px 16px;padding:0;margin:0 0 10px;list-style:none;font-size:var(--zd-font-small);color:var(--color-text-muted)">
 <li>● 符合</li><li>▲ 超越</li><li>◆ 偏離</li><li>◐ 觀察</li><li>○ 不判（含無尺：當期沒有尺）</li>
 </ul>
 <div class="tblscroll"><table><tr><th>層</th><th>2026-W39</th><th>2026-W40</th><th>2026-W41</th><th>2026-W42</th><th>2026-W43</th><th>2026-W44</th><th>2026-W45</th><th>2026-W46</th><th>2026-W47</th></tr><tr><th>L0 弱訊號 <a class="b-link" href="b.html#L0">基準</a></th><td class="r">偏離・新增變數</td><td class="a">觀察</td><td class="g">符合</td><td class="a">觀察</td><td class="a">觀察</td><td class="a">觀察</td><td class="a">觀察</td><td class="a">觀察</td><td class="a">觀察</td></tr><tr><th>L1 終端需求 <a class="b-link" href="b.html#L1">基準</a></th><td class="g">符合預期</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合</td><td class="b">超越</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合</td></tr><tr><th>L2 雲端資本開支 <a class="b-link" href="b.html#L2">基準</a><div class="l2-note" data-l2-note></div><div class="l2-note" data-l2-verdict-note></div></th><td class="g">符合預期</td><td class="n">無尺</td><td class="n">無尺</td><td class="n">無尺</td><td class="a">觀察</td><td class="b">超越</td><td class="b">超越</td><td class="b">超越</td><td class="b">超越</td></tr><tr><th>L3 晶片 <a class="b-link" href="b.html#L3">基準</a></th><td class="g">符合預期</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合</td><td class="b">超越</td><td class="a">觀察</td><td class="b">超越</td><td class="b">超越</td><td class="b">超越</td></tr><tr><th>L4 記憶體 <a class="b-link" href="b.html#L4">基準</a></th><td class="b">超越預期</td><td class="g">符合</td><td class="b">超越</td><td class="b">超越</td><td class="g">符合</td><td class="b">超越</td><td class="g">符合</td><td class="b">超越</td><td class="b">超越</td></tr><tr><th>L5 先進封裝 <a class="b-link" href="b.html#L5">基準</a></th><td class="g">符合預期</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合</td><td class="b">超越</td><td class="g">符合</td><td class="b">超越</td><td class="b">超越</td><td class="b">超越</td></tr><tr><th>L6 晶圓代工 <a class="b-link" href="b.html#L6">基準</a></th><td class="b">超越預期</td><td class="g">符合</td><td class="b">超越</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合</td><td class="b">超越</td><td class="b">超越</td><td class="b">超越</td></tr><tr><th>L7／L7a 設備 <a class="b-link" href="b.html#L7a">基準</a></th><td class="r">L7 偏離趨勢（混判）</td><td class="n">無尺</td><td class="g">符合</td><td class="n">無尺</td><td class="b">超越</td><td class="a">觀察</td><td class="a">觀察</td><td class="b">超越</td><td class="b">超越</td></tr><tr><th>L7b 材料 <a class="b-link" href="b.html#L7b">基準</a></th><td class="n">缺（v1.0 無獨立列）</td><td class="a">觀察</td><td class="a">觀察</td><td class="r">偏離</td><td class="r">偏離</td><td class="r">偏離</td><td class="r">偏離</td><td class="r">偏離</td><td class="r">偏離</td></tr><tr><th>L8 電力 <a class="b-link" href="b.html#L8">基準</a></th><td class="b">超越預期</td><td class="n">無尺</td><td class="n">無尺</td><td class="n">無尺</td><td class="b">超越</td><td class="n">無尺</td><td class="r">偏離</td><td class="r">偏離</td><td class="r">偏離</td></tr><tr><th>外生｜利率 <a class="b-link" href="b.html#RATE">基準</a></th><td class="r">升息循環重啟</td><td class="g">符合</td><td class="a">觀察</td><td class="a">觀察</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合（偏鷹側）</td><td class="g">符合（偏鷹側）</td><td class="g">符合（貼上緣）</td></tr><tr><th>外生｜管制 <a class="b-link" href="b.html#CTRL">基準</a></th><td class="a">觀察</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合</td><td class="g">符合</td><td class="n">維持</td><td class="n">維持（降溫）</td><td class="r">偏離（新）</td></tr><tr><th>反射性迴路 <a class="b-link" href="b.html#REFL">基準</a></th><td class="a">觀察（擁擠度升）</td><td class="g">符合</td><td class="g">符合</td><td class="a">觀察</td><td class="r">偏離</td><td class="r">偏離</td><td class="r">偏離</td><td class="r">偏離</td><td class="r">偏離（惡化）</td></tr></table></div>
@@ -67,8 +59,8 @@
 <div id="hm-root"></div>
 <p class="muted hm-asof" id="hm-asof"></p>
 </section>
-
-<details class="notes" id="notes">
+</main>
+<div class="wrap wrap-o zd-after"><details class="notes zd-notes" id="notes">
 <summary>附註與方法</summary>
 <h2>P0–P7 處置（2026-11-19 核准，2026-W48 起生效）</h2>
 <table>
@@ -92,5 +84,6 @@
 <p>免責聲明：以上內容基於公開資料和量化分析，僅供參考，不構成投資建議。</p>
 </details>
 </div>
+<footer class="zd-footer zd-site-footer"></footer>
 </body>
 </html>

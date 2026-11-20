@@ -1,5 +1,5 @@
-/* weekly-zd.css —— 振達設計規範 Workshop 1.0.0：每週新聞解析（週報）樣式
-   狀態：DRAFT 可用版（2026-11-21 12:00 前交付；定稿 2026-11-22 15:00）
+/* weekly-zd.css —— 振達設計規範 Workshop 1.0.1：每週新聞解析（週報）樣式
+   狀態：定稿（2026-11-20；之後只做修補版）
    引用順序：fonts/fonts.css → css/zd-tokens.css → css/zd-components.css → css/zd-nav.css → 本檔（由產生器內嵌於 <style>，或另存 css/weekly-zd.css 引用）
    作用範圍：<body class="zd zd-weekly">。沿用現行週報的 HTML 結構與 class（見 WEEKLY-CLASSES.md），
    不需引用 nav.css，也不再內嵌 weekly.css。只用 tokens 變數；字級只用 --zd-font-*（規範 1.0.0 字級鎖定）。 */
@@ -41,7 +41,7 @@
 .zd-weekly h3{margin:var(--space-5) 0 var(--space-2);font-size:var(--zd-font-h3)}
 .zd-weekly h4{font-size:var(--zd-font-h4)}
 
-/* 燈號 chip：色＋形＋字。結構 <span class="chip green"><span class="shape">●</span>符合</span>（shape 由產生器輸出，CSS 不另加）。
+/* 燈號 chip：色＋形＋字。結構 <span class="chip green"><span class="shape" aria-hidden="true">●</span>符合</span>（shape 由產生器輸出，CSS 不另加）。
    green＝符合 ●、blue＝超越 ▲、red＝偏離 ◆、amber＝觀察 ◐、gray＝不判 ○ */
 .zd-weekly .chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:var(--radius-pill);font-size:var(--zd-font-label);
   font-weight:var(--weight-bold);line-height:var(--leading-snug);background:var(--color-surface-sunken);color:var(--color-text-muted);border:1px solid transparent;white-space:nowrap}

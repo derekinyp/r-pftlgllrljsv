@@ -1,4 +1,4 @@
-/* zd-components.css —— 振達設計規範 Workshop 1.0.0 components.css 的站用副本，只在 <body class="zd"> 內生效。DRAFT 可用版 */
+/* zd-components.css —— 振達設計規範 Workshop 1.0.1 components.css 的站用副本，只在 <body class="zd"> 內生效。定稿 */
 /* 振達設計規範 Workshop 1.0.0 —— 網站元件（純 CSS，不綁框架）
    引用順序：fonts/fonts.css → tokens/tokens.css → components/components.css
    規則：只用 tokens.css 的 semantic 變數；不得寫死色碼與字級（tools/check.py 會查）。
@@ -60,11 +60,11 @@ body.zd{margin:0;background:var(--color-surface-canvas);color:var(--color-text-d
 /* ---------- 5 燈號標籤 Signal（色＋形＋字） ---------- */
 .zd-signal{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--radius-pill);font-size:var(--zd-font-label);font-weight:var(--weight-bold);line-height:1;white-space:nowrap}
 .zd-signal::before{font-size:var(--zd-font-caption)}
-.zd-signal--ok{color:var(--color-signal-ok-text);background:var(--color-signal-ok-bg)}       .zd-signal--ok::before{content:"●";color:var(--color-signal-ok-solid)}
-.zd-signal--up{color:var(--color-signal-up-text);background:var(--color-signal-up-bg)}       .zd-signal--up::before{content:"▲";color:var(--color-signal-up-solid)}
-.zd-signal--off{color:var(--color-signal-off-text);background:var(--color-signal-off-bg)}    .zd-signal--off::before{content:"◆";color:var(--color-signal-off-solid)}
-.zd-signal--watch{color:var(--color-signal-watch-text);background:var(--color-signal-watch-bg)} .zd-signal--watch::before{content:"◐";color:var(--color-signal-watch-solid)}
-.zd-signal--na{color:var(--color-signal-na-text);background:var(--color-signal-na-bg)}       .zd-signal--na::before{content:"○";color:var(--color-signal-na-solid)}
+.zd-signal--ok{color:var(--color-signal-ok-text);background:var(--color-signal-ok-bg)}       .zd-signal--ok::before{content:"●";content:"●" / "";color:var(--color-signal-ok-solid)}
+.zd-signal--up{color:var(--color-signal-up-text);background:var(--color-signal-up-bg)}       .zd-signal--up::before{content:"▲";content:"▲" / "";color:var(--color-signal-up-solid)}
+.zd-signal--off{color:var(--color-signal-off-text);background:var(--color-signal-off-bg)}    .zd-signal--off::before{content:"◆";content:"◆" / "";color:var(--color-signal-off-solid)}
+.zd-signal--watch{color:var(--color-signal-watch-text);background:var(--color-signal-watch-bg)} .zd-signal--watch::before{content:"◐";content:"◐" / "";color:var(--color-signal-watch-solid)}
+.zd-signal--na{color:var(--color-signal-na-text);background:var(--color-signal-na-bg)}       .zd-signal--na::before{content:"○";content:"○" / "";color:var(--color-signal-na-solid)}
 .zd-tone-ok{--zd-tone:var(--color-signal-ok-solid)} .zd-tone-up{--zd-tone:var(--color-signal-up-solid)} .zd-tone-off{--zd-tone:var(--color-signal-off-solid)}
 .zd-tone-watch{--zd-tone:var(--color-signal-watch-solid)} .zd-tone-na{--zd-tone:var(--color-signal-na-solid)}
 .zd-legend{display:flex;flex-wrap:wrap;gap:var(--space-2);list-style:none;margin:0 0 var(--space-3);padding:0}

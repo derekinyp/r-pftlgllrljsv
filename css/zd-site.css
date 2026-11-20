@@ -1,0 +1,129 @@
+/* zd-site.css —— 振達設計規範 Workshop 1.0.0：站內頁共用版面。由舊檔 css/s.css 轉換（色碼→tokens、字級→--zd-font-*），舊檔保留以便回滾。 */
+
+:root{
+  --bg:var(--color-surface-zebra); --panel:#fff; --line:var(--color-surface-sunken); --ink:var(--color-text-default); --ink2:var(--color-text-muted); --ink3:var(--color-text-subtle);
+  --red:var(--color-signal-off-solid); --red-bg:var(--color-signal-off-bg); --green:var(--color-signal-ok-text); --green-bg:var(--color-signal-ok-bg);
+  --amber:var(--color-signal-watch-text); --amber-bg:var(--color-signal-watch-bg); --blue:var(--color-signal-up-text); --blue-bg:var(--color-signal-up-bg); --gray:var(--color-text-subtle); --gray-bg:var(--color-surface-zebra);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  line-height:1.7;font-size:var(--zd-font-small)}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:var(--zd-font-h1);margin:0 0 8px}
+h2{font-size:var(--zd-font-h2);margin:32px 0 12px}
+h3{font-size:var(--zd-font-h3);margin:20px 0 8px}
+p,li{color:var(--ink2)}
+.lead{font-size:var(--zd-font-body);color:var(--ink2);margin:0 0 20px}
+.banner{background:var(--amber-bg);border:1px solid var(--color-signal-watch-solid);border-left:4px solid var(--amber);
+  padding:10px 14px;border-radius:0 8px 8px 0;color:var(--color-signal-watch-text);margin:0 0 20px}
+.banner b{color:var(--color-signal-watch-text)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0 28px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;display:block}
+.card:hover{border-color:var(--color-signal-up-solid)}
+.card h3{margin:0 0 6px;color:var(--ink)}
+.card p{margin:0;font-size:var(--zd-font-small)}
+table{width:100%;border-collapse:collapse;background:var(--panel);font-size:var(--zd-font-table);margin:8px 0 24px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--color-surface-zebra);font-weight:600}
+.g{background:var(--green-bg);color:var(--green);font-weight:600}
+.b{background:var(--blue-bg);color:var(--blue);font-weight:600}
+.r{background:var(--red-bg);color:var(--red);font-weight:600}
+.a{background:var(--amber-bg);color:var(--amber);font-weight:600}
+.n{background:var(--gray-bg);color:var(--gray)}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:0 0 24px}
+.kpi div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
+.kpi .v{font-size:var(--zd-font-h2);font-weight:700}
+.kpi .l{font-size:var(--zd-font-caption);color:var(--ink3)}
+.muted{color:var(--ink3);font-size:var(--zd-font-caption)}
+.node-btns{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 16px}
+.node-btns button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:4px 8px;cursor:pointer;font:inherit;font-size:var(--zd-font-label)}
+.node-btns button.on{background:var(--color-signal-up-solid);color:#fff;border-color:var(--color-signal-up-solid)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 20px}
+.panel h3{margin-top:0}
+svg.map{width:100%;height:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.foot{margin-top:40px;color:var(--ink3);font-size:var(--zd-font-caption);border-top:1px solid var(--line);padding-top:12px}
+a.in{color:var(--blue)}
+
+.map-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,1fr);gap:16px;align-items:start}
+@media (max-width:840px){.map-grid{grid-template-columns:1fr}}
+
+.tblscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tblscroll table{min-width:880px}
+.tblscroll th{white-space:nowrap;font-size:var(--zd-font-caption)}
+
+.b-link{font-size:var(--zd-font-caption);font-weight:700;color:var(--color-signal-up-text);text-decoration:none;white-space:nowrap;margin-left:6px}
+.b-link:hover,.b-link:focus-visible{text-decoration:underline;outline:none}
+
+abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help;font-style:normal}
+.l2-note{display:block;margin-top:4px;font-size:var(--zd-font-caption);color:var(--color-text-muted);line-height:1.55;overflow-wrap:anywhere}
+/* 綜覽燈號表第一欄的對帳／判藍註記必須換行，否則 nowrap 會把註記切在首屏外 */
+#lights th .l2-note{white-space:normal;font-weight:500;max-width:16em}
+
+.o-kpi-compact{display:none}
+@media (max-width:640px){
+  /* 綜覽手機首屏先看到燈號：四張卡收成一行摘要 */
+  .wrap-o .lead{margin:0 0 8px;font-size:var(--zd-font-small);line-height:1.55}
+  .wrap-o #o-scale-note{margin:0 0 8px;padding:8px 10px}
+  .wrap-o #o-kpi{display:none}
+  .wrap-o .o-kpi-compact{display:block;margin:0 0 10px;padding:8px 10px;background:#fff;border:1px solid var(--color-border-default);border-radius:10px;color:var(--color-text-default);font-size:var(--zd-font-small);line-height:1.55}
+  .wrap-o #lights{margin-top:4px}
+  .wrap-o #lights h2{margin-top:8px}
+}
+
+/* ---- Workshop 設計層 ---- */
+/* 舊變數改指向規範 tokens（頁內 <style> 仍引用 --ink 等舊名） */
+:root{--bg:var(--color-surface-canvas);--panel:var(--color-surface-default);--line:var(--color-border-default);
+  --ink:var(--color-text-default);--ink2:var(--color-text-muted);--ink3:var(--color-text-subtle);
+  --red:var(--color-signal-off-text);--red-bg:var(--color-signal-off-bg);--green:var(--color-signal-ok-text);--green-bg:var(--color-signal-ok-bg);
+  --amber:var(--color-signal-watch-text);--amber-bg:var(--color-signal-watch-bg);--blue:var(--color-signal-up-text);--blue-bg:var(--color-signal-up-bg);
+  --gray:var(--color-signal-na-text);--gray-bg:var(--color-signal-na-bg)}
+body.zd-site{background:var(--color-surface-canvas);color:var(--color-text-default);font-family:var(--font-sans);font-size:var(--zd-font-body);line-height:var(--leading-body)}
+.zd-site .wrap{max-width:var(--layout-max);padding:var(--space-6) var(--space-5) var(--space-8)}
+.zd-site h1{font-size:var(--zd-font-h1);line-height:var(--leading-tight);letter-spacing:-.01em;margin:0 0 var(--space-3)}
+.zd-site h2{font-size:var(--zd-font-h2);line-height:var(--leading-tight);margin:var(--space-7) 0 var(--space-3);padding-top:var(--space-4);border-top:1px solid var(--color-border-grid)}
+.zd-site h3{font-size:var(--zd-font-h3);line-height:var(--leading-tight)}
+.zd-site h4{font-size:var(--zd-font-h4)}
+.zd-site .lead{font-size:var(--zd-font-lead);color:var(--color-text-muted);max-width:var(--layout-read)}
+.zd-site a{color:var(--color-text-link)}
+.zd-site a.in,.zd-site .b-link{color:var(--color-text-link)}
+.zd-site .card,.zd-site .panel,.zd-site .kpi div{border-color:var(--color-border-default);border-radius:var(--radius-md);box-shadow:var(--shadow-1)}
+.zd-site .card:hover{border-color:var(--color-brand-default)}
+.zd-site .kpi .v{font-size:var(--zd-font-kpi);font-variant-numeric:tabular-nums;line-height:1.1}
+.zd-site .kpi .l,.zd-site .muted{font-size:var(--zd-font-caption);color:var(--color-text-subtle)}
+.zd-site table{font-size:var(--zd-font-table);background:var(--color-surface-default)}
+.zd-site th,.zd-site td{border-color:var(--color-border-grid)}
+.zd-site thead th,.zd-site th{background:var(--color-surface-sunken);color:var(--color-text-default)}
+.zd-site tbody tr:nth-child(even) td:not(.g):not(.b):not(.r):not(.a):not(.n){background:var(--color-surface-zebra)}
+.zd-site .banner{background:var(--color-brand-tint);border:0;border-left:4px solid var(--color-brand-default);color:var(--color-text-muted);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.zd-site .banner b{color:var(--color-text-default)}
+.zd-site .node-btns button{border-color:var(--color-border-default);background:var(--color-surface-default);border-radius:var(--radius-pill);font-size:var(--zd-font-label);padding:4px 12px;color:var(--color-text-default)}
+.zd-site .node-btns button.on{background:var(--color-brand-default);border-color:var(--color-brand-default);color:var(--color-text-on-brand)}
+.zd-site svg.map{border-color:var(--color-border-default);border-radius:var(--radius-md)}
+/* 判定燈號：色＋形＋字（class g/b/r/a/n 是資料語意，保留；形狀以 ::before 補上，不改文字內容） */
+.zd-site td.g,.zd-site td.b,.zd-site td.r,.zd-site td.a,.zd-site td.n{font-weight:var(--weight-bold)}
+.zd-site td.g{background:var(--color-signal-ok-bg);color:var(--color-signal-ok-text)}
+.zd-site td.b{background:var(--color-signal-up-bg);color:var(--color-signal-up-text)}
+.zd-site td.r{background:var(--color-signal-off-bg);color:var(--color-signal-off-text)}
+.zd-site td.a{background:var(--color-signal-watch-bg);color:var(--color-signal-watch-text)}
+.zd-site td.n{background:var(--color-signal-na-bg);color:var(--color-signal-na-text);font-weight:var(--weight-regular)}
+.zd-site td.g::before{content:"● ";content:"● " / ""}.zd-site td.b::before{content:"▲ ";content:"▲ " / ""}.zd-site td.r::before{content:"◆ ";content:"◆ " / ""}.zd-site td.a::before{content:"◐ ";content:"◐ " / ""}.zd-site td.n::before{content:"○ ";content:"○ " / ""}
+.zd-site td.g:empty::before,.zd-site td.b:empty::before,.zd-site td.r:empty::before,.zd-site td.a:empty::before,.zd-site td.n:empty::before{content:none}
+/* 註記與頁尾 */
+.zd-site details.notes,.zd-site .notes{max-width:var(--layout-max);margin:var(--space-7) auto 0;padding:var(--space-4) var(--space-5);color:var(--color-text-muted);font-size:var(--zd-font-small)}
+.zd-site details.notes summary{cursor:pointer;font-weight:var(--weight-bold);color:var(--color-text-default)}
+.zd-site .foot{color:var(--color-text-subtle);font-size:var(--zd-font-caption);border-top-color:var(--color-border-grid)}
+.zd-site footer{max-width:var(--layout-max);margin:var(--space-6) auto 0;padding:var(--space-4) var(--space-5) var(--space-7);color:var(--color-text-subtle);font-size:var(--zd-font-caption);border-top:1px solid var(--color-border-grid)}
+.zd-site footer:empty{display:none}
+.zd-site footer .sb-review-note,.zd-site #sb-review-note{max-width:none;margin:0;padding:0;border:0;color:var(--color-text-subtle);font-size:var(--zd-font-caption);background:none}
+.zd-site :focus-visible{outline:2px solid var(--color-brand-default);outline-offset:2px}
+.zd-site .o-kpi-compact{font-size:var(--zd-font-small)}
+@media (max-width:760px){
+  .zd-site .wrap{padding:var(--space-5) var(--space-4) var(--space-7)}
+  .zd-site h2{margin-top:var(--space-6)}
+}
+/* 附註區（main 之後）：與主內容同寬，上方留白 */
+.zd-site .wrap.zd-after{padding-top:0;padding-bottom:var(--space-5)}
+.zd-site .wrap.zd-after > details.notes{margin-top:0}
+/* 燈號格不要把「▲ 超越」切成兩行 */
+.zd-site td.g,.zd-site td.b,.zd-site td.r,.zd-site td.a,.zd-site td.n{min-width:5.4em}

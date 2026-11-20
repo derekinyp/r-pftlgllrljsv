@@ -5,25 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>現行基準表 v2.1</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/zd-tokens.css">
+<link rel="stylesheet" href="css/zd-components.css">
+<link rel="stylesheet" href="css/zd-nav.css">
+<link rel="stylesheet" href="css/zd-site.css">
+<link rel="stylesheet" href="css/zd-baseline.css">
 <style>
-#sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
-#sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
-#sb-nav a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
-#sb-nav a:hover{background:#374151;color:#fff}
-#sb-nav a.sb-on{background:#1d4ed8;color:#fff}
 .b-alias{display:block;height:0;width:0;overflow:hidden}
 </style>
-<link rel="stylesheet" href="css/s.css">
-<link rel="stylesheet" href="css/nav.css">
-<link rel="stylesheet" href="css/baseline.css">
 <script src="js/issues.js" defer></script>
 <script src="js/latest-brief.js" defer></script>
 <script src="js/site-copy.js" defer></script>
 <script src="js/b.js" defer></script>
 </head>
-<body>
+<body class="zd zd-site">
 <nav id="sb-nav"><div class="sb-inner"><a href="index.html">首頁</a><div class="sb-dd" id="sb-guide"><button type="button" class="sb-dd-btn" aria-expanded="false" aria-haspopup="true" aria-controls="sb-guide-menu" id="sb-guide-btn">框架入門</button><div class="sb-dd-menu" id="sb-guide-menu" role="menu" hidden><a href="q.html" role="menuitem">一頁圖解</a><a href="t.html" role="menuitem">逐步推導</a></div></div><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html" class="sb-on">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="index.html#weeks">各期週報</a></noscript></div></nav>
-<div class="wrap wrap-b">
+<main class="wrap wrap-b">
 
 <h1>現行基準表</h1>
 <p class="b-lead">這是現在拿來判定符合、超越或偏離的尺。基準版本 v2.1，2026-11-20 核准，自 2026-W48 起適用；已刊各期不回溯改判。v2.0 於 2026-11-19 核准，但在 2026-11-20 被 v2.1 取代前，未曾用於任何已刊期。數字與文字引自已核准的基準登錄檔。</p>
@@ -193,51 +191,51 @@
 <p class="b-cap">這是傳導圖的簡化示意，不是判定。實線為主鏈或已立尺關係，虛線為間接或回饋。點節點會留在本頁對應列；完整關係見 <a class="in" href="m.html">傳導圖</a>。</p>
 <svg viewBox="0 0 960 320" role="img" aria-label="簡化關聯：主鏈由 L0 到 L8，左側外生，右側反射性與配套層">
   <defs>
-    <marker id="b-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#64748b"/></marker>
+    <marker id="b-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6E6154"/></marker>
   </defs>
-  <text x="24" y="22" font-size="11" fill="#4d5666" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">外生側軌</text>
-  <text x="300" y="22" font-size="11" fill="#4d5666" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">主鏈（錢由上往下，瓶頸由下往上）</text>
-  <text x="780" y="22" font-size="11" fill="#4d5666" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">迴路／不立尺</text>
-  <line x1="200" y1="70" x2="200" y2="280" stroke="#e3e6ec" stroke-width="1"/>
-  <line x1="760" y1="70" x2="760" y2="280" stroke="#e3e6ec" stroke-width="1"/>
+  <text x="24" y="22" fill="#54483D" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">外生側軌</text>
+  <text x="300" y="22" fill="#54483D" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">主鏈（錢由上往下，瓶頸由下往上）</text>
+  <text x="780" y="22" fill="#54483D" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">迴路／不立尺</text>
+  <line x1="200" y1="70" x2="200" y2="280" stroke="#EFE7D8" stroke-width="1"/>
+  <line x1="760" y1="70" x2="760" y2="280" stroke="#EFE7D8" stroke-width="1"/>
   <!-- side left -->
-  <a href="#P0"><rect x="24" y="48" width="150" height="28" rx="14" fill="#f8fafc" stroke="#475569"/><text x="99" y="67" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">政策與許可</text></a>
-  <a href="#P1"><rect x="24" y="88" width="150" height="28" rx="14" fill="#f8fafc" stroke="#475569"/><text x="99" y="107" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">能源價格與通道</text></a>
-  <a href="#RATE"><rect x="24" y="148" width="150" height="28" rx="14" fill="#f8fafc" stroke="#475569"/><text x="99" y="167" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">利率</text></a>
-  <a href="#CTRL"><rect x="24" y="188" width="150" height="28" rx="14" fill="#f8fafc" stroke="#475569"/><text x="99" y="207" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">管制／地緣</text></a>
+  <a href="#P0"><rect x="24" y="48" width="150" height="28" rx="14" fill="#FFFDF8" stroke="#54483D"/><text x="99" y="67" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">政策與許可</text></a>
+  <a href="#P1"><rect x="24" y="88" width="150" height="28" rx="14" fill="#FFFDF8" stroke="#54483D"/><text x="99" y="107" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">能源價格與通道</text></a>
+  <a href="#RATE"><rect x="24" y="148" width="150" height="28" rx="14" fill="#FFFDF8" stroke="#54483D"/><text x="99" y="167" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">利率</text></a>
+  <a href="#CTRL"><rect x="24" y="188" width="150" height="28" rx="14" fill="#FFFDF8" stroke="#54483D"/><text x="99" y="207" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">管制／地緣</text></a>
   <!-- main -->
-  <a href="#L0"><rect x="300" y="44" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="335" y="63" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L0</text></a>
-  <a href="#L1"><rect x="400" y="44" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="435" y="63" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L1</text></a>
-  <a href="#L2"><rect x="500" y="44" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="535" y="63" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L2</text></a>
-  <a href="#L3"><rect x="600" y="44" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="635" y="63" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L3</text></a>
-  <line x1="370" y1="58" x2="400" y2="58" stroke="#64748b" marker-end="url(#b-arr)"/>
-  <line x1="470" y1="58" x2="500" y2="58" stroke="#64748b" marker-end="url(#b-arr)"/>
-  <line x1="570" y1="58" x2="600" y2="58" stroke="#64748b" marker-end="url(#b-arr)"/>
-  <a href="#L4"><rect x="430" y="110" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="465" y="129" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L4</text></a>
-  <a href="#L5"><rect x="530" y="110" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="565" y="129" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L5</text></a>
-  <a href="#L6"><rect x="630" y="110" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="665" y="129" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L6</text></a>
-  <line x1="620" y1="72" x2="465" y2="110" stroke="#64748b" marker-end="url(#b-arr)"/>
-  <line x1="635" y1="72" x2="565" y2="110" stroke="#64748b" marker-end="url(#b-arr)"/>
-  <line x1="650" y1="72" x2="665" y2="110" stroke="#64748b" marker-end="url(#b-arr)"/>
-  <a href="#L7a"><rect x="480" y="176" width="80" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="520" y="195" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L7a</text></a>
-  <a href="#L7b"><rect x="600" y="176" width="80" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="640" y="195" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L7b</text></a>
-  <line x1="535" y1="72" x2="520" y2="176" stroke="#64748b" marker-end="url(#b-arr)"/>
-  <line x1="655" y1="138" x2="640" y2="176" stroke="#64748b" marker-end="url(#b-arr)"/>
-  <a href="#L8"><rect x="540" y="242" width="80" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="580" y="261" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L8</text></a>
-  <line x1="535" y1="72" x2="580" y2="242" stroke="#64748b" marker-end="url(#b-arr)"/>
-  <line x1="580" y1="256" x2="535" y2="80" stroke="#94a3b8" stroke-dasharray="4 3"/>
+  <a href="#L0"><rect x="300" y="44" width="70" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="335" y="63" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L0</text></a>
+  <a href="#L1"><rect x="400" y="44" width="70" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="435" y="63" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L1</text></a>
+  <a href="#L2"><rect x="500" y="44" width="70" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="535" y="63" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L2</text></a>
+  <a href="#L3"><rect x="600" y="44" width="70" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="635" y="63" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L3</text></a>
+  <line x1="370" y1="58" x2="400" y2="58" stroke="#6E6154" marker-end="url(#b-arr)"/>
+  <line x1="470" y1="58" x2="500" y2="58" stroke="#6E6154" marker-end="url(#b-arr)"/>
+  <line x1="570" y1="58" x2="600" y2="58" stroke="#6E6154" marker-end="url(#b-arr)"/>
+  <a href="#L4"><rect x="430" y="110" width="70" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="465" y="129" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L4</text></a>
+  <a href="#L5"><rect x="530" y="110" width="70" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="565" y="129" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L5</text></a>
+  <a href="#L6"><rect x="630" y="110" width="70" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="665" y="129" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L6</text></a>
+  <line x1="620" y1="72" x2="465" y2="110" stroke="#6E6154" marker-end="url(#b-arr)"/>
+  <line x1="635" y1="72" x2="565" y2="110" stroke="#6E6154" marker-end="url(#b-arr)"/>
+  <line x1="650" y1="72" x2="665" y2="110" stroke="#6E6154" marker-end="url(#b-arr)"/>
+  <a href="#L7a"><rect x="480" y="176" width="80" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="520" y="195" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L7a</text></a>
+  <a href="#L7b"><rect x="600" y="176" width="80" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="640" y="195" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L7b</text></a>
+  <line x1="535" y1="72" x2="520" y2="176" stroke="#6E6154" marker-end="url(#b-arr)"/>
+  <line x1="655" y1="138" x2="640" y2="176" stroke="#6E6154" marker-end="url(#b-arr)"/>
+  <a href="#L8"><rect x="540" y="242" width="80" height="28" rx="8" fill="#FFFDF8" stroke="#2A211A"/><text x="580" y="261" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">L8</text></a>
+  <line x1="535" y1="72" x2="580" y2="242" stroke="#6E6154" marker-end="url(#b-arr)"/>
+  <line x1="580" y1="256" x2="535" y2="80" stroke="#8C8174" stroke-dasharray="4 3"/>
   <!-- right -->
-  <a href="#REFL"><rect x="790" y="100" width="146" height="28" rx="8" fill="#f5f3ff" stroke="#6d28d9"/><text x="863" y="119" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">反射性迴路</text></a>
-  <a href="#AUX"><rect x="790" y="176" width="146" height="28" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-dasharray="5 3"/><text x="863" y="195" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">配套層（不立尺）</text></a>
-  <line x1="174" y1="162" x2="500" y2="58" stroke="#94a3b8" stroke-dasharray="4 3"/>
-  <line x1="174" y1="202" x2="600" y2="58" stroke="#94a3b8" stroke-dasharray="4 3"/>
-  <line x1="174" y1="62" x2="540" y2="256" stroke="#94a3b8" stroke-dasharray="4 3"/>
-  <line x1="670" y1="58" x2="790" y2="114" stroke="#94a3b8" stroke-dasharray="4 3"/>
-  <line x1="790" y1="114" x2="570" y2="58" stroke="#94a3b8" stroke-dasharray="4 3"/>
+  <a href="#REFL"><rect x="790" y="100" width="146" height="28" rx="8" fill="#FFFDF8" stroke="#7048A0"/><text x="863" y="119" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">反射性迴路</text></a>
+  <a href="#AUX"><rect x="790" y="176" width="146" height="28" rx="8" fill="#FBF8F2" stroke="#7A4A06" stroke-dasharray="5 3"/><text x="863" y="195" text-anchor="middle" fill="#2A211A" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif" style="font-size:var(--zd-font-caption)">配套層（不立尺）</text></a>
+  <line x1="174" y1="162" x2="500" y2="58" stroke="#8C8174" stroke-dasharray="4 3"/>
+  <line x1="174" y1="202" x2="600" y2="58" stroke="#8C8174" stroke-dasharray="4 3"/>
+  <line x1="174" y1="62" x2="540" y2="256" stroke="#8C8174" stroke-dasharray="4 3"/>
+  <line x1="670" y1="58" x2="790" y2="114" stroke="#8C8174" stroke-dasharray="4 3"/>
+  <line x1="790" y1="114" x2="570" y2="58" stroke="#8C8174" stroke-dasharray="4 3"/>
 </svg>
 </section>
-
-<details class="notes" id="notes">
+</main>
+<div class="wrap wrap-b zd-after"><details class="notes zd-notes" id="notes">
 <summary>附註與方法</summary>
 <p>不公開索引，僅供內部審閱。頁面已標示 noindex。不構成投資建議。盤點日期 2026-11-20（台北時間，UTC+8）。</p>
 <p>現行版（v2.1，2026-11-20 核准，2026-W48 起適用）。v2.0 於 2026-11-19 核准，但在 2026-11-20 被取代前，未曾用於任何已刊期。已刊 2026-W39 至 2026-W47 不回溯重判，仍以當時 v1.1 為準。差異紀錄欄位沿用舊格式：編號、層、原值、新值、理由與依據來源（附時點）。v1.1、v2.0 保留為歷史版，可在下表對照。</p>
@@ -305,5 +303,6 @@
 <p>免責聲明：以上內容基於公開資料和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</p>
 </details>
 </div>
+<footer class="zd-footer zd-site-footer"></footer>
 </body>
 </html>

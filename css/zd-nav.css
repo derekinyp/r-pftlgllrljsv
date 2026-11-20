@@ -1,5 +1,5 @@
-/* zd-nav.css —— 振達設計規範 Workshop 1.0.0：站內導覽列（issues.js 的 sb-* 掛鉤）
-   狀態：DRAFT 可用版（2026-11-21 12:00 前交付；定稿 2026-11-22 15:00）
+/* zd-nav.css —— 振達設計規範 Workshop 1.0.1：站內導覽列（issues.js 的 sb-* 掛鉤）
+   狀態：定稿（2026-11-20；之後只做修補版）
    需要先引用 zd-tokens.css。只在 <body class="zd"> 內生效，不影響未引用本檔的舊頁（W39–W47 仍用 nav.css）。
    必保留的掛鉤：#sb-nav #sb-guide #sb-guide-btn #sb-guide-menu #sb-issues、.sb-week .sb-latest .sb-week-lab、
    切換 class .open（.sb-dd）與 .sb-guide-open（#sb-nav）、頁尾 #sb-review-note.sb-review-note。 */

@@ -1,7 +1,7 @@
 {
   "$meta": {
     "name": "振達設計規範 Workshop（工坊）",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "note": "ECharts 畫在 canvas，無法讀 CSS 變數；fontSize 為字級角色的桌機 px 值（caption／small／h3），改規範時由 build_tokens.py 重產。"
   },
   "color": [
@@ -14,7 +14,7 @@
   ],
   "backgroundColor": "transparent",
   "textStyle": {
-    "fontFamily": "Figtree, \"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", sans-serif",
+    "fontFamily": "Figtree, \"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", \"Noto Sans CJK TC\", sans-serif",
     "color": "#2A211A",
     "fontSize": 14
   },

@@ -1,0 +1,8 @@
+/* zd-page.css —— 振達設計規範 Workshop 1.0.1：自帶版面的頁（q、t）共用外殼：附註與頁尾。版面本身在各頁 <style>（已轉 tokens）。 */
+body.zd-site{background:var(--color-surface-canvas)}
+.zd-site .zd-after{padding-top:0}
+.zd-site details.zd-notes{color:var(--color-text-muted);font-size:var(--zd-font-small)}
+.zd-site details.zd-notes summary{cursor:pointer;font-weight:var(--weight-bold);color:var(--color-text-default)}
+.zd-site footer.zd-site-footer{max-width:var(--layout-max);margin:var(--space-6) auto 0;padding:var(--space-4) var(--space-5) var(--space-7);color:var(--color-text-subtle);font-size:var(--zd-font-caption);border-top:1px solid var(--color-border-grid)}
+.zd-site footer.zd-site-footer:empty{display:none}
+.zd-site :focus-visible{outline:2px solid var(--color-brand-default);outline-offset:2px}

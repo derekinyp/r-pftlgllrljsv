@@ -1,0 +1,58 @@
+/* zd-heatmap.css —— 振達設計規範 Workshop 1.0.0：綜覽熱圖（色盤灰青→紫，獨立於燈號）。由舊檔 css/heatmap.css 轉換（色碼→tokens、字級→--zd-font-*），舊檔保留以便回滾。 */
+/* Heatmap on o.html: full-width block below the page body, not beside the lights.
+   Distinct from judgment-light colors. No external fonts/CDN. No decorative gradients. */
+.wrap.wrap-o{max-width:1280px}
+.hm-block{margin:28px 0 8px}
+.hm-disclaimer{margin:0 0 10px}
+#hm-root{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:var(--zd-font-small);color:var(--color-text-default)}
+.hm-legend{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:0 0 10px;color:var(--color-text-muted)}
+.hm-legend .hm-scale{display:inline-flex;align-items:center;gap:6px}
+.hm-ramp{display:inline-flex;height:10px;border:1px solid var(--color-border-default);overflow:hidden}
+.hm-ramp i{width:24px;height:10px;display:block}
+.hm-ramp i:nth-child(1){background:#2e7880}
+.hm-ramp i:nth-child(2){background:var(--color-text-subtle)}
+.hm-ramp i:nth-child(3){background:#f4f1ea}
+.hm-ramp i:nth-child(4){background:var(--color-signal-na-solid)}
+.hm-ramp i:nth-child(5){background:var(--color-chart-heat-high)}
+.hm-chip{display:inline-block;padding:0 5px;border:1px solid var(--color-border-default);border-radius:3px;background:var(--color-surface-zebra);font-size:var(--zd-font-caption);color:var(--color-text-muted)}
+/* Horizontal scroll; sticky first column must sit inside this scroller. */
+.hm-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;border:1px solid var(--color-border-default);background:#fff}
+.hm-grid{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;table-layout:auto}
+.hm-grid th,.hm-grid td{padding:0;text-align:center;vertical-align:middle}
+.hm-grid thead th{background:var(--color-surface-zebra);color:var(--color-text-muted);font-weight:600;font-size:var(--zd-font-caption);line-height:1.25;padding:8px 2px 7px;border-bottom:1px solid var(--color-border-default);white-space:nowrap}
+.hm-lab{text-align:left !important;padding:6px 10px !important;white-space:normal;overflow:hidden;line-height:1.3;font-weight:600;color:var(--color-text-default);background:var(--color-surface-default);border-right:1px solid var(--color-border-default);position:-webkit-sticky;position:sticky;left:0;z-index:2;width:11.5em;min-width:11.5em;max-width:11.5em;box-shadow:1px 0 0 var(--color-border-default);box-sizing:border-box}
+.hm-grid thead th.hm-lab{z-index:3;background:var(--color-surface-zebra)}
+.hm-grid tbody tr.hm-layer{cursor:pointer}
+.hm-grid tbody tr.hm-layer:hover .hm-lab{background:var(--color-signal-up-bg)}
+.hm-grid tbody tr.hm-open .hm-lab{background:var(--color-signal-up-bg)}
+.hm-grid tbody tr.hm-ind .hm-lab{font-weight:500;color:var(--color-text-muted);background:var(--color-surface-default);padding-left:18px !important;z-index:2}
+.hm-cell{width:48px;min-width:48px;max-width:48px;height:34px;position:relative;border-right:1px solid rgba(0,0,0,.05);border-bottom:1px solid rgba(0,0,0,.05);box-sizing:border-box}
+.hm-cell .m{display:block;font-size:var(--zd-font-caption);line-height:34px;color:rgba(20,24,30,.86)}
+.hm-cell.hm-miss{background:var(--color-surface-sunken)}
+.hm-cell.hm-miss .m{color:var(--color-text-subtle)}
+.hm-cell.hm-hold{background:var(--color-border-default)}
+.hm-cell.hm-hold .m{color:var(--color-text-muted)}
+.hm-cell.hm-noruler{background:var(--color-surface-zebra)}
+.hm-cell.hm-noruler .m{color:var(--color-text-muted)}
+.hm-cell.hm-carry{box-shadow:inset 0 -2px 0 0 rgba(0,0,0,.22)}
+.hm-cell.hm-part{outline:1px dashed var(--color-text-subtle);outline-offset:-2px}
+.hm-warn{position:absolute;top:1px;right:1px;width:6px;height:6px;border-radius:50%;background:var(--color-signal-watch-text)}
+.hm-detail{margin:10px 0 0;padding:10px 12px;border:1px solid var(--color-border-default);background:var(--color-surface-default);color:var(--color-text-default)}
+.hm-detail h3{margin:0 0 6px;font-size:var(--zd-font-h3)}
+.hm-detail p,.hm-detail li{margin:0 0 6px;line-height:1.55}
+.hm-detail ul{margin:0;padding-left:1.2em}
+.hm-asof{margin:8px 0 0}
+.hm-keyhint{color:var(--color-text-muted);font-size:var(--zd-font-caption)}
+@media (max-width:640px){
+  .hm-cell{width:42px;min-width:42px;max-width:42px;height:32px}
+  .hm-cell .m{line-height:32px;font-size:var(--zd-font-caption)}
+  .hm-lab{width:9.8em;min-width:9.8em;max-width:9.8em;font-size:var(--zd-font-caption);padding:5px 8px !important;white-space:normal}
+  .hm-grid thead th{font-size:var(--zd-font-caption)}
+}
+
+.hm-empty-btn{margin-left:8px;font:inherit;font-size:var(--zd-font-caption);color:var(--color-signal-up-text);background:#fff;border:1px solid var(--color-signal-up-solid);border-radius:6px;padding:2px 8px;cursor:pointer}
+.hm-empty-btn:hover,.hm-empty-btn:focus-visible{border-color:var(--color-signal-up-text);outline:none}
+.hm-grid.hide-empty tr.hm-layer.is-empty{display:none}
+.hm-labnote{display:block;font-weight:500;font-size:var(--zd-font-caption);line-height:1.35;color:var(--color-text-muted);margin-top:3px}
+
+/* ---- Workshop 設計層 ---- */

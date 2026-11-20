@@ -51,7 +51,7 @@
     }
     var card3 = el('div');
     if (data && iss && data.issueId === iss.id && layers.length) {
-      card3.appendChild(el('div', 'v', '綠 ' + counts.g + ' · 藍 ' + counts.b + ' · 紅 ' + counts.r));
+      card3.appendChild(el('div', 'v', '● 符合 ' + counts.g + '・▲ 超越 ' + counts.b + '・◆ 偏離 ' + counts.r));
       var extra = [];
       if (counts.a) extra.push('觀察 ' + counts.a);
       if (counts.n) extra.push('不判 ' + counts.n);
@@ -81,7 +81,7 @@
       if (iss) bits.push(iss.id);
       bits.push(ruler.v);
       if (data && iss && data.issueId === iss.id && layers.length) {
-        bits.push('綠 ' + counts.g + ' · 藍 ' + counts.b + ' · 紅 ' + counts.r);
+        bits.push('● 符合 ' + counts.g + '・▲ 超越 ' + counts.b + '・◆ 偏離 ' + counts.r);
         if (redNames.length) bits.push('偏離：' + redNames.join('、'));
       }
       compact.textContent = bits.join('　');

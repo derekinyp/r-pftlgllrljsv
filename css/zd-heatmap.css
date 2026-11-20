@@ -56,3 +56,6 @@
 .hm-labnote{display:block;font-weight:500;font-size:var(--zd-font-caption);line-height:1.35;color:var(--color-text-muted);margin-top:3px}
 
 /* ---- Workshop 設計層 ---- */
+/* 熱圖同類處理：最新一欄固定在右（:last-child，新增週自動跟上）；首欄 .hm-lab 原本就 sticky left */
+.zd-site .hm-grid tr > :last-child{position:-webkit-sticky;position:sticky;right:0;z-index:2;box-shadow:-1px 0 0 var(--color-border-default),-6px 0 8px -6px rgba(42,33,26,.22)}
+.zd-site .hm-grid thead tr > :last-child{z-index:3;background:var(--color-surface-sunken)}

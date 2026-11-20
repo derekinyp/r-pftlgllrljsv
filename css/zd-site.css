@@ -127,3 +127,15 @@ body.zd-site{background:var(--color-surface-canvas);color:var(--color-text-defau
 .zd-site .wrap.zd-after > details.notes{margin-top:0}
 /* 燈號格不要把「▲ 超越」切成兩行 */
 .zd-site td.g,.zd-site td.b,.zd-site td.r,.zd-site td.a,.zd-site td.n{min-width:5.4em}
+/* o 頁寬表（#lights）：首欄固定在左、最新一欄固定在右（純 CSS；用 :first-child／:last-child，週一新增欄位自動成為最右欄）。
+   只改呈現位置，不動 DOM，o.js 讀 '#lights td' 不受影響。 */
+.zd-site #lights .tblscroll{position:relative}
+.zd-site #lights .tblscroll tr > :first-child{position:sticky;left:0;z-index:2;background:var(--color-surface-zebra);box-shadow:1px 0 0 var(--color-border-grid),6px 0 8px -6px rgba(42,33,26,.22)}
+.zd-site #lights .tblscroll tr > :last-child{position:sticky;right:0;z-index:2;box-shadow:-1px 0 0 var(--color-border-grid),-6px 0 8px -6px rgba(42,33,26,.22)}
+.zd-site #lights .tblscroll tr > th:last-child{background:var(--color-surface-sunken)}
+.zd-site #lights .tblscroll tr > td:last-child:not(.g):not(.b):not(.r):not(.a):not(.n){background:var(--color-surface-default)}
+.zd-site #lights .tblscroll tr:first-child > :first-child{z-index:3;background:var(--color-surface-sunken)}
+@media (max-width:760px){
+  .zd-site #lights .tblscroll tr > :first-child{min-width:8.5em;max-width:10em}
+  .zd-site #lights th .l2-note{max-width:none}
+}

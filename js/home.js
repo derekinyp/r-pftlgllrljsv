@@ -96,6 +96,15 @@
         note.setAttribute('data-l2-note', '');
         note.textContent = (window.SITE_COPY && window.SITE_COPY.L2_RECON_NOTE) || '';
         left.appendChild(note);
+        var why = el('span', 'l2-note');
+        why.setAttribute('data-l2-verdict-note', '');
+        var issId = (latest && data && data.issueId === latest.id) ? data.issueId : (latest && latest.id);
+        if (window.SITE_COPY && window.SITE_COPY.l2VerdictNote) {
+          var wt = window.SITE_COPY.l2VerdictNote(issId);
+          if (wt) why.textContent = wt;
+          else why.hidden = true;
+        }
+        left.appendChild(why);
       }
       top.appendChild(left);
       var shortV = (window.SITE_COPY && window.SITE_COPY.verdictShort)

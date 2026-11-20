@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>現行基準表 v2.0</title>
+<title>現行基準表 v2.1</title>
 <style>
 #sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
 #sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
@@ -26,31 +26,31 @@
 <div class="wrap wrap-b">
 
 <h1>現行基準表</h1>
-<p class="b-lead">這是現在拿來判定符合、超越或偏離的尺。基準版本 v2.0，2026-11-19 核准，自 2026-W48 起適用；已刊各期不回溯改判。數字與文字引自已核准的 v2.0 基準登錄檔，未改寫基準值。</p>
+<p class="b-lead">這是現在拿來判定符合、超越或偏離的尺。基準版本 v2.1，2026-11-20 核准，自 2026-W48 起適用；已刊各期不回溯改判。v2.0 於 2026-11-19 核准，但在 2026-11-20 被 v2.1 取代前，未曾用於任何已刊期。數字與文字引自已核准的基準登錄檔。</p>
 
 <p class="banner b-scale-note" id="b-scale-note"></p>
 <h2 class="b-sec" id="quick">現行基準速查</h2>
-<p class="b-foot-note">每格濃縮自已核准的 v2.0 基準，未改寫基準值。多數層官方表未另列超越門檻；本頁不自行補寫門檻。完整規則見下方展開說明。</p>
+<p class="b-foot-note">每格濃縮自已核准的 v2.1 基準。超越通則：高於該層區間上緣，且當期有可查證的實際讀數，才判超越；暫定基準（L2、L5）不適用。單邊範圍以「預期值＋一個容差寬度」為超越門檻（L1 &gt;70%、L6 &gt;63%）。完整規則見各列「判色規則」。</p>
 <div class="tblscroll">
 <table class="b-quick" id="b-quick">
-<thead><tr><th>層</th><th>看什麼數字</th><th>符合範圍</th><th>什麼算偏離（紅）</th><th>本期燈號</th></tr></thead>
+<thead><tr><th>層</th><th>看什麼數字</th><th>符合範圍</th><th>什麼算偏離（紅）</th><th>判色規則</th><th id="b-light-col">本期燈號</th></tr></thead>
 <tbody>
-<tr id="L0"><th scope="row">L0 弱訊號</th><td data-label="看什麼數字">可能改寫單位成本曲線的技術或政策</td><td data-label="符合範圍">無數值符合區</td><td data-label="什麼算偏離（紅）">出現改曲線的技術或政策</td><td data-label="本期燈號" data-layer="L0"></td></tr>
-<tr id="L1"><th scope="row">L1 終端需求</th><td data-label="看什麼數字">龍頭資料中心營收年增</td><td data-label="符合範圍">年增 <b>≥40%</b></td><td data-label="什麼算偏離（紅）">兩季 <b>&lt;30%</b>，或雲端 AI 成長連續低於資本開支</td><td data-label="本期燈號" data-layer="L1"></td></tr>
-<tr id="L2"><th scope="row"><span id="P5" class="b-alias"></span>L2 資本開支</th><td data-label="看什麼數字">名單主體全年資本開支指引與實際</td><td data-label="符合範圍"><b>暫定</b>，對帳前不鎖 ±10%</td><td data-label="什麼算偏離（紅）">名單下修全年指引，或供給受電力而非需求制約</td><td data-label="本期燈號" data-layer="L2"></td></tr>
-<tr id="L3"><th scope="row">L3 晶片</th><td data-label="看什麼數字">營收、指引、資料中心佔比、毛利率</td><td data-label="符合範圍">續創高、指引超共識、佔比 <b>&gt;85%</b></td><td data-label="什麼算偏離（紅）">毛利率 <b>&lt;72%</b>（以實際值判）</td><td data-label="本期燈號" data-layer="L3"></td></tr>
-<tr id="L4"><th scope="row"><span id="P3" class="b-alias"></span><span id="P6" class="b-alias"></span>L4 記憶體</th><td data-label="看什麼數字">同世代合約價；世代轉換看單位成本</td><td data-label="符合範圍">同世代季增 <b>+5–25%</b></td><td data-label="什麼算偏離（紅）">現貨鬆、庫存回升逾 4 週、意外擴產，或量產進入伺服器客戶</td><td data-label="本期燈號" data-layer="L4"></td></tr>
-<tr id="L5"><th scope="row">L5 先進封裝</th><td data-label="看什麼數字">CoWoS 交期</td><td data-label="符合範圍">吃緊、交期 <b>&gt;52</b> 週；容差 ±8 週</td><td data-label="什麼算偏離（紅）">交期顯著縮短，或大量轉向替代方案</td><td data-label="本期燈號" data-layer="L5"></td></tr>
-<tr id="L6"><th scope="row">L6 晶圓代工</th><td data-label="看什麼數字">先進製程利用率與毛利率</td><td data-label="符合範圍">近滿載、毛利率 <b>&gt;60%</b></td><td data-label="什麼算偏離（紅）">降價或折讓、利用率下滑、新製程客戶流失</td><td data-label="本期燈號" data-layer="L6"></td></tr>
-<tr id="L7a"><th scope="row"><span id="P2" class="b-alias"></span>L7a 設備</th><td data-label="看什麼數字">設備訂單與營收年增</td><td data-label="符合範圍">落後開支 3–9 個月；營收年增容差 ±15%</td><td data-label="什麼算偏離（紅）">訂單年增轉負，或確認為需求型出貨遞延</td><td data-label="本期燈號" data-layer="L7a"></td></tr>
-<tr id="L7b"><th scope="row">L7b 材料</th><td data-label="看什麼數字">材料年漲幅</td><td data-label="符合範圍">平穩或溫和；容差 <b>0–10%</b></td><td data-label="什麼算偏離（紅）">年漲 <b>&gt;15%</b> 且持續</td><td data-label="本期燈號" data-layer="L7b"></td></tr>
-<tr id="L8"><th scope="row">L8 電力</th><td data-label="看什麼數字">表後訂單與變壓器交期</td><td data-label="符合範圍">訂單累積；交期約 36 個月；緊至 2027</td><td data-label="什麼算偏離（紅）">供電或許可卡住落地（許可見政策列）；訂單容差 ±20%</td><td data-label="本期燈號" data-layer="L8"></td></tr>
-<tr id="RATE"><th scope="row">外生｜利率</th><td data-label="看什麼數字">年底利率中值與 10 年期公債</td><td data-label="符合範圍">年底中值路徑；中值容差 ±25bp</td><td data-label="什麼算偏離（紅）">10 年期 <b>&gt;5.5%</b> 或 <b>&lt;4.5%</b>；單次升息 &gt;25bp 或轉向降息</td><td data-label="本期燈號" data-layer="rate"></td></tr>
-<tr id="CTRL"><th scope="row"><span id="P7" class="b-alias"></span>外生｜管制</th><td data-label="看什麼數字">管制客體、是否已生效、官方名單</td><td data-label="符合範圍">維持「逐步收緊」的方向性文字</td><td data-label="什麼算偏離（紅）">客體顯著擴大或收窄、已生效可核對，或名單增刪</td><td data-label="本期燈號" data-layer="reg"></td></tr>
-<tr id="REFL"><th scope="row">反射性迴路</th><td data-label="看什麼數字">融資條件與擁擠度</td><td data-label="符合範圍">敘事—融資—開支迴路可繼續轉</td><td data-label="什麼算偏離（紅）">融資成本升、發債受阻、擁擠度極值</td><td data-label="本期燈號" data-layer="ref"></td></tr>
-<tr id="P0"><th scope="row"><span id="POL" class="b-alias"></span>P0 政策與許可</th><td data-label="看什麼數字">資料中心許可是否可推進</td><td data-label="符合範圍">聯邦／州許可可推進</td><td data-label="什麼算偏離（紅）">已生效行政措施，或大州凍結逾 3 個月</td><td data-label="本期燈號" data-layer="P0"></td></tr>
-<tr id="P1"><th scope="row"><span id="NRG" class="b-alias"></span>P1 能源與通道</th><td data-label="看什麼數字">能源價格與關鍵航線</td><td data-label="符合範圍">未達偏離門檻（觀察：油價 &gt;$100 滿 4 週）</td><td data-label="什麼算偏離（紅）">油價 <b>&gt;$120</b>，或關鍵航線中斷</td><td data-label="本期燈號" data-layer="P1"></td></tr>
-<tr id="AUX"><th scope="row"><span id="P4" class="b-alias"></span>配套層</th><td data-label="看什麼數字">只記錄、不立尺</td><td data-label="符合範圍">不判</td><td data-label="什麼算偏離（紅）">不判</td><td data-label="本期燈號" data-layer="AUX"></td></tr>
+<tr id="L0"><th scope="row">L0 弱訊號</th><td data-label="看什麼數字">可能改寫單位成本曲線的技術或政策</td><td data-label="符合範圍">無數值符合區</td><td data-label="什麼算偏離（紅）">出現改曲線的技術或政策</td><td data-label="判色規則">改曲線即紅；無數值區間，不適用超越通則</td><td data-label="燈號" data-layer="L0"></td></tr>
+<tr id="L1"><th scope="row">L1 終端需求<div class="b-hist">v2.0：未另列超越門檻（符合為年增 ≥40%）</div></th><td data-label="看什麼數字">龍頭資料中心營收年增</td><td data-label="符合範圍">年增 <b>≥40%</b>；超越門檻 <b>&gt;70%</b></td><td data-label="什麼算偏離（紅）">兩季 <b>&lt;30%</b>，或雲端 AI 成長連續低於資本開支</td><td data-label="判色規則">≥40% 綠；&gt;70% 且有可查證讀數 藍；兩季 &lt;30% 或雲端 AI 連續低於開支 紅</td><td data-label="燈號" data-layer="L1"></td></tr>
+<tr id="L2"><th scope="row"><span id="P5" class="b-alias"></span>L2 資本開支<div class="b-hist">v1.1：五大主體 2026 年約 6,900 億美元，容忍 ±10%</div><div class="l2-note" data-l2-note></div><div class="l2-note" data-l2-verdict-note></div></th><td data-label="看什麼數字">名單主體全年資本開支指引與實際</td><td data-label="符合範圍"><b>暫定</b>，對帳前不鎖 ±10%</td><td data-label="什麼算偏離（紅）">名單下修全年指引，或供給受電力而非需求制約</td><td data-label="判色規則">暫定，不適用超越通則；名單下修或電力制約 紅</td><td data-label="燈號" data-layer="L2"></td></tr>
+<tr id="L3"><th scope="row">L3 晶片</th><td data-label="看什麼數字">營收、指引、資料中心佔比、毛利率</td><td data-label="符合範圍">續創高、指引超共識、佔比 <b>&gt;85%</b></td><td data-label="什麼算偏離（紅）">毛利率 <b>&lt;72%</b>（以實際值判）</td><td data-label="判色規則">續創高／超共識／佔比 &gt;85% 綠；毛利率 &lt;72% 紅；高於符合區上緣且有可查證讀數 藍</td><td data-label="燈號" data-layer="L3"></td></tr>
+<tr id="L4"><th scope="row"><span id="P3" class="b-alias"></span><span id="P6" class="b-alias"></span>L4 記憶體<div class="b-hist">v1.1：合約價按季 +5～25%；偏離為現貨鬆動、庫存回升逾 4 週、廠商擴產超預期</div></th><td data-label="看什麼數字">同世代合約價；世代轉換看單位成本</td><td data-label="符合範圍">同世代季增 <b>+5–25%</b></td><td data-label="什麼算偏離（紅）">現貨鬆、庫存回升逾 4 週、意外擴產，或量產進入伺服器客戶</td><td data-label="判色規則">同世代 +5–25% 綠；現貨鬆等 紅；高於上緣且有可查證讀數 藍</td><td data-label="燈號" data-layer="L4"></td></tr>
+<tr id="L5"><th scope="row">L5 先進封裝</th><td data-label="看什麼數字">CoWoS 交期</td><td data-label="符合範圍">吃緊、交期 <b>&gt;52</b> 週；容差 ±8 週</td><td data-label="什麼算偏離（紅）">交期顯著縮短，或大量轉向替代方案</td><td data-label="判色規則">交期 &gt;52 週為符合方向；顯著縮短或轉向 紅；暫定且無新交期時，不適用超越通則</td><td data-label="燈號" data-layer="L5"></td></tr>
+<tr id="L6"><th scope="row">L6 晶圓代工<div class="b-hist">v2.0：毛利率 &gt;60%，容忍 ±3pp（未寫明中心與分帶）</div></th><td data-label="看什麼數字">先進製程利用率與毛利率</td><td data-label="符合範圍">以 60% 為中心：60–63% 綠、&gt;63% 藍</td><td data-label="什麼算偏離（紅）">&lt;57% 紅（57–60% 橘）；降價或折讓、利用率下滑、新製程客戶流失亦紅</td><td data-label="判色規則">&lt;57% 紅；57–60% 橘；60–63% 綠；&gt;63% 藍。降價、利用率下滑、客戶流失亦紅</td><td data-label="燈號" data-layer="L6"></td></tr>
+<tr id="L7a"><th scope="row"><span id="P2" class="b-alias"></span>L7a 設備<div class="b-hist">v1.1：落後資本開支 6～12 個月；出貨遞延算偏離</div></th><td data-label="看什麼數字">設備訂單與營收年增</td><td data-label="符合範圍">落後開支 3–9 個月；營收年增容差 ±15%</td><td data-label="什麼算偏離（紅）">訂單年增轉負，或確認為需求型出貨遞延</td><td data-label="判色規則">容差 ±15%；訂單轉負或需求型遞延 紅；高於上緣且有可查證讀數 藍</td><td data-label="燈號" data-layer="L7a"></td></tr>
+<tr id="L7b"><th scope="row">L7b 材料<div class="b-hist">v2.0：年漲 &lt;15%；容忍 0–10%；&gt;15% 並持續為紅（10–15% 未上色，「持續」未定量）</div></th><td data-label="看什麼數字">材料年漲幅</td><td data-label="符合範圍">年漲 <b>0–10%</b> 綠；<b>10–15%</b> 橘</td><td data-label="什麼算偏離（紅）">年漲 <b>&gt;15%</b> 且連續兩次一手讀數</td><td data-label="判色規則">0–10% 綠；10–15% 橘；&gt;15% 且連續兩次一手讀數 紅</td><td data-label="燈號" data-layer="L7b"></td></tr>
+<tr id="L8"><th scope="row">L8 電力</th><td data-label="看什麼數字">表後訂單與變壓器交期</td><td data-label="符合範圍">訂單累積；交期約 36 個月；緊至 2027</td><td data-label="什麼算偏離（紅）">供電或許可卡住落地（許可見政策列）；訂單容差 ±20%</td><td data-label="判色規則">訂單 ±20%；交期縮短或落地延後 紅；高於上緣且有可查證讀數 藍</td><td data-label="燈號" data-layer="L8"></td></tr>
+<tr id="RATE"><th scope="row">外生｜利率</th><td data-label="看什麼數字">年底利率中值與 10 年期公債</td><td data-label="符合範圍">年底中值路徑；中值容差 ±25bp</td><td data-label="什麼算偏離（紅）">10 年期 <b>&gt;5.5%</b> 或 <b>&lt;4.5%</b>；單次升息 &gt;25bp 或轉向降息</td><td data-label="判色規則">中值 ±25bp；10 年期越界、單次升息 &gt;25bp 或轉向降息 紅</td><td data-label="燈號" data-layer="rate"></td></tr>
+<tr id="CTRL"><th scope="row"><span id="P7" class="b-alias"></span>外生｜管制<div class="b-hist">v1.1：維持既有框架、逐步收緊；無容忍、無可查核訊號</div></th><td data-label="看什麼數字">管制客體、是否已生效、官方名單</td><td data-label="符合範圍">維持「逐步收緊」的方向性文字</td><td data-label="什麼算偏離（紅）">客體顯著擴大或收窄、已生效可核對，或名單增刪</td><td data-label="判色規則">客體顯著增減、已生效可核對、或名單增刪 紅</td><td data-label="燈號" data-layer="reg"></td></tr>
+<tr id="REFL"><th scope="row">反射性迴路</th><td data-label="看什麼數字">融資條件與擁擠度</td><td data-label="符合範圍">敘事—融資—開支迴路可繼續轉</td><td data-label="什麼算偏離（紅）">融資成本升、發債受阻、擁擠度極值</td><td data-label="判色規則">融資成本升、發債受阻、擁擠度極值 紅</td><td data-label="燈號" data-layer="ref"></td></tr>
+<tr id="P0"><th scope="row"><span id="POL" class="b-alias"></span>P0 政策與許可</th><td data-label="看什麼數字">資料中心許可是否可推進</td><td data-label="符合範圍">聯邦／州許可可推進</td><td data-label="什麼算偏離（紅）">已生效行政措施，或大州凍結逾 3 個月</td><td data-label="判色規則">已生效行政措施，或大州凍結逾 3 個月 紅</td><td data-label="燈號" data-layer="P0"></td></tr>
+<tr id="P1"><th scope="row"><span id="NRG" class="b-alias"></span>P1 能源與通道</th><td data-label="看什麼數字">能源價格與關鍵航線</td><td data-label="符合範圍">未達偏離門檻（觀察：油價 &gt;$100 滿 4 週）</td><td data-label="什麼算偏離（紅）">油價 <b>&gt;$120</b>，或關鍵航線中斷</td><td data-label="判色規則">油價 &gt;$100 滿 4 週 橘；&gt;$120 或航線中斷 紅</td><td data-label="燈號" data-layer="P1"></td></tr>
+<tr id="AUX"><th scope="row"><span id="P4" class="b-alias"></span>配套層</th><td data-label="看什麼數字">只記錄、不立尺</td><td data-label="符合範圍">不判</td><td data-label="什麼算偏離（紅）">不判</td><td data-label="判色規則">不立尺、不判</td><td data-label="燈號" data-layer="AUX"></td></tr>
 </tbody>
 </table>
 </div>
@@ -64,73 +64,73 @@
 <thead><tr><th>層</th><th>預期值或區間</th><th>判斷指標</th><th>判色規則</th><th>依據與關聯</th></tr></thead>
 <tbody>
 <tr id="full-L0">
-<th scope="row"><div class="b-name">L0 弱訊號入口</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
+<th scope="row"><div class="b-name">L0 弱訊號入口</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
 <td data-label="預期值或區間">無數值預期；持續掃跨層異常（模型架構效率躍升、能源政策轉向、材料斷供）。</td>
 <td data-label="判斷指標">看有沒有可能改寫單位成本曲線的技術或政策。基準表未另訂固定更新頻率或單一來源名稱。</td>
-<td data-label="判色規則">無容忍區間。出現可改變單位成本曲線的技術或政策，即為偏離／新增變數訊號。官方表未另列「超越」門檻。</td>
+<td data-label="判色規則">無容忍區間。出現可改變單位成本曲線的技術或政策，即為偏離／新增變數訊號。無數值符合區上緣，不因超越通則自動轉藍。</td>
 <td data-label="依據與關聯">依據：v2.0 對本列一字未動，仍不加數值尺。<br>連動：無固定上游；可觸發對 <a class="in" href="m.html#L1">L1</a>～<a class="in" href="m.html#L8">L8</a>、外生或反射性的新假說。見 <a class="in" href="m.html#L0">傳導圖 L0</a>。</td>
 </tr>
 <tr id="full-L1">
-<th scope="row"><div class="b-name">L1 終端需求</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
+<th scope="row"><div class="b-name">L1 終端需求</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同。v2.0：未另列超越門檻。</div></th>
 <td data-label="預期值或區間">以可查核一手指標為分母：龍頭資料中心季度營收年增維持 &gt;50%，並看雲廠 AI／雲業務營收年增。同一筆資料中心營收不得再拿去改判 L3。</td>
 <td data-label="判斷指標">龍頭資料中心季度營收 YoY，以及雲廠 AI／雲業務營收 YoY。頻率：季度（基準表寫明季度營收）。來源：可查核一手財報科目；須注意各公司財年不一致。</td>
-<td data-label="判色規則">容忍區間 ±20 個百分點（年增 ≥40% 為符合）。偏離：龍頭資料中心營收年增連續兩季 &lt;30%；或雲廠 AI 收入增速連續兩季低於資本開支增速。官方表未另列「超越」門檻。</td>
+<td data-label="判色規則">容忍區間 ±20 個百分點（年增 ≥40% 為符合）。偏離：龍頭資料中心營收年增連續兩季 &lt;30%；或雲廠 AI 收入增速連續兩季低於資本開支增速。超越：單邊範圍以預期值 50%＋一個容差 20 個百分點為門檻，年增 &gt;70% 且當期有可查證的實際讀數。</td>
 <td data-label="依據與關聯">依據：v2.0 修改為補使用規則。<br>連動：上游為終端使用，可被 <a class="in" href="m.html#RATE">利率</a>／<a class="in" href="m.html#CTRL">管制</a>打偏；下游到 <a class="in" href="m.html#L2">L2 資本開支</a>。見 <a class="in" href="m.html#L1">傳導圖 L1</a>。</td>
 </tr>
 <tr id="full-L2">
-<th scope="row"><span class="b-alias"></span><div class="b-name">L2 雲端資本開支</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：五大主體 2026 年約 6,900 億美元，容忍 ±10%</div><div class="l2-note" data-l2-note></div></th>
+<th scope="row"><span class="b-alias"></span><div class="b-name">L2 雲端資本開支</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：五大主體 2026 年約 6,900 億美元，容忍 ±10%</div><div class="l2-note" data-l2-note></div></th>
 <td data-label="預期值或區間"><span class="prov">暫定</span>先列明主體與是否含融資租賃；2026 年合計約 8,200 億美元，待一手財報逐家對帳後再定案。對帳完成前，不把此數當已鎖定的 ±10% 尺。<p class="b-note-inline">對帳註記（非改尺）：一手對帳尚缺 Oracle 的官方年度指引，故維持暫定。</p></td>
 <td data-label="判斷指標">已列入口徑主體的全年資本開支指引與財報實際值；是否含融資租賃須逐家核對。基準表未另訂固定更新頻率。來源：一手財報（待對帳完成）。不得與 v1.1 的約 6,900 億或框架圖九大口徑約 8,300 億直接互換。</td>
-<td data-label="判色規則">對帳完成前，不把約 8,200 億當已鎖定的 ±10% 尺。偏離訊號：任一家已列入口徑的主體下修全年指引；或供應受制於電力而非需求。官方表未另列「超越」門檻。</td>
+<td data-label="判色規則">對帳完成前，不把約 8,200 億當已鎖定的 ±10% 尺。偏離訊號：任一家已列入口徑的主體下修全年指引；或供應受制於電力而非需求。本列為暫定基準，不適用超越通則。</td>
 <td data-label="依據與關聯">依據：v2.0 修改採納 P5；數值標暫定，定案時須回報。<br>連動：上游 <a class="in" href="m.html#L1">L1</a>、融資與 <a class="in" href="m.html#RATE">利率</a>；下游 <a class="in" href="m.html#L3">L3</a>、<a class="in" href="m.html#L7a">L7a</a>、<a class="in" href="m.html#L8">L8</a>。見 <a class="in" href="m.html#L2">傳導圖 L2</a>。</td>
 </tr>
 <tr id="full-L3">
-<th scope="row"><div class="b-name">L3 晶片</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
+<th scope="row"><div class="b-name">L3 晶片</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
 <td data-label="預期值或區間">龍頭季度營收續創高、指引超前共識；資料中心佔比 &gt;85%。治理事件不改本層。打臉門檻統一為毛利率 &lt;72%（以實際值判，不再使用 &lt;71%）。</td>
 <td data-label="判斷指標">龍頭季度營收、公司指引相對共識、資料中心營收佔比，以及毛利率實際值。頻率：季度財報與指引。來源：公司法說／財報（一手）。</td>
-<td data-label="判色規則">容忍：指引 ±5%。偏離：指引低於共識；毛利率 &lt;72%（打臉，以實際值判）；或資料中心佔比跌破當期所設查核線。官方表未另列獨立的「超越」百分比門檻；基準預期本身寫的是營收續創高、指引超前共識。</td>
+<td data-label="判色規則">容忍：指引 ±5%。偏離：指引低於共識；毛利率 &lt;72%（打臉，以實際值判）；或資料中心佔比跌破當期所設查核線。超越：高於該層符合區上緣，且當期有可查證的實際讀數。</td>
 <td data-label="依據與關聯">依據：v2.0 將打臉門檻統一為毛利率 &lt;72%（2026-11-19）。<br>連動：上游 <a class="in" href="m.html#L2">L2</a>；下游 <a class="in" href="m.html#L4">L4</a>、<a class="in" href="m.html#L5">L5</a>、<a class="in" href="m.html#L6">L6</a>。見 <a class="in" href="m.html#L3">傳導圖 L3</a>。</td>
 </tr>
 <tr id="full-L4">
-<th scope="row"><span class="b-alias"></span><span class="b-alias"></span><div class="b-name">L4 記憶體</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：合約價按季 +5～25%；偏離為現貨鬆動、庫存回升逾 4 週、廠商擴產超預期</div></th>
+<th scope="row"><span class="b-alias"></span><span class="b-alias"></span><div class="b-name">L4 記憶體</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：合約價按季 +5～25%；偏離為現貨鬆動、庫存回升逾 4 週、廠商擴產超預期</div></th>
 <td data-label="預期值或區間">同世代合約價按季 +5～25%；世代轉換不計入該按季區間，改看每單位成本。</td>
 <td data-label="判斷指標">同世代合約價季度變化；現貨鬆緊、庫存天數、廠商擴產；以及世代轉換是否已獲量產驗證並進入伺服器客戶。評估或轉引不觸發技術破局。基準表未另訂固定來源名稱。</td>
-<td data-label="判色規則">同世代容忍：合約價按季 +5～25%。偏離訊號（均保留）：同世代現貨鬆動、庫存回升逾 4 週、廠商擴產超預期；或世代轉換已獲量產驗證並進入伺服器客戶。官方表未另列獨立的「超越」門檻。</td>
+<td data-label="判色規則">同世代容忍：合約價按季 +5～25%。偏離訊號（均保留）：同世代現貨鬆動、庫存回升逾 4 週、廠商擴產超預期；或世代轉換已獲量產驗證並進入伺服器客戶。超越：高於該層區間上緣，且當期有可查證的實際讀數。</td>
 <td data-label="依據與關聯">依據：v2.0 採納 P6（世代拆尺）與 P3（增列技術破局訊號，不移除舊訊號）。<br>連動：上游 <a class="in" href="m.html#L3">L3</a>，亦可被 <a class="in" href="m.html#L7b">L7b</a> 成本推升；下游回傳 L3 毛利與終端成本。見 <a class="in" href="m.html#L4">傳導圖 L4</a>。</td>
 </tr>
 <tr id="full-L5">
-<th scope="row"><div class="b-name">L5 先進封裝</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
+<th scope="row"><div class="b-name">L5 先進封裝</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同。v2.0：無新交期讀數時不得升級為超越。</div></th>
 <td data-label="預期值或區間">CoWoS 產能吃緊、交期逾 52 週。無新交期讀數時，不得把判定升級為超越。</td>
 <td data-label="判斷指標">先進封裝（如 CoWoS）交期與產能是否吃緊。基準表未另訂固定更新頻率或單一來源名稱。無新交期讀數時，不得把判定升級為超越。</td>
-<td data-label="判色規則">容忍：交期 ±8 週。偏離：交期顯著縮短，或客戶大量轉向替代封裝方案。升級為超越須有新的交期讀數。</td>
+<td data-label="判色規則">容忍：交期 ±8 週。偏離：交期顯著縮短，或客戶大量轉向替代封裝方案。本列為暫定基準，不適用超越通則；既有專則仍有效：無新交期讀數時，不得把判定升級為超越。</td>
 <td data-label="依據與關聯">依據：v2.0 一字未動，僅加注記。<br>連動：上游 <a class="in" href="m.html#L3">L3</a>（代工廠亦是封裝供方）；下游影響 L3 交期與 <a class="in" href="m.html#L2">L2</a> 上線時程。見 <a class="in" href="m.html#L5">傳導圖 L5</a>。</td>
 </tr>
 <tr id="full-L6">
-<th scope="row"><div class="b-name">L6 晶圓代工</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
+<th scope="row"><div class="b-name">L6 晶圓代工</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同。v2.0：毛利率 &gt;60%，容忍 ±3pp，未寫明中心與分帶，亦未另列超越門檻。</div></th>
 <td data-label="預期值或區間">3nm／2nm 近滿載、定價權強、毛利率 &gt;60%。兩種毛利口徑不可混用（法說新台幣基礎與美元換算不可混用）。</td>
 <td data-label="判斷指標">先進製程利用率與定價權，以及毛利率。基準表未另訂固定更新頻率。來源：代工廠法說／財報（一手）；須同口徑比較。</td>
-<td data-label="判色規則">容忍：毛利率 ±3 個百分點。偏離：出現降價或折讓、利用率下滑、新製程客戶流失。官方表未另列獨立的「超越」門檻，也未寫明 ±3 個百分點的中心值算法。</td>
-<td data-label="依據與關聯">依據：v2.0 一字未動。<br>連動：上游 <a class="in" href="m.html#L3">L3</a> 下單、<a class="in" href="m.html#L5">L5</a> 排程；下游 <a class="in" href="m.html#L7a">L7a</a> 點貨、<a class="in" href="m.html#L7b">L7b</a> 拉貨。見 <a class="in" href="m.html#L6">傳導圖 L6</a>。</td>
+<td data-label="判色規則">以 60% 為中心、寬 3 個百分點固定分帶：毛利率 &lt;57% 紅、57–60% 橘、60–63% 綠、&gt;63% 藍。出現降價或折讓、利用率下滑、新製程客戶流失，亦為偏離（紅）。兩種毛利口徑不可混用。</td>
+<td data-label="依據與關聯">依據：v2.1 採納以 60% 為中心的固定分帶（2026-11-20 核准）。<br>連動：上游 <a class="in" href="m.html#L3">L3</a> 下單、<a class="in" href="m.html#L5">L5</a> 排程；下游 <a class="in" href="m.html#L7a">L7a</a> 點貨、<a class="in" href="m.html#L7b">L7b</a> 拉貨。見 <a class="in" href="m.html#L6">傳導圖 L6</a>。</td>
 </tr>
 <tr id="full-L7a">
-<th scope="row"><span class="b-alias"></span><div class="b-name">L7a 設備</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：落後資本開支 6～12 個月；出貨遞延算偏離</div></th>
+<th scope="row"><span class="b-alias"></span><div class="b-name">L7a 設備</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：落後資本開支 6～12 個月；出貨遞延算偏離</div></th>
 <td data-label="預期值或區間">設備訂單與營收落後資本開支 3～9 個月，方向一致。判定以營收基本面為準；股價漲幅不作層級判定依據。</td>
 <td data-label="判斷指標">設備訂單與營收年增，以及出貨遞延屬供給型或需求型。頻率：基準表以落後資本開支 3～9 個月來讀，未另訂公布日。來源：設備廠財報／訂單（一手）。</td>
-<td data-label="判色規則">容忍：營收年增 ±15%。偏離：設備訂單年增轉負；或確認為需求型出貨遞延。供給型遞延不算偏離。官方表未另列獨立的「超越」門檻。</td>
+<td data-label="判色規則">容忍：營收年增 ±15%。偏離：設備訂單年增轉負；或確認為需求型出貨遞延。供給型遞延不算偏離。超越：高於該層區間上緣，且當期有可查證的實際讀數。</td>
 <td data-label="依據與關聯">依據：v2.0 採納 P2（時滯改 3～9 個月；僅需求型遞延才算偏離）。<br>連動：上游 <a class="in" href="m.html#L2">L2</a>／<a class="in" href="m.html#L6">L6</a> 擴產；下游為未來數季代工產能。見 <a class="in" href="m.html#L7a">傳導圖 L7a</a>。</td>
 </tr>
 <tr id="full-L7b">
-<th scope="row"><div class="b-name">L7b 材料</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
+<th scope="row"><div class="b-name">L7b 材料</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同。v2.0：年漲 &lt;15%，容忍 0–10%，&gt;15% 並持續為紅；10–15% 未上色，「持續」未定量。</div></th>
 <td data-label="預期值或區間">材料價格平穩或溫和上行，年漲幅 &lt;15%。</td>
 <td data-label="判斷指標">材料價格年漲幅。基準表未另訂固定更新頻率或單一來源名稱；須補一手量測。</td>
-<td data-label="判色規則">容忍區間：年漲幅 0～10%。偏離：年漲幅 &gt;15% 並持續，則示警。官方表未另寫 10% 到 15% 之間如何判色，也未另列「超越」門檻。</td>
-<td data-label="依據與關聯">依據：v2.0 一字未動。<br>連動：上游為材料廠商，<a class="in" href="m.html#NRG">能源</a>／<a class="in" href="m.html#CTRL">管制</a>可加劇；下游推升 <a class="in" href="m.html#L6">L6</a>、<a class="in" href="m.html#L4">L4</a>、<a class="in" href="m.html#L3">L3</a> 成本。見 <a class="in" href="m.html#L7b">傳導圖 L7b</a>。</td>
+<td data-label="判色規則">年漲幅 0–10% 為符合（綠）；10–15% 為觀察（橘）；&gt;15% 且連續兩次一手讀數才判偏離（紅）。若 2026-W48 因此由紅轉橘，週報須寫明「因規則修正」。本列不以「漲得更少」套用超越通則。</td>
+<td data-label="依據與關聯">依據：v2.1 補 10–15% 觀察帶，並將「持續」定為連續兩次一手讀數（2026-11-20 核准）。<br>連動：上游為材料廠商，<a class="in" href="m.html#NRG">能源</a>／<a class="in" href="m.html#CTRL">管制</a>可加劇；下游推升 <a class="in" href="m.html#L6">L6</a>、<a class="in" href="m.html#L4">L4</a>、<a class="in" href="m.html#L3">L3</a> 成本。見 <a class="in" href="m.html#L7b">傳導圖 L7b</a>。</td>
 </tr>
 <tr id="full-L8">
-<th scope="row"><div class="b-name">L8 電力</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
+<th scope="row"><div class="b-name">L8 電力</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
 <td data-label="預期值或區間">表後供電訂單快速累積；變壓器交期約 36 個月；2027 年前供給仍緊。國內許可改記到「政策與許可」列，不與交期混判。</td>
 <td data-label="判斷指標">表後供電訂單與變壓器交期。基準表未另訂固定更新頻率或單一來源名稱。許可不在本列判。</td>
-<td data-label="判色規則">容忍：訂單 ±20%。偏離：交期明顯縮短（瓶頸降級）；或供電計畫延宕（落地延後）。官方表未另列獨立的「超越」門檻。</td>
+<td data-label="判色規則">容忍：訂單 ±20%。偏離：交期明顯縮短（瓶頸降級）；或供電計畫延宕（落地延後）。超越：高於該層區間上緣，且當期有可查證的實際讀數。</td>
 <td data-label="依據與關聯">依據：v2.0 修改為與 P0 分帳。<br>連動：上游 <a class="in" href="m.html#L2">L2</a>，許可為 <a class="in" href="m.html#P0">政策與許可</a> 側軌；供電不足可往上卡住 L2 落地。見 <a class="in" href="m.html#L8">傳導圖 L8</a>。</td>
 </tr>
 </tbody></table>
@@ -142,42 +142,42 @@
 <thead><tr><th>層</th><th>預期值或區間</th><th>判斷指標</th><th>判色規則</th><th>依據與關聯</th></tr></thead>
 <tbody>
 <tr id="full-RATE">
-<th scope="row"><div class="b-name">外生｜利率</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
+<th scope="row"><div class="b-name">外生｜利率</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
 <td data-label="預期值或區間">政策利率路徑與 10 年期公債門檻維持 v1.1：年底中值路徑；10 年期美債偏離為 &gt;5.5% 或 &lt;4.5%；單次升息 &gt;25bp 或轉向降息。</td>
 <td data-label="判斷指標">政策利率路徑（年底中值）與 10 年期美債。頻率：隨政策會議與債市。來源：官方貨幣政策與市場利率（基準表未點名單一資料庫）。</td>
-<td data-label="判色規則">容忍：年底中值 ±25bp。偏離：單次升息 &gt;25bp；或轉向降息；10 年期美債 &gt;5.5% 或 &lt;4.5%。官方表未另列「超越」門檻。</td>
+<td data-label="判色規則">容忍：年底中值 ±25bp。偏離：單次升息 &gt;25bp；或轉向降息；10 年期美債 &gt;5.5% 或 &lt;4.5%。無數值符合區上緣可套用時，不因超越通則自動轉藍。</td>
 <td data-label="依據與關聯">依據：v2.0 一字未動。<br>連動：上游為央行、通膨與長債供給，油價可傳向生產者物價；下游進 <a class="in" href="m.html#REFL">反射性迴路</a>，並間接影響 <a class="in" href="m.html#L2">L2</a>。見 <a class="in" href="m.html#RATE">傳導圖利率</a>。</td>
 </tr>
 <tr id="full-CTRL">
-<th scope="row"><span class="b-alias"></span><div class="b-name">外生｜管制／地緣</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：維持既有框架、逐步收緊；無容忍、無可查核訊號</div></th>
+<th scope="row"><span class="b-alias"></span><div class="b-name">外生｜管制／地緣</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：維持既有框架、逐步收緊；無容忍、無可查核訊號</div></th>
 <td data-label="預期值或區間">維持既有框架、逐步收緊（基準文字暫不改寫）。補可查核定義：客體清單（含遠端算力服務是否納管）、規則是否已生效、是否新增高轉運風險名單。量化門檻待生效後的一手實務再補，不預填未讀到的結果。</td>
 <td data-label="判斷指標">看管制客體、規則是否已生效、官方名單是否增刪須核對的司法轄區。基準表未另訂固定更新頻率。來源：官方規則與名單（一手）。</td>
-<td data-label="判色規則">無數值容忍區間。可查核偏離：① 管制客體較前一版規則顯著擴大或收窄；② 已公布的生效日已過且執行口徑可核對；③ 官方名單增列或刪除須核對的司法轄區。大幅放寬或擴大仍為方向性示警。官方表未另列「超越」門檻。</td>
+<td data-label="判色規則">無數值容忍區間。可查核偏離：① 管制客體較前一版規則顯著擴大或收窄；② 已公布的生效日已過且執行口徑可核對；③ 官方名單增列或刪除須核對的司法轄區。大幅放寬或擴大仍為方向性示警。無數值符合區上緣，不因超越通則自動轉藍。</td>
 <td data-label="依據與關聯">依據：v2.0 採納 P7（先定義、後量化）。<br>連動：上游為政策，不從主鏈預判；下游可打進 <a class="in" href="m.html#L3">L3</a>、<a class="in" href="m.html#L6">L6</a> 或雲端服務，若反制鎖材料則打 <a class="in" href="m.html#L7b">L7b</a>。見 <a class="in" href="m.html#CTRL">傳導圖管制</a>。</td>
 </tr>
 <tr id="full-REFL">
-<th scope="row"><div class="b-name">反射性迴路</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
+<th scope="row"><div class="b-name">反射性迴路</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：與 v1.1 相同</div></th>
 <td data-label="預期值或區間">敘事 → 估值 → 融資 → 資本開支 → 財報 → 敘事，維持正向循環。</td>
 <td data-label="判斷指標">融資成本、發債是否受阻、擁擠度是否達歷史極值。基準表未另訂固定更新頻率或單一來源名稱。</td>
-<td data-label="判色規則">無數值容忍區間。偏離訊號：融資成本顯著上升、發債受阻、擁擠度達歷史極值。官方表未另列「超越」門檻。</td>
+<td data-label="判色規則">無數值容忍區間。偏離訊號：融資成本顯著上升、發債受阻、擁擠度達歷史極值。無數值符合區上緣，不因超越通則自動轉藍。</td>
 <td data-label="依據與關聯">依據：v2.0 一字未動。<br>連動：上游為敘事與 <a class="in" href="m.html#RATE">利率</a>，財報可回饋；下游影響 <a class="in" href="m.html#L2">L2 資本開支</a>。市場定價不作層級判定依據。見 <a class="in" href="m.html#REFL">傳導圖反射性</a>。</td>
 </tr>
 <tr id="full-P0">
-<th scope="row"><span class="b-alias"></span><div class="b-name">外生｜政策與許可（新）</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：v1.1 無此列</div></th>
+<th scope="row"><span class="b-alias"></span><div class="b-name">外生｜政策與許可（新）</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：v1.1 無此列</div></th>
 <td data-label="預期值或區間">聯邦與州層級的資料中心許可與用電審批。</td>
 <td data-label="判斷指標">已生效的行政措施，或主要州許可凍結是否超過 3 個月。基準表未另訂固定來源名稱。</td>
-<td data-label="判色規則">無百分比容忍區間。偏離訊號：已生效行政措施；或主要州凍結超過 3 個月。官方表未另列「超越」門檻。</td>
+<td data-label="判色規則">無百分比容忍區間。偏離訊號：已生效行政措施；或主要州凍結超過 3 個月。無數值符合區上緣，不因超越通則自動轉藍。</td>
 <td data-label="依據與關聯">依據：v2.0 修改採納 P0；不與電力交期混判。<br>連動：上游為聯邦／州層級政策；下游限制 <a class="in" href="m.html#L8">L8</a> 與 <a class="in" href="m.html#L2">L2</a> 落地。見 <a class="in" href="m.html#P0">傳導圖政策與許可</a>。</td>
 </tr>
 <tr id="full-P1">
-<th scope="row"><span class="b-alias"></span><div class="b-name">外生｜能源價格與通道（新）</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：v1.1 無此列</div></th>
+<th scope="row"><span class="b-alias"></span><div class="b-name">外生｜能源價格與通道（新）</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：v1.1 無此列</div></th>
 <td data-label="預期值或區間">國際油價與運輸通道。參考門檻：高於 100 美元且持續 4 週為觀察；高於 120 美元或通道中斷為偏離。</td>
 <td data-label="判斷指標">國際油價與關鍵運輸通道是否中斷。頻率：基準表以「持續 4 週」為觀察門檻，未另訂單一公布來源。</td>
 <td data-label="判色規則">觀察：高於 100 美元且持續 4 週。偏離：高於 120 美元，或關鍵通道中斷。容忍欄寫「見左」。</td>
 <td data-label="依據與關聯">依據：v2.0 修改採納 P1，不與 P0 合併。<br>連動：上游為國際油價與通道；下游可傳向 <a class="in" href="m.html#RATE">利率</a>路徑與 <a class="in" href="m.html#L7b">L7b</a>。見 <a class="in" href="m.html#P1">傳導圖能源</a>。</td>
 </tr>
 <tr id="full-AUX">
-<th scope="row"><span class="b-alias"></span><div class="b-name">配套層</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：圖有、表無；不判層</div></th>
+<th scope="row"><span class="b-alias"></span><div class="b-name">配套層</div><div class="b-ver">基準版本 v2.1、生效 2026-W48</div><div class="b-hist">W39–W47 當時用的尺：圖有、表無；不判層</div></th>
 <td data-label="預期值或區間">不立尺、僅記錄；仍留在框架圖（灰色虛線）。</td>
 <td data-label="判斷指標">不設判定指標。基準表宣告不立尺，僅記錄。</td>
 <td data-label="判色規則">不判層。無符合／超越／偏離門檻。</td>
@@ -239,16 +239,17 @@
 
 <details class="notes" id="notes">
 <summary>附註與方法</summary>
-<p>不公開索引，僅供內部審閱。頁面已標示 noindex。不構成投資建議。盤點日期 2026-11-19（台北時間，UTC+8）。</p>
-<p>現行版（v2.0，2026-11-19 核准，2026-W48 起適用）。已刊 2026-W39 至 2026-W47 不回溯重判，仍以當時 v1.1 為準。差異紀錄欄位沿用舊格式：編號、層、原值、新值、理由與依據來源（附時點）。v1.1 保留為歷史版，可在下表對照。</p>
+<p>不公開索引，僅供內部審閱。頁面已標示 noindex。不構成投資建議。盤點日期 2026-11-20（台北時間，UTC+8）。</p>
+<p>現行版（v2.1，2026-11-20 核准，2026-W48 起適用）。v2.0 於 2026-11-19 核准，但在 2026-11-20 被取代前，未曾用於任何已刊期。已刊 2026-W39 至 2026-W47 不回溯重判，仍以當時 v1.1 為準。差異紀錄欄位沿用舊格式：編號、層、原值、新值、理由與依據來源（附時點）。v1.1、v2.0 保留為歷史版，可在下表對照。</p>
 <p><b>現行版說明：</b>L2 約 8,200 億美元為<b>暫定</b>，待一手財報逐家對帳後再定案。下期出刊前還要補 11/18 財報與 11/19 管制生效後的一手讀數，這兩筆不預填進本表數值欄。</p>
 <p>口徑提醒：L6 台積電毛利率須同口徑比較（法說新台幣基礎與美元換算不可混用）。L1 分母採公司財報科目，須注意各公司財年不一致。L2 約 8,200 億為暫定，對帳完成前不得與 v1.1 的 6,900 億或框架圖九大口徑 8,300 億直接互換。</p>
-<h3>版本沿革（v1.0→v1.1→v2.0）</h3>
+<h3>版本沿革（v1.0→v1.1→v2.0→v2.1）</h3>
 <table>
 <tr><th>版本</th><th>日期</th><th>變更內容</th><th>核准</th></tr>
 <tr><td>v1.0</td><td>2026-09-21</td><td>立尺。8 層＋外生＋反射性共 12 列，建立預期值／容忍區間／偏離訊號三欄結構。〈勘誤：文件標題曾誤植「13 列」，實際 12 列〉</td><td>振達同意</td></tr>
 <tr><td>v1.1</td><td>2026-09-21</td><td>三項修正：C1 L7 拆為 L7a 設備＋L7b 材料（12 → 13 列）；C2 L1 分母改為可查核一手財報指標（證據等級弱→強）；C3 外生利率欄補政策利率路徑。其餘 10 列一字未動</td><td>振達同意</td></tr>
-<tr><td>v2.0</td><td>2026-11-19</td><td>依 P0–P7 處置推進。自 2026-W48 起作為判定尺；已刊 2026-W39–2026-W47 不回溯重判。L3 打臉門檻統一為毛利率 &lt;72%。L2 約 8,200 億美元標暫定。</td><td>振達同意</td></tr>
+<tr><td>v2.0</td><td>2026-11-19</td><td>依 P0–P7 處置推進。原訂自 2026-W48 起作為判定尺；已刊 2026-W39–2026-W47 不回溯重判。L3 打臉門檻統一為毛利率 &lt;72%。L2 約 8,200 億美元標暫定。本版在 2026-11-20 被 v2.1 取代前，未曾用於任何已刊期。</td><td>振達同意</td></tr>
+<tr><td>v2.1</td><td>2026-11-20</td><td>依 2026-11-20 提案核准三項，自 2026-W48 起適用，不回溯改已刊判定。① L6 以 60% 為中心固定分帶（&lt;57% 紅、57–60% 橘、60–63% 綠、&gt;63% 藍）。② L7b：10–15% 判橘；&gt;15% 且連續兩次一手讀數才判紅。③ 超越通則：高於該層區間上緣且有可查證實際讀數才判超越；暫定基準（L2、L5）不適用；單邊範圍以預期值＋一個容差寬度為門檻（L1 &gt;70%、L6 &gt;63%）。</td><td>振達同意（14:32，台北時間）</td></tr>
 </table>
 <h2>用 2026-W39 至 2026-W47 回頭驗尺（歷史，不回溯改判）</h2>
 <table>
@@ -282,9 +283,9 @@
 </table>
 <p>關鍵人物／治理：同意不立尺、不開案。若立了尺，就得用會計無法驗證的動機，去改一個用財報判定的層級。</p>
 
-<h2>與歷史尺 v1.1 的差異（沿用原欄位）</h2>
+<h2>與歷史尺 v1.1 的差異（v2.0 已收入 v2.1，沿用原欄位）</h2>
 <table>
-<tr><th>編號</th><th>層</th><th>v1.1 原值（歷史）</th><th>v2.0 新值（現行，2026-W48 起）</th><th>理由與依據（附時點）</th></tr>
+<tr><th>編號</th><th>層</th><th>v1.1 原值（歷史）</th><th>v2.0 值（已收入 v2.1）</th><th>理由與依據（附時點）</th></tr>
 <tr><td>P5</td><td>L2</td><td>五大主體 2026 年約 6,900 億美元，容忍 ±10%</td><td>先列明主體與是否含融資租賃；約 8,200 億美元為暫定，待一手對帳</td><td>框架圖另有九大口徑約 8,300 億（2026-09-21 已警示不可互換）；後期出現四家加另一家租賃主體的加總。部分為轉引、需核實。</td></tr>
 <tr><td>P6</td><td>L4 容忍</td><td>合約價按季 +5～25%</td><td>同世代仍用原區間；世代轉換改看每單位成本</td><td>錨定數據 2026Q1 +90～95%、Q2 +58～63%（2026-09-21）；2026-W46 記錄世代單價跳升，2026-W47 無新成交價。</td></tr>
 <tr><td>P3</td><td>L4 偏離訊號</td><td>現貨鬆動、庫存回升逾 4 週、廠商擴產超預期</td><td>上列三項全留，增列量產驗證並進入伺服器客戶</td><td>2026-W43 起有相關宣布；直至 2026-W47 仍屬評估或轉引，不觸發。</td></tr>
@@ -293,6 +294,13 @@
 <tr><td>P0</td><td>新列</td><td>無此列</td><td>新增政策與許可；門檻為已生效行政措施</td><td>2026-W45 提出；2026-W47 無新行政令，降為待議優先。</td></tr>
 <tr><td>P1</td><td>新列</td><td>無此列</td><td>新增能源價格與通道，不與 P0 合併</td><td>2026-W43 提出；2026-W47 能源分項回落，未達門檻。</td></tr>
 <tr><td>P4</td><td>配套層</td><td>圖有、表無；不判層</td><td>宣告不立尺、僅記錄；保留在框架圖</td><td>2026-W47 同步下跌，但無一手量可查。</td></tr>
+</table>
+<h2>v2.0 → v2.1 的差異（2026-11-20 核准，自 2026-W48 起）</h2>
+<table>
+<tr><th>編號</th><th>層</th><th>v2.0 原值</th><th>v2.1 新值（現行，2026-W48 起）</th><th>理由與依據（附時點）</th></tr>
+<tr><td>D1</td><td>L6</td><td>毛利率 &gt;60%；容忍 ±3pp；未寫明中心，亦未另列超越門檻</td><td>以 60% 為中心固定分帶：&lt;57% 紅、57–60% 橘、60–63% 綠、&gt;63% 藍</td><td>2026-11-20 提案（選項 A）經振達 14:32 核准。已刊期不回溯改判。</td></tr>
+<tr><td>D2</td><td>L7b</td><td>年漲 &lt;15%；容忍 0–10%；&gt;15% 並持續為紅；10–15% 未上色，「持續」未定量</td><td>0–10% 綠；10–15% 橘；&gt;15% 且連續兩次一手讀數才判紅。若 W48 因此由紅轉橘，週報須寫明「因規則修正」</td><td>2026-11-20 提案經振達 14:32 核准。已刊紅燈不回溯改判。</td></tr>
+<tr><td>D3</td><td>超越通則</td><td>多數層未另列超越門檻</td><td>高於該層區間上緣且有可查證實際讀數才判超越；暫定基準（L2、L5）不適用；單邊範圍以預期值＋一個容差寬度為門檻（L1 &gt;70%、L6 &gt;63%）</td><td>2026-11-20 提案經振達 14:32 核准。已刊藍／綠燈不回溯改判。</td></tr>
 </table>
 <p>免責聲明：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</p>
 </details>

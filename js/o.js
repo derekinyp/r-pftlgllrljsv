@@ -74,6 +74,18 @@
       card4.appendChild(el('div', 'l', '本期紅燈層見記分卡'));
     }
     host.appendChild(card4);
+
+    var compact = document.getElementById('o-kpi-compact');
+    if (compact) {
+      var bits = [];
+      if (iss) bits.push(iss.id);
+      bits.push(ruler.v);
+      if (data && iss && data.issueId === iss.id && layers.length) {
+        bits.push('綠 ' + counts.g + ' · 藍 ' + counts.b + ' · 紅 ' + counts.r);
+        if (redNames.length) bits.push('紅燈：' + redNames.join('、'));
+      }
+      compact.textContent = bits.join('　');
+    }
   }
 
   function renderScaleNote() {
@@ -104,6 +116,11 @@
     renderScaleNote();
     shortenLights();
     if (copy().fillL2Notes) copy().fillL2Notes();
+    if (copy().fillL2VerdictNotes) {
+      var iss2 = latest();
+      var data2 = brief();
+      copy().fillL2VerdictNotes((data2 && data2.issueId) || (iss2 && iss2.id));
+    }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

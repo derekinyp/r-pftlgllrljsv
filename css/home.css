@@ -11,6 +11,8 @@
 }
 .hero-title{font-size:clamp(1.7rem,3.2vw,2.35rem);line-height:1.25;margin:0 0 10px;color:#f8fafc;letter-spacing:-.03em}
 .hero-tag{margin:0 0 22px;max-width:36em;color:#d6dee8;font-size:1.02rem;line-height:1.7}
+.hero-tag a{color:#93c5fd;text-decoration:underline;text-underline-offset:3px;font-weight:700}
+.hero-tag a:hover,.hero-tag a:focus-visible{color:#dbeafe;outline:none}
 .hero-kicker{margin:0 0 6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#93c5fd;font-weight:700}
 .hero-hl{margin:0 0 14px;font-size:1.15rem;line-height:1.45;color:#fff;font-weight:650}
 .hero-miss{margin:0 0 14px;color:#cbd5e1;font-size:.95rem}

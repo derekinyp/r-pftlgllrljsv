@@ -55,4 +55,17 @@ a.in{color:var(--blue)}
 .b-link:hover,.b-link:focus-visible{text-decoration:underline;outline:none}
 
 abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help;font-style:normal}
-.l2-note{display:block;margin-top:4px;font-size:12.5px;color:#4d5666;line-height:1.55}
+.l2-note{display:block;margin-top:4px;font-size:12.5px;color:#4d5666;line-height:1.55;overflow-wrap:anywhere}
+/* 綜覽燈號表第一欄的對帳／判藍註記必須換行，否則 nowrap 會把註記切在首屏外 */
+#lights th .l2-note{white-space:normal;font-weight:500;max-width:16em}
+
+.o-kpi-compact{display:none}
+@media (max-width:640px){
+  /* 綜覽手機首屏先看到燈號：四張卡收成一行摘要 */
+  .wrap-o .lead{margin:0 0 8px;font-size:14px;line-height:1.55}
+  .wrap-o #o-scale-note{margin:0 0 8px;padding:8px 10px}
+  .wrap-o #o-kpi{display:none}
+  .wrap-o .o-kpi-compact{display:block;margin:0 0 10px;padding:8px 10px;background:#fff;border:1px solid #e3e6ec;border-radius:10px;color:#1b1f2a;font-size:13px;line-height:1.55}
+  .wrap-o #lights{margin-top:4px}
+  .wrap-o #lights h2{margin-top:8px}
+}

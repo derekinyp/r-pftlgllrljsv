@@ -19,8 +19,17 @@
 .b-quick th,.b-quick td{border:1px solid #e3e6ec;padding:8px 10px;text-align:left;vertical-align:top}
 .b-quick thead th{background:#f3f5f8;font-weight:700;color:#1b1f2a}
 .b-quick tbody th{background:#fafbfc;white-space:nowrap}
+.b-quick tbody th:has(.b-hist),.b-quick tbody th:has(.l2-note){white-space:normal;min-width:11em;overflow-wrap:anywhere}
+.l2-note,.b-hist{overflow-wrap:anywhere;word-break:break-word}
 .b-quick b{font-weight:700;color:#1b1f2a}
 .b-hist{margin-top:6px;font-size:12px;color:#4d5666;line-height:1.5}
+.vtag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;text-decoration:none;line-height:1.4}
+.vtag:hover,.vtag:focus-visible{text-decoration:underline;outline:none}
+.vtag-g{background:#e8f5ee;color:#165c3c}
+.vtag-b{background:#eaf2fb;color:#164e87}
+.vtag-r{background:#fdecea;color:#9b1c1c}
+.vtag-a{background:#fdf3e3;color:#8a4b00}
+.vtag-n{background:#f2f4f7;color:#3d4450}
 .b-scale-note{margin:0 0 16px}
 .b-foot-note{margin:0 0 18px;color:#4d5666;font-size:13px;max-width:50em}
 .l2-note{display:block;margin-top:4px;font-size:12.5px;color:#4d5666;line-height:1.55}
@@ -28,9 +37,11 @@ details.b-full{margin:8px 0 28px;background:#fff;border:1px solid #e3e6ec;border
 details.b-full>summary{cursor:pointer;font-weight:700;padding:10px 0;color:#1b1f2a}
 @media (max-width:640px){
   .b-quick thead{display:none}
-  .b-quick,.b-quick tbody,.b-quick tr,.b-quick th,.b-quick td{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+  .b-quick,.b-quick tbody,.b-quick tr,.b-quick th,.b-quick td,.b-quick tbody th{
+    display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box}
   .b-quick tr{background:#fff;border:1px solid #e3e6ec;border-radius:14px;margin:0 0 12px;padding:12px}
-  .b-quick th,.b-quick td{border:0;padding:6px 0;white-space:normal}
+  .b-quick tbody th,.b-quick th,.b-quick td,.l2-note,.b-hist{
+    border:0;padding:6px 0;white-space:normal;overflow-wrap:anywhere;word-break:break-word;max-width:100%}
   .b-quick td::before{content:attr(data-label);display:block;font-weight:700;color:#1b1f2a;font-size:12px;margin:0 0 2px}
 }
 .b-table .prov{display:inline-block;margin-right:6px;padding:1px 7px;border-radius:999px;background:#fdf3e3;color:#8a4b00;font-size:11px;font-weight:700}
@@ -62,4 +73,10 @@ details.b-full>summary{cursor:pointer;font-weight:700;padding:10px 0;color:#1b1f
   .b-table tbody th{padding-bottom:10px;border-bottom:1px solid #eef0f4;margin-bottom:8px}
   .b-table td{border-top:1px solid #eef0f4;padding-top:10px}
   .b-table td::before{content:attr(data-label);display:block;font-weight:700;color:#1b1f2a;font-size:12px;margin:0 0 4px}
+}
+
+/* 速查表新增判色規則欄：桌面可換行，避免把頁面撑出水平捲軸 */
+.b-quick td[data-label="判色規則"]{font-size:13px;line-height:1.45;white-space:normal;min-width:14em}
+@media (max-width:640px){
+  .b-quick td[data-label="判色規則"]{max-width:none}
 }

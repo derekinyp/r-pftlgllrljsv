@@ -1,0 +1,165 @@
+/* zd-components.css —— 振達設計規範 Workshop 1.0.0 components.css 的站用副本，只在 <body class="zd"> 內生效。DRAFT 可用版 */
+/* 振達設計規範 Workshop 1.0.0 —— 網站元件（純 CSS，不綁框架）
+   引用順序：fonts/fonts.css → tokens/tokens.css → components/components.css
+   規則：只用 tokens.css 的 semantic 變數；不得寫死色碼與字級（tools/check.py 會查）。
+   類別一律 zd- 前綴，避免與既有網站樣式衝突。 */
+
+/* ---------- 基礎 Base ---------- */
+.zd, .zd *{box-sizing:border-box}
+body.zd{margin:0;background:var(--color-surface-canvas);color:var(--color-text-default);font-family:var(--font-sans);
+  font-size:var(--zd-font-body);line-height:var(--leading-body);-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+/* 字級鎖定：元素與角色一對一 */
+:where(.zd) h1{font-size:var(--zd-font-h1)} :where(.zd) h2{font-size:var(--zd-font-h2)} :where(.zd) h3{font-size:var(--zd-font-h3)} :where(.zd) h4{font-size:var(--zd-font-h4)} :where(.zd) h5,:where(.zd) h6{font-size:var(--zd-font-h4)}
+:where(.zd) code,:where(.zd) kbd,:where(.zd) samp,:where(.zd) pre{font-size:var(--zd-font-code)} :where(.zd) small{font-size:var(--zd-font-caption)} :where(.zd) table{font-size:var(--zd-font-table)} :where(.zd) caption,:where(.zd) figcaption{font-size:var(--zd-font-caption)}
+:where(.zd) h1,:where(.zd) h2,:where(.zd) h3{font-family:var(--font-display);line-height:var(--leading-tight);margin:0;font-weight:var(--weight-bold)}
+.zd p{margin:0 0 var(--space-3)}
+:where(.zd) a{color:var(--color-text-link);text-underline-offset:3px}
+:where(.zd) a:focus-visible,:where(.zd) button:focus-visible,:where(.zd) summary:focus-visible{outline:3px solid var(--color-brand-default);outline-offset:2px;border-radius:var(--radius-sm)}
+.zd .zd-num{font-variant-numeric:tabular-nums}
+.zd-wrap{max-width:var(--layout-max);margin:0 auto;padding:var(--space-6) var(--space-5) var(--space-8)}
+.zd-section{margin:0 0 var(--space-7)}
+.zd-h2{display:flex;align-items:center;gap:var(--space-2);font-size:var(--zd-font-h2);margin:0 0 var(--space-4)}
+.zd-h2::before{content:"";width:18px;height:3px;background:var(--color-brand-default);border-radius:2px;flex:none}
+.zd-muted{color:var(--color-text-muted)}
+.zd-small{font-size:var(--zd-font-small)}
+.zd-kicker{font-size:var(--zd-font-caption);letter-spacing:.08em;color:var(--color-text-subtle);margin:0 0 var(--space-2)}
+.zd-visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- 1 頁首 Header ＋ 2 導覽 Nav ---------- */
+.zd-header{background:var(--color-surface-canvas);border-bottom:2px solid var(--color-border-strong)}
+.zd-header__in{max-width:var(--layout-max);margin:0 auto;padding:var(--space-3) var(--space-5);display:flex;align-items:center;gap:var(--space-5)}
+.zd-header__title{font-weight:var(--weight-bold);color:var(--color-text-default);text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:var(--space-2)}
+.zd-header__title::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--color-brand-default)}
+.zd-nav{display:flex;gap:var(--space-1);margin-left:auto;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.zd-nav a{display:inline-flex;align-items:center;min-height:40px;padding:0 var(--space-3);border-radius:var(--radius-pill);color:var(--color-text-muted);text-decoration:none;font-size:var(--zd-font-label);white-space:nowrap}
+.zd-nav a:hover{background:var(--color-brand-tint);color:var(--color-text-default)}
+.zd-nav a[aria-current="page"]{background:var(--color-brand-default);color:var(--color-text-on-brand)}
+.zd-crumb{font-size:var(--zd-font-label);color:var(--color-text-subtle);margin:0 0 var(--space-2)}
+.zd-crumb a{color:var(--color-text-subtle)}
+
+/* ---------- 3 頁尾附註區 Notes ＋ Footer ---------- */
+.zd-notes{border-top:1px solid var(--color-border-default);margin-top:var(--space-7);padding-top:var(--space-2);color:var(--color-text-muted);font-size:var(--zd-font-small)}
+.zd-notes>summary{cursor:pointer;font-weight:var(--weight-bold);color:var(--color-text-default);min-height:44px;display:flex;align-items:center;list-style:none}
+.zd-notes>summary::before{content:"＋";margin-right:var(--space-2);color:var(--color-brand-default)}
+.zd-notes[open]>summary::before{content:"－"}
+.zd-notes ul{margin:0 0 var(--space-3);padding-left:1.2em}
+.zd-footer{max-width:var(--layout-max);margin:0 auto;padding:0 var(--space-5) var(--space-6);color:var(--color-text-subtle);font-size:var(--zd-font-caption)}
+
+/* ---------- 4 結論卡 Conclusion ---------- */
+.zd-conclusion{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:var(--space-6);background:var(--color-surface-default);border-radius:var(--radius-lg);padding:var(--space-7);box-shadow:var(--shadow-2)}
+.zd-conclusion__title{font-size:var(--zd-font-h1);letter-spacing:-.01em;margin:0 0 var(--space-3)}
+.zd-conclusion__lead{font-size:var(--zd-font-lead);color:var(--color-text-muted);max-width:var(--layout-read)}
+.zd-conclusion__points{list-style:none;margin:var(--space-4) 0 0;padding:0}
+.zd-conclusion__points li{display:grid;grid-template-columns:28px 1fr;gap:var(--space-3);margin:0 0 var(--space-3);color:var(--color-text-muted);font-size:var(--zd-font-small)}
+.zd-meta{background:var(--color-surface-sunken);border-radius:var(--radius-md);padding:var(--space-4);align-self:start}
+.zd-meta h3{font-size:var(--zd-font-label);margin:0 0 var(--space-2)}
+.zd-meta dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:var(--zd-font-small)}
+.zd-meta dt{color:var(--color-text-muted)} .zd-meta dd{margin:0;font-weight:var(--weight-bold)}
+.zd-actions{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-5)}
+
+/* ---------- 5 燈號標籤 Signal（色＋形＋字） ---------- */
+.zd-signal{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--radius-pill);font-size:var(--zd-font-label);font-weight:var(--weight-bold);line-height:1;white-space:nowrap}
+.zd-signal::before{font-size:var(--zd-font-caption)}
+.zd-signal--ok{color:var(--color-signal-ok-text);background:var(--color-signal-ok-bg)}       .zd-signal--ok::before{content:"●";color:var(--color-signal-ok-solid)}
+.zd-signal--up{color:var(--color-signal-up-text);background:var(--color-signal-up-bg)}       .zd-signal--up::before{content:"▲";color:var(--color-signal-up-solid)}
+.zd-signal--off{color:var(--color-signal-off-text);background:var(--color-signal-off-bg)}    .zd-signal--off::before{content:"◆";color:var(--color-signal-off-solid)}
+.zd-signal--watch{color:var(--color-signal-watch-text);background:var(--color-signal-watch-bg)} .zd-signal--watch::before{content:"◐";color:var(--color-signal-watch-solid)}
+.zd-signal--na{color:var(--color-signal-na-text);background:var(--color-signal-na-bg)}       .zd-signal--na::before{content:"○";color:var(--color-signal-na-solid)}
+.zd-tone-ok{--zd-tone:var(--color-signal-ok-solid)} .zd-tone-up{--zd-tone:var(--color-signal-up-solid)} .zd-tone-off{--zd-tone:var(--color-signal-off-solid)}
+.zd-tone-watch{--zd-tone:var(--color-signal-watch-solid)} .zd-tone-na{--zd-tone:var(--color-signal-na-solid)}
+.zd-legend{display:flex;flex-wrap:wrap;gap:var(--space-2);list-style:none;margin:0 0 var(--space-3);padding:0}
+
+/* ---------- 6 資料表格 Data table ---------- */
+.zd-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius-md);box-shadow:var(--shadow-1)}
+.zd-table{width:100%;border-collapse:collapse;background:var(--color-surface-default);font-size:var(--zd-font-table);line-height:var(--leading-snug)}
+.zd-table caption{caption-side:bottom;text-align:left;padding:var(--space-2) var(--space-3);font-size:var(--zd-font-caption);color:var(--color-text-subtle);background:var(--color-surface-default)}
+.zd-table th,.zd-table td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--color-border-default)}
+.zd-table thead th{background:var(--color-surface-sunken);color:var(--color-text-muted);font-size:var(--zd-font-caption);font-weight:var(--weight-bold);letter-spacing:.04em;white-space:nowrap}
+.zd-table tbody tr:nth-child(even){background:var(--color-surface-zebra)}
+.zd-table tbody th{font-weight:var(--weight-bold);white-space:nowrap}
+.zd-table .zd-code{display:block;font-family:var(--font-mono);font-size:var(--zd-font-caption);color:var(--color-text-subtle);font-weight:var(--weight-regular)}
+.zd-table .is-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.zd-table .zd-src{font-size:var(--zd-font-caption);color:var(--color-text-subtle);white-space:nowrap}
+.zd-table .zd-src a{color:var(--color-text-subtle)}
+.zd-price--up{color:var(--color-market-up);font-variant-numeric:tabular-nums;font-weight:var(--weight-bold)}
+.zd-price--down{color:var(--color-market-down);font-variant-numeric:tabular-nums;font-weight:var(--weight-bold)}
+.zd-price--flat{color:var(--color-market-flat);font-variant-numeric:tabular-nums}
+
+/* ---------- 7 KPI 大數字 ---------- */
+.zd-kpis{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--space-3)}
+.zd-kpi{background:var(--color-surface-default);border-radius:var(--radius-md);box-shadow:var(--shadow-1);padding:var(--space-3) var(--space-4);border-top:6px solid var(--zd-tone,var(--color-brand-default))}
+.zd-kpi__value{display:block;font-family:var(--font-display);font-size:var(--zd-font-kpi);font-weight:var(--weight-bold);line-height:1.1;font-variant-numeric:tabular-nums}
+.zd-kpi__unit{font-size:var(--zd-font-body);font-weight:var(--weight-regular);color:var(--color-text-muted);margin-left:2px}
+.zd-kpi__label{display:block;font-size:var(--zd-font-label);color:var(--color-text-muted);margin-top:var(--space-1)}
+
+/* ---------- 8 圖表容器 Chart ---------- */
+.zd-chart{margin:0;background:var(--color-surface-default);border-radius:var(--radius-md);box-shadow:var(--shadow-1);padding:var(--space-4)}
+.zd-chart__title{font-size:var(--zd-font-h3);margin:0 0 var(--space-1)}
+.zd-chart__sub{font-size:var(--zd-font-small);color:var(--color-text-muted);margin:0 0 var(--space-3)}
+.zd-chart svg{display:block;width:100%;height:auto}
+.zd-chart figcaption{font-size:var(--zd-font-caption);color:var(--color-text-subtle);margin-top:var(--space-2)}
+.zd-chart .ax{stroke:var(--color-chart-axis);stroke-width:1}
+.zd-chart .gl{stroke:var(--color-chart-grid);stroke-width:1}
+.zd-chart .zero{stroke:var(--color-chart-zero);stroke-width:1.5}
+.zd-chart .lb{fill:var(--color-text-muted);font-size:var(--zd-font-small);font-family:var(--font-sans)}
+.zd-chart .tk{fill:var(--color-chart-label);font-size:var(--zd-font-caption);font-family:var(--font-sans)}
+.zd-chart .vl{fill:var(--color-text-default);font-size:var(--zd-font-small);font-weight:var(--weight-bold);font-family:var(--font-sans)}
+.zd-chart .s1{fill:var(--color-chart-series-1)} .zd-chart .s2{fill:var(--color-chart-series-2)} .zd-chart .s3{fill:var(--color-chart-series-3)}
+.zd-chart .s4{fill:var(--color-chart-series-4)} .zd-chart .s5{fill:var(--color-chart-series-5)} .zd-chart .s6{fill:var(--color-chart-series-6)}
+.zd-chart .mk-up{fill:var(--color-market-up)} .zd-chart .mk-down{fill:var(--color-market-down)}
+
+/* ---------- 9 步驟徽章 Step badge ---------- */
+.zd-step{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:2px solid var(--color-border-strong);color:var(--color-text-default);font-family:var(--font-display);font-weight:var(--weight-bold);font-size:var(--zd-font-label);line-height:1;flex:none}
+.zd-step--filled{background:var(--color-brand-default);border-color:var(--color-brand-default);color:var(--color-text-on-brand)}
+.zd-step--lg{width:44px;height:44px;font-size:var(--zd-font-label)}
+
+/* ---------- 10 按鈕 Button ---------- */
+.zd-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-5);border-radius:var(--radius-pill);font:inherit;font-weight:var(--weight-bold);text-decoration:none;cursor:pointer;border:2px solid transparent}
+.zd-btn--primary{background:var(--color-brand-default);color:var(--color-text-on-brand)}
+.zd-btn--primary:hover{background:var(--color-brand-hover)}
+.zd-btn--secondary{background:transparent;color:var(--color-text-default);border-color:var(--color-border-strong)}
+.zd-btn--secondary:hover{background:var(--color-brand-tint)}
+.zd-btn--quiet{background:transparent;color:var(--color-text-link);padding:0 var(--space-2);text-decoration:underline}
+
+/* ---------- 11 注記 Callout ＋ 事實／推論標籤 ---------- */
+.zd-callout{border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);background:var(--color-brand-tint);color:var(--color-text-default);font-size:var(--zd-font-small);border-left:4px solid var(--color-brand-default)}
+.zd-callout--caution{background:var(--color-signal-watch-bg);border-left-color:var(--color-signal-watch-solid)}
+.zd-callout__title{display:block;font-weight:var(--weight-bold);margin-bottom:var(--space-1)}
+.zd-kind{display:inline-block;padding:2px 8px;border-radius:var(--radius-pill);font-size:var(--zd-font-caption);font-weight:var(--weight-bold);background:var(--color-surface-sunken);color:var(--color-text-muted);margin-right:6px}
+.zd-kind--inference{background:var(--color-brand-tint);color:var(--color-brand-default)}
+.zd-source{font-size:var(--zd-font-caption);color:var(--color-text-subtle)}
+
+/* ---------- 12 層級卡 Layer card ---------- */
+.zd-layers{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
+.zd-layer{background:var(--color-surface-default);border-radius:var(--radius-md);box-shadow:var(--shadow-1);padding:var(--space-3) var(--space-4);display:grid;grid-template-columns:44px minmax(0,1fr) auto;column-gap:var(--space-3);align-items:start;border-left:5px solid var(--zd-tone,var(--color-border-default))}
+.zd-layer__code{font-family:var(--font-mono);font-size:var(--zd-font-caption);color:var(--color-text-subtle);padding-top:2px}
+.zd-layer__name{font-weight:var(--weight-bold);display:block}
+.zd-layer__sum{margin:2px 0 0;color:var(--color-text-muted);font-size:var(--zd-font-small);line-height:var(--leading-snug)}
+
+/* ---------- 版面 Layout helpers ---------- */
+.zd-grid-2{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:var(--space-5);align-items:start}
+.zd-chips{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:var(--space-3) 0 var(--space-5);list-style:none;padding:0}
+.zd-chip{font-size:var(--zd-font-caption);padding:4px 10px;border-radius:var(--radius-pill);background:var(--color-surface-sunken);color:var(--color-text-muted)}
+
+/* ---------- 手機 Mobile（≤760px） ---------- */
+@media (max-width:760px){
+  .zd-header__in{padding:var(--space-2) var(--space-4);gap:var(--space-3)}
+  .zd-wrap{padding:var(--space-5) var(--space-4) var(--space-7)}
+  .zd-conclusion{grid-template-columns:1fr;padding:var(--space-5);gap:var(--space-4)}
+  .zd-layers,.zd-grid-2{grid-template-columns:1fr}
+  .zd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* 表格卡片化：td 需有 data-label */
+  .zd-table--cards thead{display:none}
+  .zd-table--cards,.zd-table--cards tbody,.zd-table--cards tr,.zd-table--cards th,.zd-table--cards td{display:block;width:100%}
+  .zd-table--cards tbody tr{position:relative;border-bottom:1px solid var(--color-border-default);padding:var(--space-3) var(--space-4)}
+  .zd-table--cards th,.zd-table--cards td{border:0;padding:3px 0;white-space:normal}
+  .zd-table--cards td[data-label]::before{content:attr(data-label);display:block;font-size:var(--zd-font-caption);color:var(--color-text-subtle);font-weight:var(--weight-bold)}
+  .zd-table--cards td.zd-cell-signal{position:absolute;top:var(--space-3);right:var(--space-4);width:auto}
+  .zd-table--cards td.zd-cell-signal::before{display:none}
+  .zd-table--cards .is-num{text-align:left}
+}
+@media print{
+  body.zd{background:var(--color-surface-default)}
+  .zd-header,.zd-nav,.zd-actions{display:none}
+  .zd-notes{display:block}
+}

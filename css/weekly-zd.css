@@ -1,0 +1,171 @@
+/* weekly-zd.css —— 振達設計規範 Workshop 1.0.0：每週新聞解析（週報）樣式
+   狀態：DRAFT 可用版（2026-11-21 12:00 前交付；定稿 2026-11-22 15:00）
+   引用順序：fonts/fonts.css → css/zd-tokens.css → css/zd-components.css → css/zd-nav.css → 本檔（由產生器內嵌於 <style>，或另存 css/weekly-zd.css 引用）
+   作用範圍：<body class="zd zd-weekly">。沿用現行週報的 HTML 結構與 class（見 WEEKLY-CLASSES.md），
+   不需引用 nav.css，也不再內嵌 weekly.css。只用 tokens 變數；字級只用 --zd-font-*（規範 1.0.0 字級鎖定）。 */
+
+.zd-weekly{background:var(--color-surface-canvas)}
+.zd-weekly *{box-sizing:border-box}
+.zd-weekly .wrap{max-width:var(--layout-max);margin:0 auto;padding:var(--space-6) var(--space-5) var(--space-8)}
+.zd-weekly p{margin:var(--space-2) 0}
+.zd-weekly ul,.zd-weekly ol{margin:var(--space-2) 0;padding-left:var(--space-5)}
+.zd-weekly li{margin:var(--space-1) 0}
+.zd-weekly a{color:var(--color-text-link)}
+.zd-weekly a.in{font-weight:var(--weight-bold)}
+
+/* 版頭 hero */
+.zd-weekly header.hero{background:var(--color-surface-default);border:1px solid var(--color-border-default);border-radius:var(--radius-lg);
+  padding:var(--space-6);margin-bottom:var(--space-5);box-shadow:var(--shadow-1)}
+.zd-weekly .kicker{font-size:var(--zd-font-caption);letter-spacing:.08em;color:var(--color-text-subtle);margin-bottom:var(--space-2)}
+.zd-weekly h1{margin:0 0 var(--space-2);font-size:var(--zd-font-h1);line-height:var(--leading-tight);letter-spacing:-.01em}
+.zd-weekly .sub{margin:0;color:var(--color-text-muted);font-size:var(--zd-font-lead);line-height:var(--leading-snug)}
+.zd-weekly .metabar{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-4)}
+
+/* 判定尺、提醒 */
+.zd-weekly .ruler{background:var(--color-surface-sunken);border-left:4px solid var(--color-brand-default);border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  padding:var(--space-3) var(--space-4);margin-bottom:var(--space-5);font-size:var(--zd-font-small);color:var(--color-text-muted)}
+.zd-weekly .ruler b{color:var(--color-text-default)}
+.zd-weekly .notice{background:var(--color-brand-tint);border-left:4px solid var(--color-brand-default);border-radius:0 var(--radius-md) var(--radius-md) 0;
+  padding:var(--space-4);margin-bottom:var(--space-5);font-size:var(--zd-font-small);color:var(--color-text-default)}
+.zd-weekly .notice h3{margin:0 0 var(--space-2);font-size:var(--zd-font-h4)}
+.zd-weekly .notice.trial{background:var(--color-signal-watch-bg);border:2px dashed var(--color-signal-watch-solid);border-left-width:4px;color:var(--color-signal-watch-text)}
+.zd-weekly .notice.trial h3{color:var(--color-signal-watch-text)}
+
+/* 區塊 section 與標題（h2 的 .num 為 IKEA 式步驟編號） */
+.zd-weekly section{background:var(--color-surface-default);border:1px solid var(--color-border-default);border-radius:var(--radius-lg);
+  padding:var(--space-5) var(--space-6);margin-bottom:var(--space-5)}
+.zd-weekly h2{display:flex;align-items:center;gap:var(--space-2);margin:0 0 var(--space-1);font-size:var(--zd-font-h2);line-height:var(--leading-tight)}
+.zd-weekly h2 .num{display:inline-flex;align-items:center;justify-content:center;flex:none;width:32px;height:32px;border-radius:50%;
+  background:var(--color-brand-default);color:var(--color-text-on-brand);font-size:var(--zd-font-label);font-variant-numeric:tabular-nums;margin:0}
+.zd-weekly .lead{margin:0 0 var(--space-4);color:var(--color-text-muted);font-size:var(--zd-font-small)}
+.zd-weekly h3{margin:var(--space-5) 0 var(--space-2);font-size:var(--zd-font-h3)}
+.zd-weekly h4{font-size:var(--zd-font-h4)}
+
+/* 燈號 chip：色＋形＋字。結構 <span class="chip green"><span class="shape">●</span>符合</span>（shape 由產生器輸出，CSS 不另加）。
+   green＝符合 ●、blue＝超越 ▲、red＝偏離 ◆、amber＝觀察 ◐、gray＝不判 ○ */
+.zd-weekly .chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:var(--radius-pill);font-size:var(--zd-font-label);
+  font-weight:var(--weight-bold);line-height:var(--leading-snug);background:var(--color-surface-sunken);color:var(--color-text-muted);border:1px solid transparent;white-space:nowrap}
+.zd-weekly .chip .shape{font-size:var(--zd-font-caption);line-height:1}
+.zd-weekly .chip.green{background:var(--color-signal-ok-bg);color:var(--color-signal-ok-text)}
+.zd-weekly .chip.blue{background:var(--color-signal-up-bg);color:var(--color-signal-up-text)}
+.zd-weekly .chip.red{background:var(--color-signal-off-bg);color:var(--color-signal-off-text)}
+.zd-weekly .chip.amber{background:var(--color-signal-watch-bg);color:var(--color-signal-watch-text)}
+.zd-weekly .chip.gray{background:var(--color-signal-na-bg);color:var(--color-signal-na-text)}
+.zd-weekly .chip.green .shape{color:var(--color-signal-ok-solid)}
+.zd-weekly .chip.blue .shape{color:var(--color-signal-up-solid)}
+.zd-weekly .chip.red .shape{color:var(--color-signal-off-solid)}
+.zd-weekly .chip.amber .shape{color:var(--color-signal-watch-solid)}
+.zd-weekly .chip.gray .shape{color:var(--color-signal-na-solid)}
+.zd-weekly .chip.is-provisional{border:1px dashed currentColor}
+/* 不帶燈號 class 的 chip（期間、版本等中性資訊）用一般字重 */
+.zd-weekly .chip:not(.green):not(.blue):not(.red):not(.amber):not(.gray){font-weight:var(--weight-regular)}
+/* 非燈號 chip：提案狀態（舊 purple）＝胡桃木淡底，不是判定 */
+.zd-weekly .chip.purple{background:var(--color-brand-tint);color:var(--color-text-default);font-weight:var(--weight-regular)}
+
+/* 圖框 */
+.zd-weekly .svgbox{width:100%;overflow-x:auto;border:1px solid var(--color-border-grid);border-radius:var(--radius-md);background:var(--color-surface-default);padding:var(--space-2)}
+.zd-weekly .svgbox svg{display:block;max-width:100%;height:auto}
+.zd-weekly .svgbox text{font-family:var(--font-sans);font-size:var(--zd-font-caption)}
+.zd-weekly .svgbox .t-xs{font-size:var(--zd-font-caption)}
+.zd-weekly .svgbox .t-sm{font-size:var(--zd-font-small)}
+.zd-weekly .chartbox{border:1px solid var(--color-border-grid);border-radius:var(--radius-md);background:var(--color-surface-default);padding:var(--space-1) var(--space-1) 0;margin-top:var(--space-3)}
+.zd-weekly .chart{width:100%;height:340px}
+.zd-weekly .chart.tall{height:420px}
+.zd-weekly .cap{font-size:var(--zd-font-caption);color:var(--color-text-subtle);padding:var(--space-2) var(--space-3) var(--space-3);line-height:var(--leading-snug)}
+
+/* 表格（數字右對齊、斑馬紋、判定欄底色） */
+.zd-weekly .tablewrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.zd-weekly table{width:100%;border-collapse:collapse;font-size:var(--zd-font-table);line-height:var(--leading-snug);margin:var(--space-3) 0;background:var(--color-surface-default)}
+.zd-weekly th,.zd-weekly td{border-bottom:1px solid var(--color-border-grid);padding:var(--space-2) var(--space-3);text-align:left;vertical-align:top}
+.zd-weekly th{background:var(--color-surface-sunken);font-weight:var(--weight-bold);color:var(--color-text-muted);font-size:var(--zd-font-caption)}
+.zd-weekly td.num,.zd-weekly th.num{text-align:right;font-variant-numeric:tabular-nums}
+.zd-weekly td.c,.zd-weekly th.c{text-align:center}
+.zd-weekly tbody tr:nth-child(even){background:var(--color-surface-zebra)}
+.zd-weekly td.j-green,.zd-weekly tbody tr:nth-child(even) td.j-green{background:var(--color-signal-ok-bg)}
+.zd-weekly td.j-blue,.zd-weekly tbody tr:nth-child(even) td.j-blue{background:var(--color-signal-up-bg)}
+.zd-weekly td.j-red,.zd-weekly tbody tr:nth-child(even) td.j-red{background:var(--color-signal-off-bg)}
+.zd-weekly td.j-amber,.zd-weekly tbody tr:nth-child(even) td.j-amber{background:var(--color-signal-watch-bg)}
+.zd-weekly td.j-gray,.zd-weekly tbody tr:nth-child(even) td.j-gray{background:var(--color-signal-na-bg)}
+/* 股價漲跌：市場色（漲紅跌綠），只用於股價與指數 */
+.zd-weekly .up{color:var(--color-market-up);font-variant-numeric:tabular-nums}
+.zd-weekly .dn{color:var(--color-market-down);font-variant-numeric:tabular-nums}
+
+/* 卡片、格線 */
+.zd-weekly .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--space-3)}
+.zd-weekly .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:var(--space-3)}
+.zd-weekly .card{border:1px solid var(--color-border-default);border-radius:var(--radius-md);padding:var(--space-4);background:var(--color-surface-default)}
+.zd-weekly .card .tag{display:inline-block;font-size:var(--zd-font-caption);font-weight:var(--weight-bold);padding:2px 8px;border-radius:var(--radius-pill);background:var(--color-surface-sunken);color:var(--color-text-muted)}
+.zd-weekly .card h4{margin:var(--space-2) 0;font-size:var(--zd-font-h4)}
+.zd-weekly .card p{margin:var(--space-1) 0;font-size:var(--zd-font-small);color:var(--color-text-muted)}
+
+/* 示警卡（不是判定燈號；左邊框與代碼徽章） */
+.zd-weekly .alert{border:1px solid var(--color-border-default);border-radius:var(--radius-md);padding:var(--space-4);background:var(--color-surface-default);margin:var(--space-3) 0}
+.zd-weekly .alert.a-red{border-left:4px solid var(--color-signal-off-solid)}
+.zd-weekly .alert.a-amber{border-left:4px solid var(--color-signal-watch-solid)}
+.zd-weekly .alert .hd{display:flex;align-items:baseline;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)}
+.zd-weekly .alert .code{font-family:var(--font-mono);font-size:var(--zd-font-caption);font-weight:var(--weight-bold);color:var(--color-text-on-brand);background:var(--color-text-default);border-radius:var(--radius-sm);padding:2px 7px}
+.zd-weekly .alert.a-red .code{background:var(--color-signal-off-text)}
+.zd-weekly .alert.a-amber .code{background:var(--color-signal-watch-text)}
+.zd-weekly .alert .ttl{font-size:var(--zd-font-h4);font-weight:var(--weight-bold)}
+.zd-weekly .alert dl{margin:var(--space-1) 0 0;display:grid;grid-template-columns:5em 1fr;gap:var(--space-1) var(--space-3);font-size:var(--zd-font-small);color:var(--color-text-muted)}
+.zd-weekly .alert dt{color:var(--color-text-subtle);font-size:var(--zd-font-caption);font-weight:var(--weight-bold)}
+.zd-weekly .alert dd{margin:0}
+.zd-weekly .note-alert{font-size:var(--zd-font-small);color:var(--color-text-muted)}
+
+/* 註記框 */
+.zd-weekly .note{background:var(--color-surface-sunken);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);font-size:var(--zd-font-small);color:var(--color-text-muted);margin-top:var(--space-3)}
+.zd-weekly .note b{color:var(--color-text-default)}
+.zd-weekly .note.warn{background:var(--color-signal-watch-bg);color:var(--color-signal-watch-text)}
+.zd-weekly .note.red{background:var(--color-signal-off-bg);color:var(--color-signal-off-text)}
+.zd-weekly .note.warn b{color:var(--color-signal-watch-text)} .zd-weekly .note.red b{color:var(--color-signal-off-text)}
+.zd-weekly .revnote{margin:var(--space-2) 0 0;padding:var(--space-2) var(--space-3);border-left:3px solid var(--color-signal-watch-solid);background:var(--color-signal-watch-bg);color:var(--color-signal-watch-text);font-size:var(--zd-font-small);line-height:var(--leading-snug)}
+
+/* KPI 小方塊 */
+.zd-weekly .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(136px,1fr));gap:var(--space-3);margin:var(--space-3) 0}
+.zd-weekly .stat .s{border:1px solid var(--color-border-default);border-radius:var(--radius-md);padding:var(--space-3);background:var(--color-surface-default)}
+.zd-weekly .stat .s .l{font-size:var(--zd-font-caption);color:var(--color-text-subtle)}
+.zd-weekly .stat .s .v{font-family:var(--font-display);font-size:var(--zd-font-h3);font-weight:var(--weight-bold);font-variant-numeric:tabular-nums;margin-top:2px}
+.zd-weekly .stat .s .d{font-size:var(--zd-font-caption);color:var(--color-text-subtle);margin-top:2px;line-height:var(--leading-snug)}
+
+/* 修正提案 */
+.zd-weekly .prop{border:1px solid var(--color-border-default);border-radius:var(--radius-md);padding:var(--space-4);margin:var(--space-3) 0;background:var(--color-surface-default)}
+.zd-weekly .prop .ph{display:flex;align-items:baseline;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2)}
+.zd-weekly .prop .pid{font-family:var(--font-mono);font-size:var(--zd-font-caption);font-weight:var(--weight-bold);color:var(--color-text-on-brand);background:var(--color-brand-default);border-radius:var(--radius-sm);padding:2px 7px}
+.zd-weekly .prop .pid.new{background:var(--color-signal-off-text)}
+.zd-weekly .prop .pt{font-size:var(--zd-font-h4);font-weight:var(--weight-bold)}
+.zd-weekly .prop table{margin:var(--space-2) 0 0}
+.zd-weekly .prop td:first-child{width:118px;min-width:118px;color:var(--color-text-muted);background:var(--color-surface-sunken);white-space:nowrap}
+
+/* 來源、頁尾、免責（附註一律在頁面底部） */
+.zd-weekly .src{font-size:var(--zd-font-caption);color:var(--color-text-subtle);margin-top:var(--space-1);line-height:var(--leading-snug)}
+.zd-weekly .src-tag{font-size:var(--zd-font-caption);color:var(--color-text-muted)}
+.zd-weekly footer{color:var(--color-text-subtle);font-size:var(--zd-font-caption);line-height:var(--leading-body);padding:var(--space-1)}
+.zd-weekly .disc{margin-top:var(--space-3);background:var(--color-surface-sunken);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);font-size:var(--zd-font-caption);color:var(--color-text-muted)}
+
+@media (max-width:760px){
+  .zd-weekly .wrap{padding:var(--space-4) var(--space-3) var(--space-8)}
+  .zd-weekly header.hero{padding:var(--space-5) var(--space-4)}
+  .zd-weekly section{padding:var(--space-4)}
+  .zd-weekly .alert dl{grid-template-columns:1fr}
+  /* 狀態圖在手機保持可讀：圖框內左右滑（整頁不捲動） */
+  .zd-weekly .svgbox svg{min-width:720px;max-width:none}
+  .zd-weekly .chart{height:300px} .zd-weekly .chart.tall{height:360px}
+  .zd-weekly .chip{white-space:normal;max-width:100%}
+  /* 新聞對照表等寬表格：390px 不可橫向捲動——縮小內距、允許任意斷行；仍用 table 角色字級 */
+  .zd-weekly th,.zd-weekly td{padding:var(--space-1) var(--space-2);overflow-wrap:anywhere;word-break:break-word;min-width:4.5em}
+  /* 寬表格放在 .tablewrap 內：表格自己左右滑，整頁不橫向捲動 */
+  .zd-weekly .tablewrap{margin:var(--space-3) calc(-1 * var(--space-2));padding:0 var(--space-2)}
+  /* 卡片模式（建議用於新聞對照表）：每個 td 加 data-label="欄名" 後，手機自動轉卡片 */
+  .zd-weekly table:has(td[data-label]) thead{display:none}
+  .zd-weekly table:has(td[data-label]),.zd-weekly table:has(td[data-label]) tbody,.zd-weekly table:has(td[data-label]) tr,
+  .zd-weekly table:has(td[data-label]) td{display:block;width:100%;min-width:0}
+  .zd-weekly table:has(td[data-label]) tr{border-bottom:2px solid var(--color-border-default);padding:var(--space-2) 0}
+  .zd-weekly table:has(td[data-label]) td{border:0;padding:2px var(--space-2)}
+  .zd-weekly table:has(td[data-label]) td[data-label]::before{content:attr(data-label);display:block;font-size:var(--zd-font-caption);font-weight:var(--weight-bold);color:var(--color-text-subtle)}
+  .zd-weekly .metabar{gap:var(--space-1)}
+  .zd-weekly .ruler{overflow-wrap:anywhere;word-break:break-word}
+}
+@media print{
+  .zd-weekly{background:var(--color-surface-default)}
+  .zd-weekly section,.zd-weekly header.hero{box-shadow:none;break-inside:avoid}
+}

@@ -1,0 +1,159 @@
+/* zd-tokens.css —— 振達設計規範 Workshop 1.0.0（git tag v1.0.0）tokens.css 的站用副本，請勿手改；來源 /workspace/design-system/tokens/tokens.json。DRAFT 可用版 */
+/* 由 tools/build_tokens.py 自 tokens/tokens.json 產生，請勿手改。振達設計規範 Workshop（工坊） 1.0.0 */
+/* primitive（--p-*）只供本檔引用；產出請只用 semantic 變數。 */
+:root{
+  --p-color-birch-50: #FFFDF8;
+  --p-color-birch-100: #F6F1E7;
+  --p-color-birch-200: #EFE7D8;
+  --p-color-birch-300: #E7DDCB;
+  --p-color-birch-400: #E2D7C5;
+  --p-color-birch-zebra: #FBF8F2;
+  --p-color-bark-500: #8C8174;
+  --p-color-bark-600: #6E6154;
+  --p-color-bark-700: #54483D;
+  --p-color-bark-900: #2A211A;
+  --p-color-walnut-100: #F0E6DA;
+  --p-color-walnut-700: #6B4A2E;
+  --p-color-walnut-800: #573B24;
+  --p-color-green-100: #E4F1E7;
+  --p-color-green-500: #2E8B57;
+  --p-color-green-800: #1E6141;
+  --p-color-blue-100: #E5EDF8;
+  --p-color-blue-500: #3A72C0;
+  --p-color-blue-800: #1F4E8C;
+  --p-color-red-100: #FBE7E3;
+  --p-color-red-500: #D2453A;
+  --p-color-red-800: #A3271D;
+  --p-color-orange-100: #FBEFD8;
+  --p-color-orange-500: #B37510;
+  --p-color-orange-800: #7A4A06;
+  --p-color-stone-100: #EFE9E0;
+  --p-color-market-red: #C62F3A;
+  --p-color-market-green: #1F7A4D;
+  --p-color-series-teal: #2F6F7E;
+  --p-color-series-plum: #A0527A;
+  --p-color-series-olive: #6F7F3A;
+  --p-color-series-dusk: #5B6B8C;
+  --p-color-series-stone: #7A6F64;
+  --p-color-white: #FFFFFF;
+  --p-color-heat-low: #2E7880;
+  --p-color-heat-mid: #F4F1EA;
+  --p-color-heat-high: #7048A0;
+  --p-font-noto-sans-tc: "Noto Sans TC";
+  --p-font-figtree: Figtree;
+  --p-font-plex-mono: "IBM Plex Mono";
+}
+:root,[data-theme="light"]{
+  --color-surface-canvas: var(--p-color-birch-100); /* 頁面底色（樺木） */
+  --color-surface-default: var(--p-color-birch-50); /* 卡片、表格、文件紙面 */
+  --color-surface-sunken: var(--p-color-birch-200); /* 表頭、次要區塊 */
+  --color-surface-zebra: var(--p-color-birch-zebra); /* 表格斑馬紋 */
+  --color-text-default: var(--p-color-bark-900);
+  --color-text-muted: var(--p-color-bark-700);
+  --color-text-subtle: var(--p-color-bark-600); /* 輔助字，最小 12px */
+  --color-text-on-brand: var(--p-color-birch-50);
+  --color-text-link: var(--p-color-walnut-700);
+  --color-border-default: var(--p-color-birch-400);
+  --color-border-grid: var(--p-color-birch-300);
+  --color-border-strong: var(--p-color-bark-900);
+  --color-brand-default: var(--p-color-walnut-700); /* 胡桃木 Walnut */
+  --color-brand-hover: var(--p-color-walnut-800);
+  --color-brand-tint: var(--p-color-walnut-100);
+  --color-signal-ok-text: var(--p-color-green-800);
+  --color-signal-ok-bg: var(--p-color-green-100);
+  --color-signal-ok-solid: var(--p-color-green-500);
+  --color-signal-up-text: var(--p-color-blue-800);
+  --color-signal-up-bg: var(--p-color-blue-100);
+  --color-signal-up-solid: var(--p-color-blue-500);
+  --color-signal-off-text: var(--p-color-red-800);
+  --color-signal-off-bg: var(--p-color-red-100);
+  --color-signal-off-solid: var(--p-color-red-500);
+  --color-signal-watch-text: var(--p-color-orange-800);
+  --color-signal-watch-bg: var(--p-color-orange-100);
+  --color-signal-watch-solid: var(--p-color-orange-500);
+  --color-signal-na-text: var(--p-color-bark-700);
+  --color-signal-na-bg: var(--p-color-stone-100);
+  --color-signal-na-solid: var(--p-color-bark-500);
+  --color-market-up: var(--p-color-market-red); /* 股價漲（台灣慣例紅），只用於股價 */
+  --color-market-down: var(--p-color-market-green); /* 股價跌（綠），只用於股價 */
+  --color-market-flat: var(--p-color-bark-600); /* 股價平盤 */
+  --color-chart-series-1: var(--p-color-walnut-700);
+  --color-chart-series-2: var(--p-color-series-teal);
+  --color-chart-series-3: var(--p-color-series-plum);
+  --color-chart-series-4: var(--p-color-series-olive);
+  --color-chart-series-5: var(--p-color-series-dusk);
+  --color-chart-series-6: var(--p-color-series-stone);
+  --color-chart-axis: var(--p-color-bark-900);
+  --color-chart-grid: var(--p-color-birch-300);
+  --color-chart-label: var(--p-color-bark-600);
+  --color-chart-zero: var(--p-color-bark-700);
+  --color-chart-heat-low: var(--p-color-heat-low); /* 熱圖低端（灰青）：低於基準；不是燈號 */
+  --color-chart-heat-mid: var(--p-color-heat-mid); /* 熱圖中點 */
+  --color-chart-heat-high: var(--p-color-heat-high); /* 熱圖高端（紫）：高於基準；不是燈號 */
+  --font-sans: Figtree, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif; /* Figtree 管拉丁與數字，Noto Sans TC 管中文 */
+  --font-display: Figtree, "Noto Sans TC", sans-serif;
+  --font-mono: "IBM Plex Mono", "Noto Sans TC", ui-monospace, monospace;
+  --text-xs: 12px; /* 註記、圖表軸標（最小字級） */
+  --text-sm: 14px; /* 表格、輔助說明 */
+  --text-md: 16px; /* 正文 */
+  --text-lg: 19px; /* 導言、h3 */
+  --text-xl: 23px; /* h2 */
+  --text-2xl: 30px; /* h1（內頁） */
+  --text-3xl: 38px; /* h1（首頁） */
+  --text-4xl: 48px; /* KPI 大數字 */
+  --leading-tight: 1.25; /* 標題 */
+  --leading-snug: 1.5; /* 表格、卡片 */
+  --leading-body: 1.75; /* 繁中正文 */
+  --weight-regular: 400;
+  --weight-bold: 700;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-1: 0 1px 2px rgba(42,33,26,.06);
+  --shadow-2: 0 10px 30px rgba(42,33,26,.10);
+  --layout-max: 1120px;
+  --layout-read: 42em; /* 正文最佳行寬（約 40 個全形字） */
+  --print-title: 20pt; /* 文件標題（Google 文件／Word） */
+  --print-h1: 15pt; /* 一級標題 */
+  --print-h2: 12.5pt; /* 二級標題 */
+  --print-body: 10.5pt; /* 內文 */
+  --print-table: 9.5pt; /* 表格 */
+  --print-caption: 8.5pt; /* 註記、來源 */
+  --slide-title: 40pt; /* 封面標題（16:9，13.333 × 7.5 in） */
+  --slide-section: 36pt; /* 章節頁 */
+  --slide-heading: 28pt; /* 內頁標題 */
+  --slide-body: 18pt; /* 內文 */
+  --slide-table: 14pt; /* 表格 */
+  --slide-caption: 11pt; /* 來源、頁碼 */
+  --slide-kpi: 60pt; /* 大數字 */
+}
+/* 字級角色 font roles（鎖定）：每個角色桌機、手機（≤760px）、列印各只有一個值。頁面不得直接用 --text-* 或寫死字級。 */
+:root{
+  --zd-font-h1: var(--text-3xl); /* 頁面主標題（每頁一個；首頁結論標題也用這個） */
+  --zd-font-h2: var(--text-xl); /* 區塊標題 */
+  --zd-font-h3: var(--text-lg); /* 小節標題、卡片標題、圖表標題 */
+  --zd-font-h4: var(--text-md); /* 最小標題（粗體，與內文同大） */
+  --zd-font-lead: var(--text-lg); /* 導言（標題下第一段） */
+  --zd-font-body: var(--text-md); /* 內文 */
+  --zd-font-small: var(--text-sm); /* 輔助內文：重點條列、層摘要、附註內文、提示框 */
+  --zd-font-table: var(--text-sm); /* 表格儲存格 */
+  --zd-font-label: var(--text-sm); /* 介面標籤：導覽、燈號標籤、按鈕旁標示、欄位名 */
+  --zd-font-caption: var(--text-xs); /* 註記：來源、圖說、表頭、kicker、軸標（最小字級） */
+  --zd-font-code: var(--text-sm); /* 程式碼、編號（等寬字） */
+  --zd-font-kpi: var(--text-4xl); /* KPI 大數字 */
+}
+@media (max-width:760px){:root{--zd-font-h1:var(--text-2xl);--zd-font-h2:var(--text-xl);--zd-font-h3:var(--text-lg);--zd-font-h4:var(--text-md);--zd-font-lead:var(--text-md);--zd-font-body:var(--text-md);--zd-font-small:var(--text-sm);--zd-font-table:var(--text-sm);--zd-font-label:var(--text-sm);--zd-font-caption:var(--text-xs);--zd-font-code:var(--text-sm);--zd-font-kpi:var(--text-3xl);}}
+.zd-print{--zd-font-h1:var(--print-title);--zd-font-h2:var(--print-h1);--zd-font-h3:var(--print-h2);--zd-font-h4:var(--print-body);--zd-font-lead:var(--print-h2);--zd-font-body:var(--print-body);--zd-font-small:var(--print-table);--zd-font-table:var(--print-table);--zd-font-label:var(--print-table);--zd-font-caption:var(--print-caption);--zd-font-code:var(--print-table);--zd-font-kpi:var(--print-title);}
+@media print{:root{--zd-font-h1:var(--print-title);--zd-font-h2:var(--print-h1);--zd-font-h3:var(--print-h2);--zd-font-h4:var(--print-body);--zd-font-lead:var(--print-h2);--zd-font-body:var(--print-body);--zd-font-small:var(--print-table);--zd-font-table:var(--print-table);--zd-font-label:var(--print-table);--zd-font-caption:var(--print-caption);--zd-font-code:var(--print-table);--zd-font-kpi:var(--print-title);}}
+.zd-t-h1{font-size:var(--zd-font-h1)}.zd-t-h2{font-size:var(--zd-font-h2)}.zd-t-h3{font-size:var(--zd-font-h3)}.zd-t-h4{font-size:var(--zd-font-h4)}.zd-t-lead{font-size:var(--zd-font-lead)}.zd-t-body{font-size:var(--zd-font-body)}.zd-t-small{font-size:var(--zd-font-small)}.zd-t-table{font-size:var(--zd-font-table)}.zd-t-label{font-size:var(--zd-font-label)}.zd-t-caption{font-size:var(--zd-font-caption)}.zd-t-code{font-size:var(--zd-font-code)}.zd-t-kpi{font-size:var(--zd-font-kpi)}
+/* 深色模式保留位置：日後新增 [data-theme="dark"]{ --color-*: var(--p-...); }，只換 semantic 別名。 */

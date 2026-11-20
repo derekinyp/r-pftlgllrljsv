@@ -1,0 +1,187 @@
+{
+  "$meta": {
+    "name": "振達設計規範 Workshop（工坊）",
+    "version": "1.0.0",
+    "note": "ECharts 畫在 canvas，無法讀 CSS 變數；fontSize 為字級角色的桌機 px 值（caption／small／h3），改規範時由 build_tokens.py 重產。"
+  },
+  "color": [
+    "#6B4A2E",
+    "#2F6F7E",
+    "#A0527A",
+    "#6F7F3A",
+    "#5B6B8C",
+    "#7A6F64"
+  ],
+  "backgroundColor": "transparent",
+  "textStyle": {
+    "fontFamily": "Figtree, \"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", sans-serif",
+    "color": "#2A211A",
+    "fontSize": 14
+  },
+  "title": {
+    "textStyle": {
+      "color": "#2A211A",
+      "fontSize": 19,
+      "fontWeight": 700
+    },
+    "subtextStyle": {
+      "color": "#54483D",
+      "fontSize": 14
+    }
+  },
+  "categoryAxis": {
+    "axisLine": {
+      "lineStyle": {
+        "color": "#2A211A"
+      }
+    },
+    "axisTick": {
+      "show": false
+    },
+    "axisLabel": {
+      "color": "#6E6154",
+      "fontSize": 12
+    },
+    "splitLine": {
+      "show": false
+    }
+  },
+  "valueAxis": {
+    "axisLine": {
+      "show": false
+    },
+    "axisLabel": {
+      "color": "#6E6154",
+      "fontSize": 12
+    },
+    "splitLine": {
+      "lineStyle": {
+        "color": "#E7DDCB"
+      }
+    }
+  },
+  "timeAxis": {
+    "axisLine": {
+      "lineStyle": {
+        "color": "#2A211A"
+      }
+    },
+    "axisLabel": {
+      "color": "#6E6154",
+      "fontSize": 12
+    },
+    "splitLine": {
+      "show": false
+    }
+  },
+  "legend": {
+    "textStyle": {
+      "color": "#54483D",
+      "fontSize": 12
+    }
+  },
+  "tooltip": {
+    "backgroundColor": "#FFFDF8",
+    "borderColor": "#E2D7C5",
+    "textStyle": {
+      "color": "#2A211A",
+      "fontSize": 14
+    }
+  },
+  "line": {
+    "symbol": "circle",
+    "symbolSize": 6,
+    "lineStyle": {
+      "width": 2
+    }
+  },
+  "bar": {
+    "itemStyle": {
+      "borderRadius": [
+        3,
+        3,
+        0,
+        0
+      ]
+    }
+  },
+  "markLine": {
+    "lineStyle": {
+      "color": "#54483D"
+    },
+    "label": {
+      "color": "#54483D",
+      "fontSize": 12
+    }
+  },
+  "visualMap": {
+    "inRange": {
+      "color": [
+        "#2E7880",
+        "#F4F1EA",
+        "#7048A0"
+      ]
+    },
+    "textStyle": {
+      "color": "#54483D",
+      "fontSize": 12
+    }
+  },
+  "$market": {
+    "up": "#C62F3A",
+    "down": "#1F7A4D",
+    "flat": "#6E6154",
+    "note": "只用於股價／指數；漲紅跌綠，與燈號不混用"
+  },
+  "$signals": {
+    "ok": {
+      "solid": "#2E8B57",
+      "text": "#1E6141",
+      "bg": "#E4F1E7",
+      "glyph": "●",
+      "label": "符合"
+    },
+    "up": {
+      "solid": "#3A72C0",
+      "text": "#1F4E8C",
+      "bg": "#E5EDF8",
+      "glyph": "▲",
+      "label": "超越"
+    },
+    "off": {
+      "solid": "#D2453A",
+      "text": "#A3271D",
+      "bg": "#FBE7E3",
+      "glyph": "◆",
+      "label": "偏離"
+    },
+    "watch": {
+      "solid": "#B37510",
+      "text": "#7A4A06",
+      "bg": "#FBEFD8",
+      "glyph": "◐",
+      "label": "觀察"
+    },
+    "na": {
+      "solid": "#8C8174",
+      "text": "#54483D",
+      "bg": "#EFE9E0",
+      "glyph": "○",
+      "label": "不判"
+    }
+  },
+  "$heat": {
+    "low": "#2E7880",
+    "mid": "#F4F1EA",
+    "high": "#7048A0",
+    "note": "熱圖色盤（灰青→紫），獨立於燈號"
+  },
+  "$fontRoles": {
+    "caption": 12,
+    "small": 14,
+    "table": 14,
+    "body": 16,
+    "h3": 19,
+    "h2": 23
+  }
+}

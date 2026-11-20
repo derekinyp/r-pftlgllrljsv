@@ -1,0 +1,41 @@
+/* zd-nav.css —— 振達設計規範 Workshop 1.0.0：站內導覽列（issues.js 的 sb-* 掛鉤）
+   狀態：DRAFT 可用版（2026-11-21 12:00 前交付；定稿 2026-11-22 15:00）
+   需要先引用 zd-tokens.css。只在 <body class="zd"> 內生效，不影響未引用本檔的舊頁（W39–W47 仍用 nav.css）。
+   必保留的掛鉤：#sb-nav #sb-guide #sb-guide-btn #sb-guide-menu #sb-issues、.sb-week .sb-latest .sb-week-lab、
+   切換 class .open（.sb-dd）與 .sb-guide-open（#sb-nav）、頁尾 #sb-review-note.sb-review-note。 */
+.zd #sb-nav{position:sticky;top:0;z-index:50;background:var(--color-surface-canvas);color:var(--color-text-default);
+  border-bottom:2px solid var(--color-border-strong);font-family:var(--font-sans);font-size:var(--zd-font-label);line-height:var(--leading-tight)}
+.zd #sb-nav .sb-inner{max-width:var(--layout-max);margin:0 auto;padding:var(--space-2) var(--space-5);display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-1) var(--space-2)}
+.zd #sb-nav a,.zd #sb-nav .sb-static{display:inline-flex;align-items:center;min-height:40px;padding:0 var(--space-3);border-radius:var(--radius-pill);
+  color:var(--color-text-muted);text-decoration:none;white-space:nowrap}
+.zd #sb-nav a:hover{background:var(--color-brand-tint);color:var(--color-text-default)}
+.zd #sb-nav a.sb-on,.zd #sb-nav a[aria-current="page"]{background:var(--color-brand-default);color:var(--color-text-on-brand);font-weight:var(--weight-bold)}
+.zd #sb-nav .sb-brand{font-weight:var(--weight-bold);color:var(--color-text-default);margin-right:var(--space-2)}
+.zd #sb-nav .sb-note{margin-left:auto;color:var(--color-text-subtle);font-size:var(--zd-font-caption)}
+.zd #sb-nav a:focus-visible,.zd #sb-nav button:focus-visible,.zd #sb-nav select:focus-visible{outline:3px solid var(--color-brand-default);outline-offset:2px}
+/* 框架入門下拉 */
+.zd #sb-nav .sb-dd{position:relative;display:inline-flex;align-items:center}
+.zd #sb-nav .sb-dd-btn{appearance:none;-webkit-appearance:none;background:transparent;border:0;font:inherit;color:var(--color-text-muted);
+  min-height:40px;padding:0 var(--space-3);border-radius:var(--radius-pill);cursor:pointer;white-space:nowrap}
+.zd #sb-nav .sb-dd-btn::after{content:"▾";margin-left:var(--space-1)}
+.zd #sb-nav .sb-dd-btn:hover,.zd #sb-nav .sb-dd.open .sb-dd-btn{background:var(--color-brand-tint);color:var(--color-text-default)}
+.zd #sb-nav .sb-dd-btn.sb-on,.zd #sb-nav .sb-dd.open .sb-dd-btn.sb-on{background:var(--color-brand-default);color:var(--color-text-on-brand)}
+.zd #sb-nav .sb-dd-menu{position:absolute;top:calc(100% + 4px);left:0;z-index:60;min-width:11em;padding:var(--space-2) 0;
+  background:var(--color-surface-default);border:1px solid var(--color-border-default);border-radius:var(--radius-md);box-shadow:var(--shadow-2)}
+.zd #sb-nav .sb-dd-menu[hidden]{display:none !important}
+.zd #sb-nav .sb-dd-menu a{display:flex;border-radius:0;padding:0 var(--space-4);color:var(--color-text-default)}
+.zd #sb-nav .sb-dd-menu a:hover,.zd #sb-nav .sb-dd-menu a:focus{background:var(--color-brand-tint)}
+.zd #sb-nav .sb-dd-menu a.sb-on{background:var(--color-brand-default);color:var(--color-text-on-brand)}
+/* 期數選單（issues.js 產生） */
+.zd .sb-week{display:inline-flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
+.zd .sb-week-lab{display:inline-flex;align-items:center}
+.zd #sb-nav select{font:inherit;color:var(--color-text-default);background:var(--color-surface-default);border:1px solid var(--color-border-default);
+  border-radius:var(--radius-pill);min-height:36px;padding:0 var(--space-3);max-width:15em}
+/* 頁尾審閱註記（issues.js 附加到第一個 <footer>） */
+.zd .sb-review-note{margin:var(--space-4) 0 0;color:var(--color-text-subtle);font-size:var(--zd-font-caption);line-height:var(--leading-snug)}
+@media (max-width:760px){
+  .zd #sb-nav .sb-inner{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:var(--space-2) var(--space-4)}
+  .zd #sb-nav .sb-inner:has(.sb-dd.open),.zd #sb-nav.sb-guide-open .sb-inner{overflow:visible}
+  .zd #sb-nav a,.zd #sb-nav .sb-dd,.zd #sb-issues,.zd #sb-nav select{flex-shrink:0}
+}
+@media print{.zd #sb-nav{display:none}}

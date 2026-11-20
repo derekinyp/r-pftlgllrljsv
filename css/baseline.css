@@ -1,11 +1,14 @@
-/* 現行基準表：桌機表格、窄屏卡片；錨點避開 sticky 導覽 */
+/* 現行基準表：桌機表格、窄屏卡片；錨點避開頂端導覽 */
 .wrap-b{max-width:1180px}
 .b-lead{margin:0 0 18px;color:#4d5666;max-width:46em}
 .b-ver{font-size:11px;font-weight:600;color:#4d5666;letter-spacing:.02em;margin-top:4px}
 .b-name{font-weight:700;color:#1b1f2a}
 .b-table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;font-size:13.5px;margin:0 0 28px}
 .b-table th,.b-table td{border:1px solid #e3e6ec;padding:10px 11px;text-align:left;vertical-align:top}
-.b-table thead th{background:#f3f5f8;font-weight:700;color:#1b1f2a;position:sticky;top:48px;z-index:2}
+/* 表頭不可 sticky：表格包在 .tblscroll（overflow-x:auto，y 會一併算成 auto）裡，
+   sticky 包含塊變成表格容器而非視窗。先前 top:48px 在未捲動時就把 thead th
+   往下推約 48px，與 L0 列重疊；該 48px 也不等於實際導覽列高度（約 53px）。 */
+.b-table thead th{background:#f3f5f8;font-weight:700;color:#1b1f2a;position:static}
 .b-table tbody th{background:#fafbfc;width:13rem}
 .b-table tbody tr,.b-alias{scroll-margin-top:72px}
 .b-table .prov{display:inline-block;margin-right:6px;padding:1px 7px;border-radius:999px;background:#fdf3e3;color:#8a4b00;font-size:11px;font-weight:700}
@@ -30,5 +33,4 @@
   .b-table tbody th{padding-bottom:10px;border-bottom:1px solid #eef0f4;margin-bottom:8px}
   .b-table td{border-top:1px solid #eef0f4;padding-top:10px}
   .b-table td::before{content:attr(data-label);display:block;font-weight:700;color:#1b1f2a;font-size:12px;margin:0 0 4px}
-  .b-table thead th{position:static}
 }

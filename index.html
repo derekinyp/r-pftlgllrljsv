@@ -4,50 +4,90 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>目錄</title>
-<style>
-#sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;
-  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
-  font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
-#sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
-#sb-nav a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
-#sb-nav a:hover{background:#374151;color:#fff}
-#sb-nav a.sb-on{background:#1d4ed8;color:#fff}
-#sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
-#sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
-</style>
+<title>研究入口</title>
 <link rel="stylesheet" href="css/s.css">
 <link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/home.css">
 <script src="js/issues.js" defer></script>
+<script src="js/latest-brief.js" defer></script>
+<script src="js/home.js" defer></script>
 </head>
 <body>
-<nav id="sb-nav"><div class="sb-inner"><a class="sb-brand" href="index.html">目錄</a><a href="index.html" class="sb-on">首頁</a><a href="q.html">入門（簡易）</a><a href="t.html">入門（完整）</a><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="2026-w47.html">週報（2026-W47）</a><a href="index.html#weeks">各期列表</a></noscript><span class="sb-note">不公開索引　僅供內部審閱</span></div></nav>
-<div class="wrap">
+<nav id="sb-nav"><div class="sb-inner"><a href="index.html" class="sb-on">首頁</a><div class="sb-dd" id="sb-guide"><button type="button" class="sb-dd-btn" aria-expanded="false" aria-haspopup="true" aria-controls="sb-guide-menu" id="sb-guide-btn">框架導讀</button><div class="sb-dd-menu" id="sb-guide-menu" role="menu" hidden><a href="q.html" role="menuitem">速覽版</a><a href="t.html" role="menuitem">完整解析</a></div></div><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="index.html#weeks">各期週報</a></noscript></div></nav>
+<main class="home">
+  <section class="hero" aria-labelledby="home-title">
+    <h1 class="hero-title" id="home-title">八層因果鏈</h1>
+    <p class="hero-tag">用同一把判定尺，把每週公開資訊掛回因果鏈。燈號只表示符合、超越、偏離或觀察，不是股價漲跌方向。</p>
+    <div id="hero-latest">
+      <noscript><p class="hero-miss">請開啟腳本以載入最新一期重點，或直接查看各期週報。</p><p class="hero-actions"><a class="btn-primary" href="index.html#weeks">各期週報</a></p></noscript>
+    </div>
+  </section>
 
-<h1>目錄</h1>
-<p class="lead">內部審閱用的三層結構：先讀入門（簡易或完整），再看綜覽與傳導圖，需要時再開各期紀錄。現行判定尺為 v2.0，自 2026-W48 起適用；已刊各期不回溯改判。</p>
-<div class="banner"><b>現行版（v2.0，2026-11-19 核准，2026-W48 起適用）。</b> 已刊 2026-W39 至 2026-W47 仍按當時的 v1.1 判定，不回溯重判。下期出刊前還要補 11/18 與 11/19 兩筆一手讀數；L2 約 8,200 億美元為暫定，待對帳。</div>
-<div class="cards">
-  <a class="card" href="q.html"><h3>入門（簡易）</h3><p>兩張圖、每層一句話。適合先建立概念，或截圖分享。</p></a>
-  <a class="card" href="t.html"><h3>入門（完整）</h3><p>從財報一路加到供應鏈、產能、外生變數與治理：框架、判定語意、事實／推論／假設。</p></a>
-  <a class="card" href="o.html"><h3>綜覽</h3><p>各層時間變化、最新一期判定、記分卡、已核准的 P0–P7 處置。</p></a>
-  <a class="card" href="m.html"><h3>傳導圖</h3><p>可互動。點任一層，看上游誰在推它、下游影響誰、對應哪幾列。</p></a>
-  <a class="card" href="b.html"><h3>基準（現行版）</h3><p>v2.0 現行表與 v1.1 歷史對照。2026-11-19 核准，2026-W48 起適用。</p></a>
-</div>
-<h2 id="weeks">各期紀錄</h2>
-<div class="cards">
-  <a class="card" href="2026-w39.html"><h3>2026-W39</h3><p>2026-09-15～09-21。以當時的 v1.0 判定，不回溯改判。</p></a>
-  <a class="card" href="2026-w40.html"><h3>2026-W40</h3><p>2026-09-22～09-28。2026-11-06 回溯補寫，原未出刊。</p></a>
-  <a class="card" href="2026-w41.html"><h3>2026-W41</h3><p>2026-09-29～10-05。回溯補寫。</p></a>
-  <a class="card" href="2026-w42.html"><h3>2026-W42</h3><p>2026-10-06～10-12。材料列首度轉紅。</p></a>
-  <a class="card" href="2026-w43.html"><h3>2026-W43</h3><p>2026-10-13～10-19。正式出刊，並公告尺的版本變更。</p></a>
-  <a class="card" href="2026-w44.html"><h3>2026-W44</h3><p>2026-10-20～10-30。回溯補寫。</p></a>
-  <a class="card" href="2026-w45.html"><h3>2026-W45</h3><p>2026-10-31～11-06。電力轉紅；新增兩項提案。</p></a>
-  <a class="card" href="2026-w46.html"><h3>2026-W46</h3><p>2026-11-04～11-10。新增容忍區間失效提案。期間與上期有重疊。</p></a>
-  <a class="card" href="2026-w47.html"><h3>2026-W47</h3><p>2026-11-11～11-16。最新已刊期。當時判定尺為 v1.1；P0–P7 於 2026-11-19 核准後自下期起適用。</p></a>
-</div>
+  <section aria-labelledby="chain-title">
+    <h2 id="chain-title">最新判定總覽</h2>
+    <p class="sec-lead">主鏈由上往下讀需求與開支，由下往上讀瓶頸。顏色沿用既有語意。</p>
+    <ul class="legend">
+      <li class="lg-g"><i></i>綠＝符合</li>
+      <li class="lg-b"><i></i>藍＝超越</li>
+      <li class="lg-r"><i></i>紅＝偏離</li>
+      <li class="lg-a"><i></i>橘＝觀察</li>
+      <li class="lg-n"><i></i>灰＝不判</li>
+    </ul>
+    <p class="chain-meta" id="chain-meta"></p>
+    <ol class="chain-list" id="chain-list"></ol>
+    <div class="exo-wrap">
+      <h3>外生變數與反射性</h3>
+      <ol class="exo-list" id="chain-exo"></ol>
+    </div>
+  </section>
 
-<p class="foot">僅供內部審閱。頁面已標示 noindex。盤點日期 2026-11-19（台北時間，UTC+8）。不構成投資建議。</p>
-</div>
+  <section aria-labelledby="entry-title">
+    <h2 id="entry-title">進入各頁</h2>
+    <div class="entry-grid">
+      <div class="entry">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h9l5 5v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v5h5"/><path d="M8 13h8M8 17h6"/></svg></span>
+        <h3>框架導讀</h3>
+        <p>先建立因果鏈怎麼讀，再進完整推導與練習。</p>
+        <div class="sublinks"><a href="q.html">速覽版</a><a href="t.html">完整解析</a></div>
+      </div>
+      <a class="entry" href="o.html">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 16V10M12 16V8M16 16v-3"/></svg></span>
+        <h3>綜覽</h3>
+        <p>各層時間變化、最新記分卡，以及已核准的處置。</p>
+      </a>
+      <a class="entry" href="m.html">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M8 7.5l6.5 8M16 7.5L9.5 15.5"/></svg></span>
+        <h3>傳導圖</h3>
+        <p>點任一層，看上游誰在推它、下游影響誰、對應哪一列。</p>
+      </a>
+      <a class="entry" href="b.html">
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 20V9l7-5 7 5v11"/><path d="M10 20v-6h4v6"/></svg></span>
+        <h3>基準</h3>
+        <p>現行判定尺與歷史版本對照。已刊各期不回溯重判。</p>
+      </a>
+      <a class="entry entry-wide" href="#weeks" data-latest-href>
+        <span class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3v3M17 3v3M4 8h16M6 5h12a2 2 0 0 1 2 2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2z"/><path d="M8 13h8M8 17h5"/></svg></span>
+        <h3>週報各期</h3>
+        <p>打開最新已刊期，或到下方時間軸選較早的紀錄。主按鈕同樣指向最新一期。</p>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="weeks-title">
+    <h2 id="weeks">各期週報</h2>
+    <ol class="timeline" id="week-timeline"></ol>
+    <noscript>
+      <p><a href="2026-w47.html">2026-W47</a> · <a href="2026-w46.html">2026-W46</a> · <a href="2026-w45.html">2026-W45</a> · <a href="2026-w44.html">2026-W44</a> · <a href="2026-w43.html">2026-W43</a> · <a href="2026-w42.html">2026-W42</a> · <a href="2026-w41.html">2026-W41</a> · <a href="2026-w40.html">2026-W40</a> · <a href="2026-w39.html">2026-W39</a></p>
+    </noscript>
+  </section>
+</main>
+<details class="notes" id="notes">
+  <summary>附註與方法</summary>
+  <p>不公開索引，僅供內部審閱。頁面已標示 noindex。不構成投資建議。</p>
+  <p>現行判定尺為 v2.0（2026-11-19 核准），自 2026-W48 起適用。已刊 2026-W39 至 2026-W47 仍按當時尺判定，不回溯重判。L2 口徑數值為暫定，待一手對帳後再定案。</p>
+  <p>燈號是判定語意：綠＝符合，藍＝超越，紅＝偏離，橘＝觀察，灰＝不判。不表示多空方向。首頁重點與各層摘要由 <code>js/issues.js</code> 與 <code>js/latest-brief.js</code> 推導，出刊時一併更新。</p>
+  <p>盤點日期 2026-11-19（台北時間，UTC+8）。</p>
+  <p><b>免責聲明</b>：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</p>
+</details>
 </body>
 </html>

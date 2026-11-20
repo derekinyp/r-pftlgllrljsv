@@ -1,4 +1,4 @@
-/* 共用頂端導覽：sticky 列、框架導讀下拉、週報期數選單 */
+/* 共用頂端導覽：sticky 列、框架入門下拉、週報期數選單 */
 #sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;
   font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
@@ -25,7 +25,7 @@
 #sb-issues{display:inline-flex;align-items:center}
 #sb-nav a.sb-latest{white-space:nowrap}
 
-/* 框架導讀：滑過或點開，觸控／鍵盤可操作 */
+/* 框架入門：滑過或點開，觸控／鍵盤可操作 */
 .sb-dd{position:relative;display:inline-flex;align-items:center}
 .sb-dd-btn{
   appearance:none;-webkit-appearance:none;

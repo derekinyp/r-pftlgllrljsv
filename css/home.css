@@ -1,6 +1,7 @@
 /* 研究入口：層次、留白與判定配色；不引入外部字型或 CDN */
 .home{max-width:1080px;margin:0 auto;padding:8px 20px 72px}
 .home h1,.home h2{color:#1b1f2a;letter-spacing:-.02em}
+.hero h1,.hero h2,.hero .hero-title,.hero .hero-hl{color:#f8fafc}
 .home h2{font-size:1.25rem;margin:48px 0 14px}
 
 .hero{

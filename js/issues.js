@@ -84,13 +84,20 @@
     if (!btn || !menu) return;
     var hoverTimer = null;
     var ignoreBtnClick = false;
+    function navRoot() {
+      return document.getElementById('sb-nav');
+    }
     function openMenu() {
       dd.classList.add('open');
+      var nav = navRoot();
+      if (nav) nav.classList.add('sb-guide-open');
       btn.setAttribute('aria-expanded', 'true');
       menu.hidden = false;
     }
     function closeMenu() {
       dd.classList.remove('open');
+      var nav = navRoot();
+      if (nav) nav.classList.remove('sb-guide-open');
       btn.setAttribute('aria-expanded', 'false');
       menu.hidden = true;
       ignoreBtnClick = false;

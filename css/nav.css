@@ -70,6 +70,8 @@ details.notes p,details.notes div{margin:8px 0}
 @media (max-width:700px){
   #sb-nav .sb-note{display:none}
   #sb-nav .sb-inner{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:8px}
+  #sb-nav .sb-inner:has(.sb-dd.open),
+  #sb-nav.sb-guide-open .sb-inner{overflow:visible}
   #sb-nav a,#sb-nav .sb-dd,#sb-issues,#sb-nav select{white-space:nowrap;flex-shrink:0}
   .sb-dd-menu{position:absolute}
 }

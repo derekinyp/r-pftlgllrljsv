@@ -26,10 +26,17 @@
 .b-schematic a:focus-visible rect,.b-schematic a:focus-visible ellipse{stroke:#1d4ed8;stroke-width:2}
 
 @media (max-width:640px){
+  /* 取消 s.css .tblscroll table{min-width:880px} 與 th{white-space:nowrap}，
+     否則卡片仍約 880px 寬，文字右側被切掉。 */
+  .wrap-b .tblscroll{overflow:visible;max-width:100%}
+  .wrap-b .tblscroll table,.b-table,.b-table tbody,.b-table tr{
+    min-width:0;max-width:100%;width:100%;box-sizing:border-box}
   .b-table thead{display:none}
-  .b-table,.b-table tbody{display:block;width:100%;border:0;background:transparent}
+  .b-table,.b-table tbody{display:block;border:0;background:transparent}
   .b-table tr{display:block;background:#fff;border:1px solid #e3e6ec;border-radius:14px;margin:0 0 14px;padding:14px 14px 8px;box-shadow:0 1px 0 rgba(15,23,42,.03)}
-  .b-table tbody th,.b-table td{display:block;width:100%;border:0;padding:0 0 10px;background:transparent}
+  .b-table tbody th,.b-table td{
+    display:block;width:100%;max-width:100%;min-width:0;border:0;padding:0 0 10px;
+    background:transparent;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
   .b-table tbody th{padding-bottom:10px;border-bottom:1px solid #eef0f4;margin-bottom:8px}
   .b-table td{border-top:1px solid #eef0f4;padding-top:10px}
   .b-table td::before{content:attr(data-label);display:block;font-weight:700;color:#1b1f2a;font-size:12px;margin:0 0 4px}

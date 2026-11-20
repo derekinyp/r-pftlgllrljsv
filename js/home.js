@@ -74,11 +74,23 @@
       }
     }
     if (!data || !data.layers || (latest && data.issueId !== latest.id)) return;
+    function baselineHref(id) {
+      var map = { rate: 'RATE', reg: 'CTRL', ref: 'REFL' };
+      return 'b.html#' + (map[id] || id);
+    }
     for (var i = 0; i < data.layers.length; i++) {
       var L = data.layers[i];
       var item = el('li', 'layer tone-' + (L.tone || 'n'));
       var top = el('div', 'layer-top');
-      top.appendChild(el('span', 'layer-name', L.name));
+      var left = el('span', 'layer-idline');
+      left.appendChild(el('span', 'layer-name', L.name));
+      if (L.id) {
+        var a = el('a', 'b-link', '基準');
+        a.href = baselineHref(L.id);
+        a.setAttribute('aria-label', L.name + '的現行基準');
+        left.appendChild(a);
+      }
+      top.appendChild(left);
       var pill = el('span', 'verdict', L.verdict || TONE_LABEL[L.tone] || '不判');
       top.appendChild(pill);
       item.appendChild(top);

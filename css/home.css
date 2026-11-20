@@ -107,3 +107,7 @@
   .chain-list,.exo-list,.entry-grid{grid-template-columns:1fr}
   .entry-wide{grid-column:auto}
 }
+
+.layer-idline{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.home .b-link{font-size:11px;font-weight:700;color:#164e87;text-decoration:none;white-space:nowrap;margin-left:0}
+.home .b-link:hover,.home .b-link:focus-visible{text-decoration:underline;outline:none}

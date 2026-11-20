@@ -4,49 +4,217 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>基準（現行版）</title>
+<title>現行基準表 v2.0</title>
 <style>
 #sb-nav{position:sticky;top:0;z-index:9999;background:#111827;color:#f9fafb;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:13px;line-height:1.4;border-bottom:1px solid #1f2937}
 #sb-nav .sb-inner{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
 #sb-nav a{color:#e5e7eb;text-decoration:none;padding:2px 6px;border-radius:4px}
 #sb-nav a:hover{background:#374151;color:#fff}
 #sb-nav a.sb-on{background:#1d4ed8;color:#fff}
-#sb-nav .sb-brand{font-weight:600;color:#93c5fd;margin-right:8px}
-#sb-nav .sb-note{margin-left:auto;color:#9ca3af;font-size:12px}
+.b-alias{display:block;height:0;width:0;overflow:hidden}
 </style>
 <link rel="stylesheet" href="css/s.css">
 <link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/baseline.css">
 <script src="js/issues.js" defer></script>
 </head>
 <body>
 <nav id="sb-nav"><div class="sb-inner"><a href="index.html">首頁</a><div class="sb-dd" id="sb-guide"><button type="button" class="sb-dd-btn" aria-expanded="false" aria-haspopup="true" aria-controls="sb-guide-menu" id="sb-guide-btn">框架入門</button><div class="sb-dd-menu" id="sb-guide-menu" role="menu" hidden><a href="q.html" role="menuitem">一頁圖解</a><a href="t.html" role="menuitem">逐步推導</a></div></div><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html" class="sb-on">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="index.html#weeks">各期週報</a></noscript></div></nav>
-<div class="wrap">
+<div class="wrap wrap-b">
 
-<h1>基準（現行版 v2.0）</h1>
-<p class="lead">現行表、與歷史尺的差異，以及已核准的 P0–P7。互動關係見 <a class="in" href="m.html">傳導圖</a>，各期走勢見 <a class="in" href="o.html">綜覽</a>。</p>
+<h1>現行基準表</h1>
+<p class="b-lead">這是現在拿來判定符合、超越或偏離的尺。基準版本 v2.0，2026-11-19 核准，自 2026-W48 起適用；已刊各期不回溯改判。數字與文字引自已核准的 v2.0 基準登錄檔，未改寫基準值。</p>
 
-<h2>現行表（v2.0）</h2>
+<h2 class="b-sec" id="main-chain">主鏈（L0–L8，L7 已分列）</h2>
+<div class="tblscroll">
+<table class="b-table">
+<thead><tr><th>層</th><th>預期值或區間</th><th>判斷指標</th><th>判色規則</th><th>依據與關聯</th></tr></thead>
+<tbody>
+<tr id="L0">
+<th scope="row"><div class="b-name">L0 弱訊號入口</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">無數值預期；持續掃跨層異常（模型架構效率躍升、能源政策轉向、材料斷供）。</td>
+<td data-label="判斷指標">看有沒有可能改寫單位成本曲線的技術或政策。基準表未另訂固定更新頻率或單一來源名稱。</td>
+<td data-label="判色規則">無容忍區間。出現可改變單位成本曲線的技術或政策，即為偏離／新增變數訊號。官方表未另列「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 對本列一字未動，仍不加數值尺。<br>連動：無固定上游；可觸發對 <a class="in" href="m.html#L1">L1</a>～<a class="in" href="m.html#L8">L8</a>、外生或反射性的新假說。見 <a class="in" href="m.html#L0">傳導圖 L0</a>。</td>
+</tr>
+<tr id="L1">
+<th scope="row"><div class="b-name">L1 終端需求</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">以可查核一手指標為分母：龍頭資料中心季度營收年增維持 &gt;50%，並看雲廠 AI／雲業務營收年增。同一筆資料中心營收不得再拿去改判 L3。</td>
+<td data-label="判斷指標">龍頭資料中心季度營收 YoY，以及雲廠 AI／雲業務營收 YoY。頻率：季度（基準表寫明季度營收）。來源：可查核一手財報科目；須注意各公司財年不一致。</td>
+<td data-label="判色規則">容忍區間 ±20 個百分點（年增 ≥40% 為符合）。偏離：龍頭資料中心營收年增連續兩季 &lt;30%；或雲廠 AI 收入增速連續兩季低於資本開支增速。官方表未另列「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 修改為補使用規則。<br>連動：上游為終端使用，可被 <a class="in" href="m.html#RATE">利率</a>／<a class="in" href="m.html#CTRL">管制</a>打偏；下游到 <a class="in" href="m.html#L2">L2 資本開支</a>。見 <a class="in" href="m.html#L1">傳導圖 L1</a>。</td>
+</tr>
+<tr id="L2">
+<th scope="row"><span id="P5" class="b-alias"></span><div class="b-name">L2 雲端資本開支</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間"><span class="prov">暫定</span>先列明主體與是否含融資租賃；2026 年合計約 8,200 億美元，待一手財報逐家對帳後再定案。對帳完成前，不把此數當已鎖定的 ±10% 尺。<p class="b-note-inline">對帳註記（非改尺）：一手對帳尚缺 Oracle 的官方年度指引，故維持暫定。</p></td>
+<td data-label="判斷指標">已列入口徑主體的全年資本開支指引與財報實際值；是否含融資租賃須逐家核對。基準表未另訂固定更新頻率。來源：一手財報（待對帳完成）。不得與 v1.1 的約 6,900 億或框架圖九大口徑約 8,300 億直接互換。</td>
+<td data-label="判色規則">對帳完成前，不把約 8,200 億當已鎖定的 ±10% 尺。偏離訊號：任一家已列入口徑的主體下修全年指引；或供應受制於電力而非需求。官方表未另列「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 修改採納 P5；數值標暫定，定案時須回報。<br>連動：上游 <a class="in" href="m.html#L1">L1</a>、融資與 <a class="in" href="m.html#RATE">利率</a>；下游 <a class="in" href="m.html#L3">L3</a>、<a class="in" href="m.html#L7a">L7a</a>、<a class="in" href="m.html#L8">L8</a>。見 <a class="in" href="m.html#L2">傳導圖 L2</a>。</td>
+</tr>
+<tr id="L3">
+<th scope="row"><div class="b-name">L3 芯片</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">龍頭季度營收續創高、指引超前共識；資料中心佔比 &gt;85%。治理事件不改本層。打臉門檻統一為毛利率 &lt;72%（以實際值判，不再使用 &lt;71%）。</td>
+<td data-label="判斷指標">龍頭季度營收、公司指引相對共識、資料中心營收佔比，以及毛利率實際值。頻率：季度財報與指引。來源：公司法說／財報（一手）。</td>
+<td data-label="判色規則">容忍：指引 ±5%。偏離：指引低於共識；毛利率 &lt;72%（打臉，以實際值判）；或資料中心佔比跌破當期所設查核線。官方表未另列獨立的「超越」百分比門檻；基準預期本身寫的是營收續創高、指引超前共識。</td>
+<td data-label="依據與關聯">依據：v2.0 將打臉門檻統一為毛利率 &lt;72%（2026-11-19）。<br>連動：上游 <a class="in" href="m.html#L2">L2</a>；下游 <a class="in" href="m.html#L4">L4</a>、<a class="in" href="m.html#L5">L5</a>、<a class="in" href="m.html#L6">L6</a>。見 <a class="in" href="m.html#L3">傳導圖 L3</a>。</td>
+</tr>
+<tr id="L4">
+<th scope="row"><span id="P3" class="b-alias"></span><span id="P6" class="b-alias"></span><div class="b-name">L4 記憶體</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">同世代合約價按季 +5～25%；世代轉換不計入該按季區間，改看每單位成本。</td>
+<td data-label="判斷指標">同世代合約價季度變化；現貨鬆緊、庫存天數、廠商擴產；以及世代轉換是否已獲量產驗證並進入伺服器客戶。評估或轉引不觸發技術破局。基準表未另訂固定來源名稱。</td>
+<td data-label="判色規則">同世代容忍：合約價按季 +5～25%。偏離訊號（均保留）：同世代現貨鬆動、庫存回升逾 4 週、廠商擴產超預期；或世代轉換已獲量產驗證並進入伺服器客戶。官方表未另列獨立的「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 採納 P6（世代拆尺）與 P3（增列技術破局訊號，不移除舊訊號）。<br>連動：上游 <a class="in" href="m.html#L3">L3</a>，亦可被 <a class="in" href="m.html#L7b">L7b</a> 成本推升；下游回傳 L3 毛利與終端成本。見 <a class="in" href="m.html#L4">傳導圖 L4</a>。</td>
+</tr>
+<tr id="L5">
+<th scope="row"><div class="b-name">L5 先進封裝</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">CoWoS 產能吃緊、交期逾 52 週。無新交期讀數時，不得把判定升級為超越。</td>
+<td data-label="判斷指標">先進封裝（如 CoWoS）交期與產能是否吃緊。基準表未另訂固定更新頻率或單一來源名稱。無新交期讀數時，不得把判定升級為超越。</td>
+<td data-label="判色規則">容忍：交期 ±8 週。偏離：交期顯著縮短，或客戶大量轉向替代封裝方案。升級為超越須有新的交期讀數。</td>
+<td data-label="依據與關聯">依據：v2.0 一字未動，僅加注記。<br>連動：上游 <a class="in" href="m.html#L3">L3</a>（代工廠亦是封裝供方）；下游影響 L3 交期與 <a class="in" href="m.html#L2">L2</a> 上線時程。見 <a class="in" href="m.html#L5">傳導圖 L5</a>。</td>
+</tr>
+<tr id="L6">
+<th scope="row"><div class="b-name">L6 晶圓代工</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">3nm／2nm 近滿載、定價權強、毛利率 &gt;60%。兩種毛利口徑不可混用（法說新台幣基礎與美元換算不可混用）。</td>
+<td data-label="判斷指標">先進製程利用率與定價權，以及毛利率。基準表未另訂固定更新頻率。來源：代工廠法說／財報（一手）；須同口徑比較。</td>
+<td data-label="判色規則">容忍：毛利率 ±3 個百分點。偏離：出現降價或折讓、利用率下滑、新製程客戶流失。官方表未另列獨立的「超越」門檻，也未寫明 ±3 個百分點的中心值算法。</td>
+<td data-label="依據與關聯">依據：v2.0 一字未動。<br>連動：上游 <a class="in" href="m.html#L3">L3</a> 下單、<a class="in" href="m.html#L5">L5</a> 排程；下游 <a class="in" href="m.html#L7a">L7a</a> 點貨、<a class="in" href="m.html#L7b">L7b</a> 拉貨。見 <a class="in" href="m.html#L6">傳導圖 L6</a>。</td>
+</tr>
+<tr id="L7a">
+<th scope="row"><span id="P2" class="b-alias"></span><div class="b-name">L7a 設備</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">設備訂單與營收落後資本開支 3～9 個月，方向一致。判定以營收基本面為準；股價漲幅不作層級判定依據。</td>
+<td data-label="判斷指標">設備訂單與營收年增，以及出貨遞延屬供給型或需求型。頻率：基準表以落後資本開支 3～9 個月來讀，未另訂公布日。來源：設備廠財報／訂單（一手）。</td>
+<td data-label="判色規則">容忍：營收年增 ±15%。偏離：設備訂單年增轉負；或確認為需求型出貨遞延。供給型遞延不算偏離。官方表未另列獨立的「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 採納 P2（時滯改 3～9 個月；僅需求型遞延才算偏離）。<br>連動：上游 <a class="in" href="m.html#L2">L2</a>／<a class="in" href="m.html#L6">L6</a> 擴產；下游為未來數季代工產能。見 <a class="in" href="m.html#L7a">傳導圖 L7a</a>。</td>
+</tr>
+<tr id="L7b">
+<th scope="row"><div class="b-name">L7b 材料</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">材料價格平穩或溫和上行，年漲幅 &lt;15%。</td>
+<td data-label="判斷指標">材料價格年漲幅。基準表未另訂固定更新頻率或單一來源名稱；須補一手量測。</td>
+<td data-label="判色規則">容忍區間：年漲幅 0～10%。偏離：年漲幅 &gt;15% 並持續，則示警。官方表未另寫 10% 到 15% 之間如何判色，也未另列「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 一字未動。<br>連動：上游為材料廠商，<a class="in" href="m.html#NRG">能源</a>／<a class="in" href="m.html#CTRL">管制</a>可加劇；下游推升 <a class="in" href="m.html#L6">L6</a>、<a class="in" href="m.html#L4">L4</a>、<a class="in" href="m.html#L3">L3</a> 成本。見 <a class="in" href="m.html#L7b">傳導圖 L7b</a>。</td>
+</tr>
+<tr id="L8">
+<th scope="row"><div class="b-name">L8 電力</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">表後供電訂單快速累積；變壓器交期約 36 個月；2027 年前供給仍緊。國內許可改記到「政策與許可」列，不與交期混判。</td>
+<td data-label="判斷指標">表後供電訂單與變壓器交期。基準表未另訂固定更新頻率或單一來源名稱。許可不在本列判。</td>
+<td data-label="判色規則">容忍：訂單 ±20%。偏離：交期明顯縮短（瓶頸降級）；或供電計畫延宕（落地延後）。官方表未另列獨立的「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 修改為與 P0 分帳。<br>連動：上游 <a class="in" href="m.html#L2">L2</a>，許可為 <a class="in" href="m.html#P0">政策與許可</a> 側軌；供電不足可往上卡住 L2 落地。見 <a class="in" href="m.html#L8">傳導圖 L8</a>。</td>
+</tr>
+</tbody></table>
+</div>
+
+<h2 class="b-sec" id="side-track">外生側軌與輔助層</h2>
+<div class="tblscroll">
+<table class="b-table">
+<thead><tr><th>層</th><th>預期值或區間</th><th>判斷指標</th><th>判色規則</th><th>依據與關聯</th></tr></thead>
+<tbody>
+<tr id="RATE">
+<th scope="row"><div class="b-name">外生｜利率</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">政策利率路徑與 10 年期公債門檻維持 v1.1：年底中值路徑；10 年期美債偏離為 &gt;5.5% 或 &lt;4.5%；單次升息 &gt;25bp 或轉向降息。</td>
+<td data-label="判斷指標">政策利率路徑（年底中值）與 10 年期美債。頻率：隨政策會議與債市。來源：官方貨幣政策與市場利率（基準表未點名單一資料庫）。</td>
+<td data-label="判色規則">容忍：年底中值 ±25bp。偏離：單次升息 &gt;25bp；或轉向降息；10 年期美債 &gt;5.5% 或 &lt;4.5%。官方表未另列「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 一字未動。<br>連動：上游為央行、通膨與長債供給，油價可傳向生產者物價；下游進 <a class="in" href="m.html#REFL">反射性迴路</a>，並間接影響 <a class="in" href="m.html#L2">L2</a>。見 <a class="in" href="m.html#RATE">傳導圖利率</a>。</td>
+</tr>
+<tr id="CTRL">
+<th scope="row"><span id="P7" class="b-alias"></span><div class="b-name">外生｜管制／地緣</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">維持既有框架、逐步收緊（基準文字暫不改寫）。補可查核定義：客體清單（含遠端算力服務是否納管）、規則是否已生效、是否新增高轉運風險名單。量化門檻待生效後的一手實務再補，不預填未讀到的結果。</td>
+<td data-label="判斷指標">看管制客體、規則是否已生效、官方名單是否增刪須核對的司法轄區。基準表未另訂固定更新頻率。來源：官方規則與名單（一手）。</td>
+<td data-label="判色規則">無數值容忍區間。可查核偏離：① 管制客體較前一版規則顯著擴大或收窄；② 已公布的生效日已過且執行口徑可核對；③ 官方名單增列或刪除須核對的司法轄區。大幅放寬或擴大仍為方向性示警。官方表未另列「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 採納 P7（先定義、後量化）。<br>連動：上游為政策，不從主鏈預判；下游可打進 <a class="in" href="m.html#L3">L3</a>、<a class="in" href="m.html#L6">L6</a> 或雲端服務，若反制鎖材料則打 <a class="in" href="m.html#L7b">L7b</a>。見 <a class="in" href="m.html#CTRL">傳導圖管制</a>。</td>
+</tr>
+<tr id="REFL">
+<th scope="row"><div class="b-name">反射性迴路</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">敘事 → 估值 → 融資 → 資本開支 → 財報 → 敘事，維持正向循環。</td>
+<td data-label="判斷指標">融資成本、發債是否受阻、擁擠度是否達歷史極值。基準表未另訂固定更新頻率或單一來源名稱。</td>
+<td data-label="判色規則">無數值容忍區間。偏離訊號：融資成本顯著上升、發債受阻、擁擠度達歷史極值。官方表未另列「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 一字未動。<br>連動：上游為敘事與 <a class="in" href="m.html#RATE">利率</a>，財報可回饋；下游影響 <a class="in" href="m.html#L2">L2 資本開支</a>。市場定價不作層級判定依據。見 <a class="in" href="m.html#REFL">傳導圖反射性</a>。</td>
+</tr>
+<tr id="P0">
+<th scope="row"><span id="POL" class="b-alias"></span><div class="b-name">外生｜政策與許可（新）</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">聯邦與州層級的資料中心許可與用電審批。</td>
+<td data-label="判斷指標">已生效的行政措施，或主要州許可凍結是否超過 3 個月。基準表未另訂固定來源名稱。</td>
+<td data-label="判色規則">無百分比容忍區間。偏離訊號：已生效行政措施；或主要州凍結超過 3 個月。官方表未另列「超越」門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 修改採納 P0；不與電力交期混判。<br>連動：上游為聯邦／州層級政策；下游限制 <a class="in" href="m.html#L8">L8</a> 與 <a class="in" href="m.html#L2">L2</a> 落地。見 <a class="in" href="m.html#P0">傳導圖政策與許可</a>。</td>
+</tr>
+<tr id="P1">
+<th scope="row"><span id="NRG" class="b-alias"></span><div class="b-name">外生｜能源價格與通道（新）</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">國際油價與運輸通道。參考門檻：高於 100 美元且持續 4 週為觀察；高於 120 美元或通道中斷為偏離。</td>
+<td data-label="判斷指標">國際油價與關鍵運輸通道是否中斷。頻率：基準表以「持續 4 週」為觀察門檻，未另訂單一公布來源。</td>
+<td data-label="判色規則">觀察：高於 100 美元且持續 4 週。偏離：高於 120 美元，或關鍵通道中斷。容忍欄寫「見左」。</td>
+<td data-label="依據與關聯">依據：v2.0 修改採納 P1，不與 P0 合併。<br>連動：上游為國際油價與通道；下游可傳向 <a class="in" href="m.html#RATE">利率</a>路徑與 <a class="in" href="m.html#L7b">L7b</a>。見 <a class="in" href="m.html#P1">傳導圖能源</a>。</td>
+</tr>
+<tr id="AUX">
+<th scope="row"><span id="P4" class="b-alias"></span><div class="b-name">配套層</div><div class="b-ver">基準版本 v2.0、生效 2026-W48</div></th>
+<td data-label="預期值或區間">不立尺、僅記錄；仍留在框架圖（灰色虛線）。</td>
+<td data-label="判斷指標">不設判定指標。基準表宣告不立尺，僅記錄。</td>
+<td data-label="判色規則">不判層。無符合／超越／偏離門檻。</td>
+<td data-label="依據與關聯">依據：v2.0 修改採納 P4（宣告不立尺、僅記錄；保留在框架圖）。<br>連動：跟隨 <a class="in" href="m.html#L2">L2</a> 與融資端，而不是穩定的訂單端。見 <a class="in" href="m.html#AUX">傳導圖配套層</a>。</td>
+</tr>
+</tbody></table>
+</div>
+
+<section class="b-schematic" aria-labelledby="schematic-title">
+<h2 id="schematic-title">各層怎麼互相影響</h2>
+<p class="b-cap">這是傳導圖的簡化示意，不是判定。實線為主鏈或已立尺關係，虛線為間接或回饋。點節點會留在本頁對應列；完整關係見 <a class="in" href="m.html">傳導圖</a>。</p>
+<svg viewBox="0 0 960 320" role="img" aria-label="簡化關聯：主鏈由 L0 到 L8，左側外生，右側反射性與配套層">
+  <defs>
+    <marker id="b-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#64748b"/></marker>
+  </defs>
+  <text x="24" y="22" font-size="11" fill="#4d5666" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">外生側軌</text>
+  <text x="300" y="22" font-size="11" fill="#4d5666" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">主鏈（錢由上往下，瓶頸由下往上）</text>
+  <text x="780" y="22" font-size="11" fill="#4d5666" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">迴路／不立尺</text>
+  <line x1="200" y1="70" x2="200" y2="280" stroke="#e3e6ec" stroke-width="1"/>
+  <line x1="760" y1="70" x2="760" y2="280" stroke="#e3e6ec" stroke-width="1"/>
+  <!-- side left -->
+  <a href="#P0"><rect x="24" y="48" width="150" height="28" rx="14" fill="#f8fafc" stroke="#475569"/><text x="99" y="67" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">政策與許可</text></a>
+  <a href="#P1"><rect x="24" y="88" width="150" height="28" rx="14" fill="#f8fafc" stroke="#475569"/><text x="99" y="107" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">能源價格與通道</text></a>
+  <a href="#RATE"><rect x="24" y="148" width="150" height="28" rx="14" fill="#f8fafc" stroke="#475569"/><text x="99" y="167" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">利率</text></a>
+  <a href="#CTRL"><rect x="24" y="188" width="150" height="28" rx="14" fill="#f8fafc" stroke="#475569"/><text x="99" y="207" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">管制／地緣</text></a>
+  <!-- main -->
+  <a href="#L0"><rect x="300" y="44" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="335" y="63" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L0</text></a>
+  <a href="#L1"><rect x="400" y="44" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="435" y="63" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L1</text></a>
+  <a href="#L2"><rect x="500" y="44" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="535" y="63" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L2</text></a>
+  <a href="#L3"><rect x="600" y="44" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="635" y="63" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L3</text></a>
+  <line x1="370" y1="58" x2="400" y2="58" stroke="#64748b" marker-end="url(#b-arr)"/>
+  <line x1="470" y1="58" x2="500" y2="58" stroke="#64748b" marker-end="url(#b-arr)"/>
+  <line x1="570" y1="58" x2="600" y2="58" stroke="#64748b" marker-end="url(#b-arr)"/>
+  <a href="#L4"><rect x="430" y="110" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="465" y="129" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L4</text></a>
+  <a href="#L5"><rect x="530" y="110" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="565" y="129" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L5</text></a>
+  <a href="#L6"><rect x="630" y="110" width="70" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="665" y="129" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L6</text></a>
+  <line x1="620" y1="72" x2="465" y2="110" stroke="#64748b" marker-end="url(#b-arr)"/>
+  <line x1="635" y1="72" x2="565" y2="110" stroke="#64748b" marker-end="url(#b-arr)"/>
+  <line x1="650" y1="72" x2="665" y2="110" stroke="#64748b" marker-end="url(#b-arr)"/>
+  <a href="#L7a"><rect x="480" y="176" width="80" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="520" y="195" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L7a</text></a>
+  <a href="#L7b"><rect x="600" y="176" width="80" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="640" y="195" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L7b</text></a>
+  <line x1="535" y1="72" x2="520" y2="176" stroke="#64748b" marker-end="url(#b-arr)"/>
+  <line x1="655" y1="138" x2="640" y2="176" stroke="#64748b" marker-end="url(#b-arr)"/>
+  <a href="#L8"><rect x="540" y="242" width="80" height="28" rx="8" fill="#f8fafc" stroke="#334155"/><text x="580" y="261" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">L8</text></a>
+  <line x1="535" y1="72" x2="580" y2="242" stroke="#64748b" marker-end="url(#b-arr)"/>
+  <line x1="580" y1="256" x2="535" y2="80" stroke="#94a3b8" stroke-dasharray="4 3"/>
+  <!-- right -->
+  <a href="#REFL"><rect x="790" y="100" width="146" height="28" rx="8" fill="#f5f3ff" stroke="#6d28d9"/><text x="863" y="119" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">反射性迴路</text></a>
+  <a href="#AUX"><rect x="790" y="176" width="146" height="28" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-dasharray="5 3"/><text x="863" y="195" text-anchor="middle" font-size="11" fill="#1b1f2a" font-family="Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif">配套層（不立尺）</text></a>
+  <line x1="174" y1="162" x2="500" y2="58" stroke="#94a3b8" stroke-dasharray="4 3"/>
+  <line x1="174" y1="202" x2="600" y2="58" stroke="#94a3b8" stroke-dasharray="4 3"/>
+  <line x1="174" y1="62" x2="540" y2="256" stroke="#94a3b8" stroke-dasharray="4 3"/>
+  <line x1="670" y1="58" x2="790" y2="114" stroke="#94a3b8" stroke-dasharray="4 3"/>
+  <line x1="790" y1="114" x2="570" y2="58" stroke="#94a3b8" stroke-dasharray="4 3"/>
+</svg>
+</section>
+
+<details class="notes" id="notes">
+<summary>附註與方法</summary>
+<p>不公開索引，僅供內部審閱。頁面已標示 noindex。不構成投資建議。盤點日期 2026-11-19（台北時間，UTC+8）。</p>
+<p>現行版（v2.0，2026-11-19 核准，2026-W48 起適用）。已刊 2026-W39 至 2026-W47 不回溯重判，仍以當時 v1.1 為準。差異紀錄欄位沿用舊格式：編號、層、原值、新值、理由與依據來源（附時點）。v1.1 保留為歷史版，可在下表對照。</p>
+<p><b>現行版說明：</b>L2 約 8,200 億美元為<b>暫定</b>，待一手財報逐家對帳後再定案。下期出刊前還要補 11/18 財報與 11/19 管制生效後的一手讀數，這兩筆不預填進本表數值欄。</p>
+<p>口徑提醒：L6 台積電毛利率須同口徑比較（法說新台幣基礎與美元換算不可混用）。L1 分母採公司財報科目，須注意各公司財年不一致。L2 約 8,200 億為暫定，對帳完成前不得與 v1.1 的 6,900 億或框架圖九大口徑 8,300 億直接互換。</p>
+<h3>版本沿革（v1.0→v1.1→v2.0）</h3>
 <table>
-<tr><th>框架層</th><th>建議的基準預期</th><th>相對現行</th></tr>
-<tr><td>L0 弱訊號入口</td><td>依舊：無數值預期，持續掃描</td><td>一字未動</td></tr>
-<tr><td>L1 終端需求</td><td>依舊用可對帳分母；加註不得拿同一筆資料中心營收去改 L3</td><td>修改：補使用規則</td></tr>
-<tr><td>L2 雲端資本開支</td><td>先鎖口徑（哪些主體、是否含融資租賃）；約 8,200 億美元為<b>暫定</b>，待一手財報逐家對帳後再定案</td><td>修改採納 P5；數值暫定</td></tr>
-<tr><td>L3 芯片</td><td>依舊：龍頭季營收續創高、指引超前共識、資料中心佔比 &gt;85%。治理事件不改本層。打臉門檻統一為毛利率 &lt;72%</td><td>打臉門檻已統一為 &lt;72%（2026-11-19）</td></tr>
-<tr><td>L4 記憶體</td><td>拆兩把尺：同世代合約價按季 +5～25%；世代轉換不計入按季增，改看每單位成本</td><td>採納 P6，並增列 P3 技術破局訊號</td></tr>
-<tr><td>L5 先進封裝</td><td>依舊：交期逾 52 週。無新交期數時不得升級為超越</td><td>一字未動，加注記</td></tr>
-<tr><td>L6 晶圓代工</td><td>依舊：毛利 &gt;60%；兩種口徑不可混用</td><td>一字未動</td></tr>
-<tr><td>L7a 設備</td><td>時滯改 3～9 個月；出貨遞延拆供給型／需求型，僅後者算偏離</td><td>採納 P2</td></tr>
-<tr><td>L7b 材料</td><td>依舊：年漲 &lt;15%，超過且持續則示警</td><td>一字未動；須補新的一手量測</td></tr>
-<tr><td>L8 電力</td><td>依舊看訂單與交期；許可改記到新的政策列</td><td>修改：與 P0 分帳</td></tr>
-<tr><td>外生｜利率</td><td>依舊：年底政策利率路徑與 10 年期公債門檻</td><td>一字未動</td></tr>
-<tr><td>外生｜管制</td><td>維持原文字；補客體清單與可查核偏離訊號</td><td>採納 P7（先定義、後量化）</td></tr>
-<tr><td>反射性迴路</td><td>依舊五節點；融資成本、發債受阻、擁擠度極值為偏離訊號</td><td>一字未動</td></tr>
-<tr><td>外生｜政策與許可（新）</td><td>聯邦與州層級的資料中心許可。門檻：已生效行政措施；主要州凍結超過 3 個月</td><td>修改採納 P0</td></tr>
-<tr><td>外生｜能源（新）</td><td>油價與通道。原提案：高於 100 美元且持續 4 週；偏離為高於 120 或通道中斷</td><td>修改採納 P1（不與 P0 合併）</td></tr>
-<tr><td>配套層</td><td>正式宣告不立尺、僅記錄；仍留在框架圖（灰色虛線）</td><td>修改 P4：不從圖上移除</td></tr>
+<tr><th>版本</th><th>日期</th><th>變更內容</th><th>核准</th></tr>
+<tr><td>v1.0</td><td>2026-09-21</td><td>立尺。8 層＋外生＋反射性共 12 列，建立預期值／容忍區間／偏離訊號三欄結構。〈勘誤：文件標題曾誤植「13 列」，實際 12 列〉</td><td>振達同意</td></tr>
+<tr><td>v1.1</td><td>2026-09-21</td><td>三項修正：C1 L7 拆為 L7a 設備＋L7b 材料（12 → 13 列）；C2 L1 分母改為可查核一手財報指標（證據等級弱→強）；C3 外生利率欄補政策利率路徑。其餘 10 列一字未動</td><td>振達同意</td></tr>
+<tr><td>v2.0</td><td>2026-11-19</td><td>依 P0–P7 處置推進。自 2026-W48 起作為判定尺；已刊 2026-W39–2026-W47 不回溯重判。L3 打臉門檻統一為毛利率 &lt;72%。L2 約 8,200 億美元標暫定。</td><td>振達同意</td></tr>
 </table>
-
-<div class="banner"><b>待辦：L2 對帳。</b>約 8,200 億美元為暫定。定案時須回報。</div>
 <h2>用 2026-W39 至 2026-W47 回頭驗尺（歷史，不回溯改判）</h2>
 <table>
 <tr><th>列</th><th>走勢摘要</th><th>尺合不合理</th><th>建議</th></tr>
@@ -91,15 +259,8 @@
 <tr><td>P1</td><td>新列</td><td>無此列</td><td>新增能源價格與通道，不與 P0 合併</td><td>2026-W43 提出；2026-W47 能源分項回落，未達門檻。</td></tr>
 <tr><td>P4</td><td>配套層</td><td>圖有、表無；不判層</td><td>宣告不立尺、僅記錄；保留在框架圖</td><td>2026-W47 同步下跌，但無一手量可查。</td></tr>
 </table>
-
-<details class="notes" id="notes">
-<summary>附註與方法</summary>
-<p>不公開索引，僅供內部審閱。頁面已標示 noindex。不構成投資建議。盤點日期 2026-11-19（台北時間，UTC+8）。</p>
-<p>現行版（v2.0，2026-11-19 核准，2026-W48 起適用）。已刊 2026-W39 至 2026-W47 不回溯重判，仍以當時 v1.1 為準。差異紀錄欄位沿用舊格式：編號、層、原值、新值、理由與依據來源（附時點）。v1.1 保留為歷史版，可在下表對照。</p>
-<p><b>現行版說明：</b>L2 約 8,200 億美元為<b>暫定</b>，待一手財報逐家對帳後再定案。下期出刊前還要補 11/18 財報與 11/19 管制生效後的一手讀數，這兩筆不預填進本表數值欄。</p>
-<p>免責聲明：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。</p>
+<p>免責聲明：以上內容基於公開數據和量化分析，僅供參考，不構成投資建議。市場有風險，投資需謹慎。任何投資決策應結合個人風險承受能力、資金狀況和投資目標獨立判斷，必要時諮詢持牌專業機構。過往表現不預示未來收益。</p>
 </details>
 </div>
-
 </body>
 </html>

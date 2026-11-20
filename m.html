@@ -28,6 +28,7 @@
 #info dt{color:#8a93a3;font-size:12px;margin:10px 0 2px}
 #info dd{margin:0;color:#1b1f2a;font-size:14px;line-height:1.55}
 .disc{margin-top:12px;color:#4d5666;font-size:12px;line-height:1.6}
+#btns button[id],.m-alias{scroll-margin-top:64px}
 </style>
 <link rel="stylesheet" href="css/s.css">
 <link rel="stylesheet" href="css/nav.css">
@@ -416,9 +417,11 @@
     });
   }
 
+  var hashAlias = {P0:"POL", P1:"NRG", P4:"AUX", P5:"L2", P2:"L7a", P3:"L4", P6:"L4", P7:"CTRL"};
   order.forEach(function(id){
     var b = document.createElement("button");
     b.type = "button";
+    b.id = id;
     b.textContent = layers[id].short;
     b.setAttribute("data-id", id);
     b.setAttribute("role", "tab");
@@ -426,6 +429,26 @@
     b.addEventListener("click", function(){ sel=id; render(); });
     btns.appendChild(b);
   });
+  Object.keys(hashAlias).forEach(function(alias){
+    if (document.getElementById(alias)) return;
+    var s = document.createElement("span");
+    s.id = alias;
+    s.className = "m-alias";
+    s.setAttribute("aria-hidden", "true");
+    btns.appendChild(s);
+  });
+  function applyHash(){
+    var raw = (location.hash || "").replace(/^#/, "");
+    if (!raw) return;
+    var id = hashAlias[raw] || raw;
+    if (layers[id]) {
+      sel = id;
+      render();
+      var btn = document.getElementById(id);
+      if (btn && btn.scrollIntoView) btn.scrollIntoView({block:"start"});
+    }
+  }
+  window.addEventListener("hashchange", applyHash);
 
   function applyZoom(){
     var map = document.getElementById("map");
@@ -440,6 +463,7 @@
   document.getElementById("z-100").addEventListener("click", function(){ zoom=1; applyZoom(); });
 
   render();
+  applyHash();
 })();
 </script>
 

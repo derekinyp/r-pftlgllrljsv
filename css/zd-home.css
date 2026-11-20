@@ -177,3 +177,11 @@
   .zd-site .home{padding:var(--space-3) var(--space-4) var(--space-7)}
   .zd-site .hero{padding:var(--space-5);border-radius:var(--radius-md)}
 }
+/* 頭版卡內的本期標題不吃 .home h2 的段落上距（48px→12px），讓主按鈕落在 390×844 首屏內（11/20 盡調 Bot 回報切掉約 15px） */
+.zd-site .hero .hero-hl{margin:var(--space-3) 0 var(--space-3);padding-top:var(--space-3)}
+.zd-site .hero .hero-kicker{margin-bottom:var(--space-2)}
+@media (max-width:760px){
+  .zd-site .hero{margin-top:var(--space-3)}
+  .zd-site .hero-points{margin-bottom:var(--space-4)}
+  .zd-site .hero-points li{margin-bottom:var(--space-2)}
+}

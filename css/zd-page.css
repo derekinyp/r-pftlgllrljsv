@@ -10,13 +10,14 @@ body.zd-site{background:var(--color-surface-canvas)}
 .zd-site .chip.green::before{content:"● ";content:"● " / ""}.zd-site .chip.blue::before{content:"▲ ";content:"▲ " / ""}
 .zd-site .chip.red::before{content:"◆ ";content:"◆ " / ""}.zd-site .chip.amber::before{content:"◐ ";content:"◐ " / ""}
 .zd-site .chip.gray::before{content:"○ ";content:"○ " / ""}
-/* t 頁表 4-1 路況（.t-chain 範圍內）：程度三級中性／胡桃木色階，不是燈號、不加形狀（規範 1.1.0 level，振達 11/20 16:48 核准）。
+/* t 頁表 4-1 路況（.t-chain 範圍內）：路況四值：監看中＋三級中性／胡桃木色階，不是燈號、不加形狀（規範 1.2.0 level，振達 11/20 16:48 核准三級、17:06 核定四值）。
    內容 class 仍是 chip green/amber/red（盡調 Bot 維護），只在本表範圍改外觀；本表外的判定 chip 不受影響。 */
 .zd-site .t-chain .chip{border-radius:var(--radius-pill);padding:2px 10px;font-size:var(--zd-font-label);border:1px solid transparent}
 .zd-site .t-chain .chip.green{background:var(--color-level-1-bg);color:var(--color-level-1-text);border-color:var(--color-level-1-border)}
 .zd-site .t-chain .chip.amber{background:var(--color-level-2-bg);color:var(--color-level-2-text);border-color:var(--color-level-2-border)}
 .zd-site .t-chain .chip.red{background:var(--color-level-3-bg);color:var(--color-level-3-text);border-color:var(--color-level-3-border)}
-.zd-site .t-chain .chip.blue,.zd-site .t-chain .chip.gray{background:var(--color-level-info-bg);color:var(--color-level-info-text);border-color:transparent}
+/* 監看中（L0，chip gray）：訊號入口、不是路段 → 樺木淺底＋虛線框、一般字重；不加形狀。與三級路況及判定「○ 不判」都分得開（規範 1.2.0，振達 11/20 17:06 核定四值） */
+.zd-site .t-chain .chip.gray{background:var(--color-level-monitor-bg);color:var(--color-level-monitor-text);border:1px dashed var(--color-level-monitor-border);font-weight:var(--weight-regular)}
 .zd-site .t-chain .chip::before{content:none}
 /* 本表的層別底色原本借用燈號色，改成中性：白底＋左側圖表色細條（分組，不是判定） */
 .zd-site .t-chain tbody tr{background:var(--color-surface-default)}

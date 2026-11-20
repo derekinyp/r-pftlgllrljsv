@@ -1,5 +1,5 @@
-/* zd-tokens.css —— 振達設計規範 Workshop 1.1.0 tokens.css 的站用副本，請勿手改；來源 design-system/tokens/tokens.json。定稿 */
-/* 由 tools/build_tokens.py 自 tokens/tokens.json 產生，請勿手改。振達設計規範 Workshop（工坊） 1.1.0 */
+/* zd-tokens.css —— 振達設計規範 Workshop 1.2.0 tokens.css 的站用副本，請勿手改；來源 design-system/tokens/tokens.json。定稿 */
+/* 由 tools/build_tokens.py 自 tokens/tokens.json 產生，請勿手改。振達設計規範 Workshop（工坊） 1.2.0 */
 /* primitive（--p-*）只供本檔引用；產出請只用 semantic 變數。 */
 :root{
   --p-color-birch-50: #FFFDF8;
@@ -99,8 +99,9 @@
   --color-level-3-bg: var(--p-color-walnut-800); /* 第 3 級（重，例：塞車瓶頸）：胡桃木實底白字 */
   --color-level-3-text: var(--p-color-white);
   --color-level-3-border: var(--p-color-walnut-800);
-  --color-level-info-bg: var(--p-color-birch-200); /* 不分級的狀態字（例：熱、滿載、持續掃）：沉底、無框 */
-  --color-level-info-text: var(--p-color-bark-700);
+  --color-level-monitor-bg: var(--p-color-birch-100); /* 監看中（訊號入口，不是路段）：樺木淺底＋虛線框、淺一階字；與「○ 不判」（石灰底、無框、有形狀）及三級路況區隔 */
+  --color-level-monitor-text: var(--p-color-bark-600);
+  --color-level-monitor-border: var(--p-color-bark-500); /* 虛線 */
   --font-sans: Figtree, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif; /* Figtree 管拉丁與數字，Noto Sans TC 管中文；網頁字型未載入或缺字（罕用字、單檔模式）時依序退回 PingFang TC（Apple）、微軟正黑體（Windows）、Noto Sans CJK TC（Linux） */
   --font-display: Figtree, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif; /* 與 sans 同一串退回字型（1.0.1 補齊系統中文字型） */
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", monospace; /* 等寬拉丁先退系統等寬字，中文再退系統中文字型 */

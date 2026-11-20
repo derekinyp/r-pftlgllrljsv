@@ -50,11 +50,13 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans 
 </style>
 <link rel="stylesheet" href="css/nav.css">
 <script src="js/issues.js" defer></script>
+<script src="js/site-copy.js" defer></script>
 </head>
 <body>
 <nav id="sb-nav"><div class="sb-inner"><a href="index.html">首頁</a><div class="sb-dd" id="sb-guide"><button type="button" class="sb-dd-btn sb-on" aria-expanded="false" aria-haspopup="true" aria-controls="sb-guide-menu" id="sb-guide-btn">框架入門</button><div class="sb-dd-menu" id="sb-guide-menu" role="menu" hidden><a href="q.html" role="menuitem" class="sb-on">一頁圖解</a><a href="t.html" role="menuitem">逐步推導</a></div></div><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="index.html#weeks">各期週報</a></noscript></div></nav>
 <div class="wrap">
-<p class="lead">兩張圖、每層一句話。看完若要細節，再進逐步推導。</p>
+<p class="lead">兩張圖、每層一句話。看完若要細節，再進逐步推導。圖上的<abbr title="跳數是因果鏈上隔幾層；時滯是影響要多久才出現">跳數 × 時滯</abbr>、<abbr title="敘事影響估值與融資，再回頭影響資本開支與財報的迴路">反射性迴路</abbr>、<abbr title="設備（L7a）與材料（L7b）定價節奏不同，所以拆成兩列">L7a／L7b</abbr>、<abbr title="原先假設被實際數據否定的門檻，也就是否證／偏離門檻">打臉</abbr>、<abbr title="不獨立立尺、只記錄的輔助項目，例如高頻寬記憶體相關配套">配套層</abbr>、<abbr title="P0 是政策與許可，P1 是能源價格與通道，皆為外生側軌">P0／P1</abbr> 的說明見 <a href="t.html#vocab">名詞對照表</a>。</p>
+<p class="l2-note">L2 口徑約 8,200 億美元為暫定。<span data-l2-note></span></p>
 <div class="screens">
 <figure class="screen" aria-label="八層因果鏈">
 <svg viewBox="0 0 390 800" role="img" aria-labelledby="c1t c1s">
@@ -82,7 +84,7 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans 
     <path d="M195 296 L195 308" stroke="#64748b" stroke-width="1.6"/>
     <!-- L3 -->
     <rect x="16" y="308" width="358" height="58" rx="12" fill="#fff" stroke="#cbd5e1"/>
-    <text x="28" y="332" font-size="16" font-weight="700" fill="#1b1f2a">L3 芯片</text>
+    <text x="28" y="332" font-size="16" font-weight="700" fill="#1b1f2a">L3 晶片</text>
     <text x="28" y="354" font-size="14" fill="#4d5666">看誰在下單、夠不夠。毛利率低於 72% 才算打臉。</text>
     <path d="M195 366 L195 378" stroke="#64748b" stroke-width="1.6"/>
     <!-- L4 -->
@@ -112,7 +114,7 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans 
     <text x="28" y="722" font-size="14" fill="#4d5666">看蓋好了有沒有電。國內許可另外記。</text>
     <text x="20" y="746" font-size="12" fill="#4d5666">外生另記：利率、管制、政策與許可、能源。</text>
     <text x="20" y="762" font-size="12" fill="#4d5666">右側是反射性迴路。配套層不立尺，只記錄。</text>
-    <text id="c1s" x="20" y="776" font-size="10" fill="#8a93a3">基準預期表 v2.0｜2026-11-19 核准，2026-W48 起適用｜僅供內部審閱</text>
+    <text id="c1s" x="20" y="776" font-size="10" fill="#8a93a3">基準預期表 v2.0｜2026-11-19 核准，2026-W48 起適用</text>
   </g>
 </svg>
 </figure>
@@ -140,7 +142,7 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans 
     <text x="195" y="236" text-anchor="middle" font-size="12" font-weight="600" fill="#1e3a8a">約 0～1 季</text>
 
     <rect x="95" y="248" width="200" height="42" rx="10" fill="#f8fafc" stroke="#334155"/>
-    <text x="195" y="275" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1f2a">L3 芯片</text>
+    <text x="195" y="275" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1f2a">L3 晶片</text>
 
     <!-- three forks -->
     <line x1="195" y1="290" x2="66" y2="348" stroke="#1e293b" stroke-width="1.5"/>
@@ -184,7 +186,7 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans 
     <text x="20" y="676" font-size="13" fill="#4d5666">影響資本開支的利率傳導要數季，屬推論，不是新量測。</text>
     <text x="20" y="698" font-size="13" fill="#4d5666">L8 往上卡資本開支，為虛線回饋。</text>
     <text x="20" y="728" font-size="13" fill="#9a3412">L2 口徑約 8,200 億美元，暫定，尚未完成一手對帳。</text>
-    <text id="c2s" x="20" y="782" font-size="10" fill="#8a93a3">基準預期表 v2.0｜2026-11-19 核准，2026-W48 起適用｜L2 暫定｜僅供內部審閱</text>
+    <text id="c2s" x="20" y="782" font-size="10" fill="#8a93a3">基準預期表 v2.0｜2026-11-19 核准，2026-W48 起適用｜L2 暫定</text>
   </g>
 </svg>
 </figure>

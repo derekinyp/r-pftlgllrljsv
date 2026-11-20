@@ -8,7 +8,8 @@
     return "rgb(" + o.join(",") + ")";
   }
   // Distinct from judgment green/blue/red lights.
-  var LO = [47, 111, 122], MID = [244, 241, 234], HI = [184, 106, 42];
+  /* 雙色與判定燈（綠／藍／紅／橘）區隔：低＝灰青，高＝紫。顏色在 ±2 封頂，格子數字照實顯示。 */
+  var LO = [46, 120, 128], MID = [244, 241, 234], HI = [112, 72, 160];
   function colorFor(v) {
     if (v == null || isNaN(v)) return null;
     var t = clip(v, 2) / 2;
@@ -39,9 +40,22 @@
     var layers = data.layers || [];
     var html = [];
     html.push('<div class="hm-legend">');
-    html.push('<span class="hm-scale"><span>低於基準</span><span class="hm-ramp" title="負到正"><i></i><i></i><i></i><i></i><i></i></span><span>高於基準</span></span>');
+    html.push('<span class="hm-scale"><span>低於基準</span><span class="hm-ramp" title="灰青＝低於基準，紫＝高於基準；不是判定燈號"><i></i><i></i><i></i><i></i><i></i></span><span>高於基準</span></span>');
     html.push('<span class="hm-chip">缺</span><span class="hm-chip">沿用（底線）</span><span class="hm-chip">部分</span><span class="hm-chip">暫定</span><span class="hm-chip">不立尺</span><span class="hm-chip">矛盾（點）</span>');
-    html.push('<span class="hm-keyhint">點列展開指標。時間軸可左右滑動，層名欄固定。色彩不是判定燈號。</span>');
+    html.push('<span class="hm-keyhint">點列展開指標。時間軸可左右滑動，層名欄固定。顏色在 ±2 封頂，數字照實顯示；紫／灰青不是判定燈號。z＝和過去兩年平均相比，差幾個標準差。</span>');
+    var emptyIdx = [];
+    for (var er = 0; er < layers.length; er++) {
+      var eL = layers[er];
+      var empty = true;
+      for (var ec = 0; ec < (eL.flags || []).length; ec++) {
+        var ef = eL.flags[ec];
+        var ev = eL.scores && eL.scores[ec];
+        if (ef !== '缺' && ef !== '暫定' && ef !== '不立尺') { empty = false; break; }
+        if (ev != null && !isNaN(ev)) { empty = false; break; }
+      }
+      if (empty) emptyIdx.push(er);
+    }
+    html.push('<button type="button" class="hm-empty-btn" id="hm-empty-btn">無資料的層（' + emptyIdx.length + '）</button>');
     html.push('</div>');
     html.push('<div class="hm-scroll"><table class="hm-grid" role="grid">');
     html.push('<thead><tr><th class="hm-lab">層</th>');
@@ -52,8 +66,10 @@
     html.push('</tr></thead><tbody>');
     for (var r = 0; r < layers.length; r++) {
       var L = layers[r];
-      html.push('<tr class="hm-layer" data-row="' + r + '" tabindex="0" role="button" aria-expanded="false">');
-      html.push('<th scope="row" class="hm-lab" title="' + L.name + '">' + L.name + '</th>');
+      html.push('<tr class="hm-layer' + (emptyIdx.indexOf(r) >= 0 ? ' is-empty' : '') + '" data-row="' + r + '" tabindex="0" role="button" aria-expanded="false">');
+      var labNote = '';
+        if (L.id === 'L1') labNote = '<div class="hm-labnote">分數高時，當時尺未另列超越門檻，燈號仍可能為符合。熱力圖不是判定。</div>';
+        html.push('<th scope="row" class="hm-lab" title="' + L.name + '">' + L.name + labNote + '</th>');
       for (var c = 0; c < months.length; c++) {
         var v = L.scores[c];
         var flag = L.flags[c];
@@ -79,8 +95,22 @@
 
     var asof = $("hm-asof");
     if (asof) {
-      asof.textContent = "資料截止 " + data.asof + "（" + data.timezone + "）。尺：" + (data.ruler || "") + "。" + (data.scale && data.scale.label ? data.scale.label + "。" : "");
+      asof.textContent = "資料截止 " + data.asof + "（" + data.timezone + "）。尺：" + (data.ruler || "") + "。" + (data.scale && data.scale.label ? data.scale.label + "。" : "") + " z＝和過去兩年平均相比，差幾個標準差。";
     }
+    var grid = root.querySelector(".hm-grid");
+    var emptyBtn = $("hm-empty-btn");
+    var hideEmpty = true;
+    function applyEmpty() {
+      if (grid) grid.classList.toggle("hide-empty", hideEmpty);
+      if (emptyBtn) emptyBtn.textContent = hideEmpty
+        ? ("顯示無資料的層（" + emptyIdx.length + "）")
+        : ("收起無資料的層（" + emptyIdx.length + "）");
+      if (emptyBtn) emptyBtn.setAttribute("aria-pressed", hideEmpty ? "true" : "false");
+    }
+    if (emptyBtn) {
+      emptyBtn.addEventListener("click", function () { hideEmpty = !hideEmpty; applyEmpty(); });
+    }
+    applyEmpty();
 
     var open = -1;
     function detail(L) {

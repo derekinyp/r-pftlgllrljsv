@@ -67,8 +67,9 @@
     host.innerHTML = '';
     if (exo) exo.innerHTML = '';
     if (meta) {
+      var scale = (window.SITE_COPY && window.SITE_COPY.scaleNote) ? window.SITE_COPY.scaleNote(latest && latest.id) : '';
       if (latest && data && data.issueId === latest.id) {
-        meta.textContent = '判定取自 ' + latest.id + ' 已刊記分卡，不回溯改判。';
+        meta.textContent = (scale ? scale + ' ' : '') + '判定取自 ' + latest.id + ' 已刊記分卡，不回溯改判。';
       } else if (latest) {
         meta.textContent = '各層摘要尚未同步至 ' + latest.id + '。';
       }
@@ -90,8 +91,18 @@
         a.setAttribute('aria-label', L.name + '的現行基準');
         left.appendChild(a);
       }
+      if (L.id === 'L2') {
+        var note = el('span', 'l2-note');
+        note.setAttribute('data-l2-note', '');
+        note.textContent = (window.SITE_COPY && window.SITE_COPY.L2_RECON_NOTE) || '';
+        left.appendChild(note);
+      }
       top.appendChild(left);
-      var pill = el('span', 'verdict', L.verdict || TONE_LABEL[L.tone] || '不判');
+      var shortV = (window.SITE_COPY && window.SITE_COPY.verdictShort)
+        ? window.SITE_COPY.verdictShort(L.tone, L.verdict)
+        : (TONE_LABEL[L.tone] || '不判');
+      var pill = el('span', 'verdict', shortV);
+      if (L.verdict && L.verdict !== shortV) pill.title = L.verdict;
       top.appendChild(pill);
       item.appendChild(top);
       item.appendChild(el('p', 'layer-sum', L.summary || ''));

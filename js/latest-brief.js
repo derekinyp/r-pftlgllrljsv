@@ -9,7 +9,7 @@ window.LATEST_BRIEF = {
   points: [
     {
       kind: '事實',
-      text: '台積電 10 月營收、應材季度營收與 CoreWeave 季度營收均大幅年增；CPI 核心升幅觸發上期所設的 A1 升級條件。'
+      text: '台積電 10 月營收、應材季度營收與 CoreWeave 季度營收均大幅年增；CPI 核心升幅達到上期所設、用來決定要不要提高利率關注等級的條件（內部代號 A1）。'
     },
     {
       kind: '事實',
@@ -17,15 +17,15 @@ window.LATEST_BRIEF = {
     },
     {
       kind: '推論',
-      text: '同一週出現自由現金流轉負與擁擠度下降的訊號。須把「誰還付得起」與「訂單本身」分開看，不能直接讀成需求消失。'
+      text: '同一週出現自由現金流轉負，以及市場資金過度集中程度（擁擠度）下降的訊號。須把「誰還付得起」與「訂單本身」分開看，不能直接讀成需求消失。'
     }
   ],
   /* tone：g 符合、b 超越、r 偏離、a 觀察、n 不判。摘要為該期已刊文字的一句濃縮。 */
   layers: [
-    { id: 'L0', name: 'L0 弱訊號', tone: 'a', verdict: '待觀察', summary: '無新弱訊號；3D DRAM 仍屬紙面。', group: 'chain' },
+    { id: 'L0', name: 'L0 弱訊號', tone: 'a', verdict: '觀察', summary: '無新弱訊號；3D DRAM 仍屬紙面。', group: 'chain' },
     { id: 'L1', name: 'L1 終端需求', tone: 'g', verdict: '符合', summary: '本期無新的一手需求讀數，維持符合。', group: 'chain' },
     { id: 'L2', name: 'L2 雲端資本開支', tone: 'b', verdict: '超越', summary: '大型雲端主體資本開支仍高；自由現金流出現轉負訊號。', group: 'chain' },
-    { id: 'L3', name: 'L3 芯片', tone: 'b', verdict: '超越', summary: '等待後續財報查核；治理事件不改本層判定。', group: 'chain' },
+    { id: 'L3', name: 'L3 晶片', tone: 'b', verdict: '超越', summary: '等待後續財報查核；治理事件不改本層判定。', group: 'chain' },
     { id: 'L4', name: 'L4 記憶體', tone: 'b', verdict: '超越', summary: '無新成交價；世代拆尺提案仍未觸發。', group: 'chain' },
     { id: 'L5', name: 'L5 先進封裝', tone: 'b', verdict: '超越', summary: '生態系訊息增加，但沒有新的交期讀數。', group: 'chain' },
     { id: 'L6', name: 'L6 晶圓代工', tone: 'b', verdict: '超越', summary: '月營收再創新高，年增幅度仍高。', group: 'chain' },

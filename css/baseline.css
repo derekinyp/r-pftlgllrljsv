@@ -10,7 +10,29 @@
    往下推約 48px，與 L0 列重疊；該 48px 也不等於實際導覽列高度（約 53px）。 */
 .b-table thead th{background:#f3f5f8;font-weight:700;color:#1b1f2a;position:static}
 .b-table tbody th{background:#fafbfc;width:13rem}
-.b-table tbody tr,.b-alias{scroll-margin-top:72px}
+.b-table tbody tr,.b-alias,.b-quick tbody tr{scroll-margin-top:72px}
+.b-table tbody tr:target,.b-quick tbody tr:target{
+  background:#fff6d8;
+  box-shadow:inset 4px 0 0 #c9a227}
+.b-table tbody tr:target th{background:#fff6d8}
+.b-quick{width:100%;border-collapse:separate;border-spacing:0;background:#fff;font-size:13.5px;margin:0 0 20px}
+.b-quick th,.b-quick td{border:1px solid #e3e6ec;padding:8px 10px;text-align:left;vertical-align:top}
+.b-quick thead th{background:#f3f5f8;font-weight:700;color:#1b1f2a}
+.b-quick tbody th{background:#fafbfc;white-space:nowrap}
+.b-quick b{font-weight:700;color:#1b1f2a}
+.b-hist{margin-top:6px;font-size:12px;color:#4d5666;line-height:1.5}
+.b-scale-note{margin:0 0 16px}
+.b-foot-note{margin:0 0 18px;color:#4d5666;font-size:13px;max-width:50em}
+.l2-note{display:block;margin-top:4px;font-size:12.5px;color:#4d5666;line-height:1.55}
+details.b-full{margin:8px 0 28px;background:#fff;border:1px solid #e3e6ec;border-radius:10px;padding:4px 14px 8px}
+details.b-full>summary{cursor:pointer;font-weight:700;padding:10px 0;color:#1b1f2a}
+@media (max-width:640px){
+  .b-quick thead{display:none}
+  .b-quick,.b-quick tbody,.b-quick tr,.b-quick th,.b-quick td{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+  .b-quick tr{background:#fff;border:1px solid #e3e6ec;border-radius:14px;margin:0 0 12px;padding:12px}
+  .b-quick th,.b-quick td{border:0;padding:6px 0;white-space:normal}
+  .b-quick td::before{content:attr(data-label);display:block;font-weight:700;color:#1b1f2a;font-size:12px;margin:0 0 2px}
+}
 .b-table .prov{display:inline-block;margin-right:6px;padding:1px 7px;border-radius:999px;background:#fdf3e3;color:#8a4b00;font-size:11px;font-weight:700}
 .b-table .none{color:#4d5666}
 .b-table a.in{color:#164e87;font-weight:600;text-decoration:none}

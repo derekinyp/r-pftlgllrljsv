@@ -8,11 +8,11 @@
 .hm-legend .hm-scale{display:inline-flex;align-items:center;gap:6px}
 .hm-ramp{display:inline-flex;height:10px;border:1px solid #cfd4dc;overflow:hidden}
 .hm-ramp i{width:24px;height:10px;display:block}
-.hm-ramp i:nth-child(1){background:#2f6f7a}
-.hm-ramp i:nth-child(2){background:#7aa0a3}
+.hm-ramp i:nth-child(1){background:#2e7880}
+.hm-ramp i:nth-child(2){background:#7eacb0}
 .hm-ramp i:nth-child(3){background:#f4f1ea}
-.hm-ramp i:nth-child(4){background:#d49a66}
-.hm-ramp i:nth-child(5){background:#b86a2a}
+.hm-ramp i:nth-child(4){background:#b49ac8}
+.hm-ramp i:nth-child(5){background:#7050a0}
 .hm-chip{display:inline-block;padding:0 5px;border:1px solid #cfd4dc;border-radius:3px;background:#f7f7f5;font-size:11px;color:#4d5666}
 /* Horizontal scroll; sticky first column must sit inside this scroller. */
 .hm-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;border:1px solid #d5dae0;background:#fff}
@@ -48,3 +48,8 @@
   .hm-lab{width:9.8em;min-width:9.8em;max-width:9.8em;font-size:12px;padding:5px 8px !important;white-space:normal}
   .hm-grid thead th{font-size:10px}
 }
+
+.hm-empty-btn{margin-left:8px;font:inherit;font-size:12px;color:#164e87;background:#fff;border:1px solid #c5d0e0;border-radius:6px;padding:2px 8px;cursor:pointer}
+.hm-empty-btn:hover,.hm-empty-btn:focus-visible{border-color:#164e87;outline:none}
+.hm-grid.hide-empty tr.hm-layer.is-empty{display:none}
+.hm-labnote{display:block;font-weight:500;font-size:10px;line-height:1.35;color:#4d5666;margin-top:3px}

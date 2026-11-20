@@ -64,14 +64,14 @@
 
     var card4 = el('div');
     if (redNames.length) {
-      card4.appendChild(el('div', 'v', '本期紅燈'));
+      card4.appendChild(el('div', 'v', '本期偏離'));
       card4.appendChild(el('div', 'l', '偏離層：' + redNames.join('、')));
     } else if (layers.length) {
-      card4.appendChild(el('div', 'v', '本期無紅燈'));
+      card4.appendChild(el('div', 'v', '本期無偏離'));
       card4.appendChild(el('div', 'l', '沒有判為偏離的層'));
     } else {
       card4.appendChild(el('div', 'v', '—'));
-      card4.appendChild(el('div', 'l', '本期紅燈層見記分卡'));
+      card4.appendChild(el('div', 'l', '本期偏離層見記分卡'));
     }
     host.appendChild(card4);
 
@@ -82,7 +82,7 @@
       bits.push(ruler.v);
       if (data && iss && data.issueId === iss.id && layers.length) {
         bits.push('綠 ' + counts.g + ' · 藍 ' + counts.b + ' · 紅 ' + counts.r);
-        if (redNames.length) bits.push('紅燈：' + redNames.join('、'));
+        if (redNames.length) bits.push('偏離：' + redNames.join('、'));
       }
       compact.textContent = bits.join('　');
     }

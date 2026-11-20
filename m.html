@@ -407,7 +407,7 @@
     svg.appendChild(colLabel(880, 36, "右側＝反射性迴路與配套層（不立尺）"));
     var cap = el("text", {x:40, y:54, "font-size":"11", fill:"#94a3b8",
       "font-family":"Noto Sans TC,PingFang TC,Microsoft JhengHei,sans-serif"});
-    cap.textContent = "實線＝主鏈或已立尺　虛線＝間接或回饋　橘框虛線＝配套層不立尺　菱形＝反射性　膠囊＝外生／入口　藍＝本次選中";
+    cap.textContent = "實線＝主鏈或已立尺　虛線＝間接或回饋　橘框虛線＝配套層不立尺　菱形＝反射性　膠囊＝外生／入口　粗框＝本次選中";
     svg.appendChild(cap);
     edges.forEach(function(e){ svg.appendChild(drawEdge(e)); });
     order.forEach(function(id){ svg.appendChild(drawNode(id)); });

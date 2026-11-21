@@ -1,5 +1,5 @@
-/* zd-components.css —— 振達設計規範 Workshop 1.2.1 components.css 的站用副本，只在 <body class="zd"> 內生效。2026-11-21 振達核准 */
-/* 振達設計規範 Workshop 1.0.0 —— 網站元件（純 CSS，不綁框架）
+/* zd-components.css —— 振達設計規範 Workshop 1.2.3 components.css 的站用副本，只在 <body class="zd"> 內生效。2026-11-21 振達核准 */
+/* 振達設計規範 Workshop 1.2.3 —— 網站元件（純 CSS，不綁框架）
    引用順序：fonts/fonts.css → tokens/tokens.css → components/components.css
    規則：只用 tokens.css 的 semantic 變數；不得寫死色碼與字級（tools/check.py 會查）。
    類別一律 zd- 前綴，避免與既有網站樣式衝突。 */
@@ -65,6 +65,17 @@ body.zd{margin:0;background:var(--color-surface-canvas);color:var(--color-text-d
 .zd-signal--off{color:var(--color-signal-off-text);background:var(--color-signal-off-bg)}    .zd-signal--off::before{content:"◆";content:"◆" / "";color:var(--color-signal-off-solid)}
 .zd-signal--watch{color:var(--color-signal-watch-text);background:var(--color-signal-watch-bg)} .zd-signal--watch::before{content:"◐";content:"◐" / "";color:var(--color-signal-watch-solid)}
 .zd-signal--na{color:var(--color-signal-na-text);background:var(--color-signal-na-bg)}       .zd-signal--na::before{content:"○";content:"○" / "";color:var(--color-signal-na-solid)}
+/* 長字串斷行（1.2.3）：網址、XBRL 代號（us-gaap:RevenueFromContract…）、長英數代號不得把頁面撐寬。
+   1) overflow-wrap 可繼承：整個 .zd 內預設 break-word——只有「一行放不下」時才在字內斷，不影響表格與排版的最小寬度計算，桌機版面不變。
+   2) 註記／來源這類純文字區塊用 anywhere（連最小寬度也一起縮），手機上可斷在任何字元。
+   3) grid／flex 子項預設 min-width:auto 會被長字撐開 → 本規範的 grid／flex 元件子項一律 min-width:0。頁面自己的 grid／flex 可加 .zd-shrink。
+   全部用 :where() 零權重，頁面既有規則（如 white-space:nowrap 的 chip）照樣優先。不設字級。 */
+:where(.zd){overflow-wrap:break-word}
+:where(.zd) :where(.zd-notes,.zd-source,.zd-wrap,figcaption,blockquote,address,dd){overflow-wrap:anywhere}
+:where(.zd) :where(table){overflow-wrap:break-word} /* 表格內不用 anywhere，免得欄寬被壓縮；寬表照舊橫捲 */
+:where(.zd) :where(.zd-kpis,.zd-layers,.zd-layer,.zd-grid-2,.zd-conclusion,.zd-conclusion__points li,.zd-meta dl,.zd-legend,.zd-chips,.zd-actions,.zd-header__in,.zd-step)>*{min-width:0}
+:where(.zd) :where(.zd-shrink,.zd-shrink>*){min-width:0}
+:where(.zd) :where(.zd-wrap){overflow-wrap:anywhere;min-width:0}
 /* KPI 件數形狀（1.2.1）：形狀各自帶燈號 solid 色、文字維持內文色；形狀用 aria-hidden 的 span，讀屏只讀文字。
    <span class="zd-kpi-mark zd-kpi-mark--ok"><span class="zd-kpi-mark__shape" aria-hidden="true">●</span> 符合 2</span>
    修飾：--ok ●（符合／g）、--up ▲（超越／b）、--off ◆（偏離／r）、--watch ◐（觀察／a）、--na ○（不判／n）。不改字級，跟隨所在元素。 */

@@ -31,6 +31,33 @@
 .vtag-r{background:var(--color-signal-off-bg);color:var(--color-signal-off-text)}
 .vtag-a{background:var(--color-signal-watch-bg);color:var(--color-signal-watch-text)}
 .vtag-n{background:var(--color-surface-zebra);color:var(--color-text-default)}
+/* 速查表本期燈號：用既有 g/b/r/a/n 色塊＋.shape（aria-hidden），不要再用藍色底線連結 */
+.b-quick td[data-layer] a.g,
+.b-quick td[data-layer] a.b,
+.b-quick td[data-layer] a.r,
+.b-quick td[data-layer] a.a,
+.b-quick td[data-layer] a.n{
+  display:inline-flex;
+  align-items:center;
+  gap:0.25em;
+  padding:2px 10px;
+  border-radius:var(--radius-pill);
+  font-size:var(--zd-font-label);
+  font-weight:var(--weight-bold);
+  text-decoration:none;
+  line-height:1.4;
+  white-space:nowrap;
+}
+.b-quick td[data-layer] a.g{background:var(--color-signal-ok-bg);color:var(--color-signal-ok-text)}
+.b-quick td[data-layer] a.b{background:var(--color-signal-up-bg);color:var(--color-signal-up-text)}
+.b-quick td[data-layer] a.r{background:var(--color-signal-off-bg);color:var(--color-signal-off-text)}
+.b-quick td[data-layer] a.a{background:var(--color-signal-watch-bg);color:var(--color-signal-watch-text)}
+.b-quick td[data-layer] a.n{background:var(--color-signal-na-bg);color:var(--color-signal-na-text);font-weight:var(--weight-regular)}
+.b-quick td[data-layer] .shape{font-size:var(--zd-font-caption);line-height:1}
+.b-quick td[data-layer] a:hover,
+.b-quick td[data-layer] a:focus-visible{text-decoration:underline;outline:none}
+.b-quick td[data-layer] .b-hist{font-weight:400}
+
 .b-scale-note{margin:0 0 16px}
 .b-foot-note{margin:0 0 18px;color:var(--color-text-muted);font-size:var(--zd-font-small);max-width:50em}
 .l2-note{display:block;margin-top:4px;font-size:var(--zd-font-caption);color:var(--color-text-muted);line-height:1.55}

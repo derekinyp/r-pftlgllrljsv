@@ -3,6 +3,8 @@
   function brief() { return window.LATEST_BRIEF || null; }
   function copy() { return window.SITE_COPY || {}; }
 
+  var SHAPE = { g: '●', b: '▲', r: '◆', a: '◐', n: '○' };
+
   function fillNote() {
     var p = document.getElementById('b-scale-note');
     if (!p || !copy().scaleNote) return;
@@ -15,10 +17,9 @@
     var C = copy();
     var href = iss && iss.href ? iss.href : 'index.html#weeks';
     var col = document.getElementById('b-light-col');
-    if (col && iss) {
-      var scale = (C.usesV2 && C.usesV2(iss.id)) ? (C.CURRENT_RULER || 'v2.1') : 'v1.1';
-      col.textContent = iss.id + ' 燈號（依 ' + scale + '）';
-    }
+    var scale = (iss && C.usesV2 && C.usesV2(iss.id)) ? (C.CURRENT_RULER || 'v2.1') : 'v1.1';
+    var header = iss ? (iss.id + ' 燈號（依 ' + scale + '）') : '本期燈號';
+    if (col) col.textContent = header;
     var map = {};
     if (data && data.layers) {
       for (var i = 0; i < data.layers.length; i++) {
@@ -27,20 +28,31 @@
     }
     var cells = document.querySelectorAll('#b-quick td[data-layer]');
     for (var j = 0; j < cells.length; j++) {
-      var id = cells[j].getAttribute('data-layer');
+      var cell = cells[j];
+      var id = cell.getAttribute('data-layer');
       var L = map[id];
-      cells[j].innerHTML = '';
+      cell.setAttribute('data-label', header);
+      var orig = cell.querySelector('.b-hist');
+      if (orig && orig.parentNode) orig.parentNode.removeChild(orig);
+      cell.innerHTML = '';
       if (!L) {
-        cells[j].textContent = '—';
-        continue;
+        cell.appendChild(document.createTextNode('—'));
+      } else {
+        var tone = L.tone || 'n';
+        var short = C.verdictShort ? C.verdictShort(L.tone, L.verdict) : (L.verdict || '不判');
+        var a = document.createElement('a');
+        a.className = tone;
+        a.href = href;
+        var sh = document.createElement('span');
+        sh.className = 'shape';
+        sh.setAttribute('aria-hidden', 'true');
+        sh.textContent = SHAPE[tone] || '○';
+        a.appendChild(sh);
+        a.appendChild(document.createTextNode(short));
+        if (iss) a.setAttribute('title', '見 ' + iss.id + (L.verdict && L.verdict !== short ? '（原文：' + L.verdict + '）' : ''));
+        cell.appendChild(a);
       }
-      var short = C.verdictShort ? C.verdictShort(L.tone, L.verdict) : (L.verdict || '不判');
-      var a = document.createElement('a');
-      a.className = 'vtag vtag-' + (L.tone || 'n');
-      a.href = href;
-      a.textContent = short;
-      if (iss) a.setAttribute('title', '見 ' + iss.id + (L.verdict && L.verdict !== short ? '（原文：' + L.verdict + '）' : ''));
-      cells[j].appendChild(a);
+      if (orig) cell.appendChild(orig);
     }
   }
   function init() {

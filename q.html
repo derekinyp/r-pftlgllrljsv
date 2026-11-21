@@ -30,18 +30,12 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans 
 .disc{margin-top:16px;color:var(--ink2);font-size:var(--zd-font-small);line-height:1.7}
 .foot{margin-top:12px;color:var(--ink3);font-size:var(--zd-font-caption)}
 @media (max-width:700px){
-  html{scroll-snap-type:y proximity}
   .wrap{padding:10px 10px 40px}
   .lead{font-size:var(--zd-font-body);margin:8px 4px 10px}
-  .screen{
-    min-height:calc(100svh - 56px);
-    max-height:calc(100svh - 56px);
-    display:flex;align-items:stretch;
-    scroll-snap-align:start;
-    scroll-margin-top:52px;
-    padding:0;
-  }
-  .screen svg{width:100%;height:100%}
+  /* 不再把圖卡鎖成 100svh：max-height + overflow:hidden 會裁掉 viewBox 800 的底部。
+     圖隨寬度按比例撐開卡片（與桌機相同），圓角裁切仍用 overflow:hidden。 */
+  .screen{max-height:none;min-height:0;display:block;padding:0}
+  .screen svg{width:100%;height:auto}
 }
 @media (min-width:1100px){
   .screens{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}

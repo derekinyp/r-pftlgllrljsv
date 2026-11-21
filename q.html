@@ -47,15 +47,88 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans 
   .screens{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
   .lead{font-size:var(--zd-font-h3)}
 }
+/* simple-phase1 */
+.now{margin:0 0 20px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 14px 14px;box-shadow:0 1px 0 rgba(15,23,42,.04);min-width:0}
+.now-meta{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;margin:0 0 8px;font-size:var(--zd-font-caption);color:var(--ink2);line-height:var(--leading-snug)}
+.now-meta a{font-weight:700;color:var(--color-brand-default);text-decoration:none}
+.now-meta a:hover{text-decoration:underline}
+.now-ruler{min-width:0;overflow-wrap:anywhere}
+.now-l2{margin:0 0 10px;font-size:var(--zd-font-caption);color:var(--ink2);line-height:var(--leading-snug);overflow-wrap:anywhere}
+.now-main .zd-h2,.now-side .zd-h2{margin:8px 0 8px;font-size:var(--zd-font-h3)}
+.now-hl{margin:0 0 8px;font-size:var(--zd-font-h4);font-weight:var(--weight-bold);line-height:var(--leading-snug)}
+.now-points{list-style:none;margin:0;padding:0}
+.now-points li{margin:0 0 6px;color:var(--ink2);font-size:var(--zd-font-small);line-height:var(--leading-snug);min-width:0;overflow-wrap:anywhere}
+.now-points li:last-child{margin-bottom:0}
+.now-legend{margin:0 0 4px}
+.now-legend-note{margin:0 0 8px;font-size:var(--zd-font-caption);color:var(--ink2)}
+.now-layers,.now-exo{list-style:none;margin:0;padding:0}
+.now-row{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px;align-items:center;padding:3px 0;border-bottom:1px solid var(--line);min-width:0}
+.now-row:last-child{border-bottom:0}
+.now-row__name{font-weight:700;font-size:var(--zd-font-label);min-width:0;overflow-wrap:anywhere}
+.now-row__sum{display:none;grid-column:1 / -1;color:var(--ink2);font-size:var(--zd-font-caption);line-height:var(--leading-snug);margin:0;min-width:0;overflow-wrap:anywhere}
+.now-exo-wrap{margin-top:8px}
+.now-exo-wrap h3{margin:0 0 4px;font-size:var(--zd-font-caption);color:var(--ink2);font-weight:700}
+.now-miss{color:var(--ink2);font-size:var(--zd-font-small)}
+.now .zd-kpi-mark{white-space:nowrap;font-size:var(--zd-font-label);font-weight:700}
+@media (max-width:1099px){
+  .now{padding:10px 12px 10px;margin-bottom:16px}
+  .now-meta{margin-bottom:4px}
+  .now-l2{margin-bottom:6px}
+  .now-main .zd-h2,.now-side .zd-h2{margin:6px 0}
+  .now-hl{margin-bottom:4px}
+  .now-points li{margin-bottom:4px}
+  .now-legend-note{margin-bottom:4px}
+  .now-row{padding:2px 0}
+}
+@media (min-width:1100px){
+  .now{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;align-items:start;padding:20px 24px}
+  .now-main,.now-side{min-width:0}
+  .now-row{grid-template-columns:minmax(7.5em,auto) auto minmax(0,1fr);align-items:start}
+  .now-row__sum{display:block;grid-column:auto;margin:0}
+}
 </style>
 <script src="js/issues.js" defer></script>
+<script src="js/latest-brief.js" defer></script>
 <script src="js/site-copy.js" defer></script>
+<script src="js/q.js" defer></script>
 </head>
 <body class="zd zd-site">
 <nav id="sb-nav"><div class="sb-inner"><a href="index.html">首頁</a><div class="sb-dd" id="sb-guide"><button type="button" class="sb-dd-btn sb-on" aria-expanded="false" aria-haspopup="true" aria-controls="sb-guide-menu" id="sb-guide-btn">框架入門</button><div class="sb-dd-menu" id="sb-guide-menu" role="menu" hidden><a href="q.html" role="menuitem" class="sb-on">一頁圖解</a><a href="t.html" role="menuitem">逐步推導</a></div></div><a href="o.html">綜覽</a><a href="m.html">傳導圖</a><a href="b.html">基準</a><span id="sb-issues"></span><noscript class="sb-noscript"><a href="index.html#weeks">各期週報</a></noscript></div></nav>
 <main class="wrap">
+<section class="now" id="now" aria-labelledby="now-points-title">
+<div class="now-main">
+<p class="now-meta" data-d3="ruler">
+<a id="now-issue" data-latest-href href="index.html#weeks">最新一期</a>
+<span id="now-span"></span>
+<span class="now-ruler" id="now-ruler">判定尺版號需開啟腳本。</span>
+</p>
+<p class="now-l2 l2-note" data-d3="l2">L2 口徑約 8,200 億美元為暫定。<span data-l2-note></span></p>
+<h2 class="zd-h2" id="now-points-title" data-d3="points">這週三句話</h2>
+<p class="now-hl" id="now-headline"></p>
+<ul class="now-points" id="now-points">
+<li class="now-miss">請開啟腳本以載入本期三句話，或改看<a href="index.html#weeks">各期週報</a>。</li>
+</ul>
+</div>
+<div class="now-side">
+<div data-d3="layers">
+<h2 class="zd-h2" id="now-layers-title">八層現況</h2>
+<ul class="zd-legend now-legend" aria-label="燈號圖例">
+<li><span class="zd-kpi-mark zd-kpi-mark--ok"><span class="zd-kpi-mark__shape" aria-hidden="true">●</span> 符合</span></li>
+<li><span class="zd-kpi-mark zd-kpi-mark--up"><span class="zd-kpi-mark__shape" aria-hidden="true">▲</span> 超越</span></li>
+<li><span class="zd-kpi-mark zd-kpi-mark--off"><span class="zd-kpi-mark__shape" aria-hidden="true">◆</span> 偏離</span></li>
+<li><span class="zd-kpi-mark zd-kpi-mark--watch"><span class="zd-kpi-mark__shape" aria-hidden="true">◐</span> 觀察</span></li>
+<li><span class="zd-kpi-mark zd-kpi-mark--na"><span class="zd-kpi-mark__shape" aria-hidden="true">○</span> 不判</span></li>
+</ul>
+<p class="now-legend-note">顏色是判定，不是股價漲跌。</p>
+<ol class="now-layers" id="now-layers"></ol>
+</div>
+<div class="now-exo-wrap" id="now-exo-wrap" hidden>
+<h3>外生／反射性</h3>
+<ol class="now-exo" id="now-exo"></ol>
+</div>
+</div>
+</section>
 <p class="lead">兩張圖、每層一句話。看完若要細節，再進逐步推導。圖上的<abbr title="跳數是因果鏈上隔幾層；時滯是影響要多久才出現">跳數 × 時滯</abbr>、<abbr title="敘事影響估值與融資，再回頭影響資本開支與財報的迴路">反射性迴路</abbr>、<abbr title="設備（L7a）與材料（L7b）定價節奏不同，所以拆成兩列">L7a／L7b</abbr>、<abbr title="原先假設被實際數據否定的門檻，也就是否證／偏離門檻">打臉</abbr>、<abbr title="不獨立立尺、只記錄的輔助項目，例如光模組、PCB、液冷">配套層</abbr>、<abbr title="P0 是政策與許可，P1 是能源價格與通道，皆為外生側軌">P0／P1</abbr> 的說明見 <a href="t.html#vocab">名詞對照表</a>。</p>
-<p class="l2-note">L2 口徑約 8,200 億美元為暫定。<span data-l2-note></span></p>
 <div class="screens">
 <figure class="screen" aria-label="八層因果鏈">
 <svg viewBox="0 0 390 800" role="img" aria-labelledby="c1t c1s">

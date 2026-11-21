@@ -1,4 +1,4 @@
-/* zd-components.css —— 振達設計規範 Workshop 1.2.1 components.css 的站用副本，只在 <body class="zd"> 內生效。待振達核准，未核准前勿接線 */
+/* zd-components.css —— 振達設計規範 Workshop 1.2.1 components.css 的站用副本，只在 <body class="zd"> 內生效。2026-11-21 振達核准 */
 /* 振達設計規範 Workshop 1.0.0 —— 網站元件（純 CSS，不綁框架）
    引用順序：fonts/fonts.css → tokens/tokens.css → components/components.css
    規則：只用 tokens.css 的 semantic 變數；不得寫死色碼與字級（tools/check.py 會查）。

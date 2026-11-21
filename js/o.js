@@ -17,6 +17,19 @@
     return window.SITE_COPY || {};
   }
 
+  /* 形狀各自帶燈號色，文字與現行字串逐字相同（KPI-MARKS.md / 規範 1.2.1）。 */
+  function kpiMarks(counts) {
+    var items = [['ok', '●', '符合 ', counts.g], ['up', '▲', '超越 ', counts.b], ['off', '◆', '偏離 ', counts.r]];
+    var frag = document.createDocumentFragment();
+    items.forEach(function (it, i) {
+      if (i) { var sep = document.createElement('span'); sep.className = 'zd-kpi-mark__sep'; sep.textContent = '・'; frag.appendChild(sep); }
+      var m = document.createElement('span'); m.className = 'zd-kpi-mark zd-kpi-mark--' + it[0];
+      var sh = document.createElement('span'); sh.className = 'zd-kpi-mark__shape'; sh.setAttribute('aria-hidden', 'true'); sh.textContent = it[1];
+      m.appendChild(sh); m.appendChild(document.createTextNode(' ' + it[2] + it[3])); frag.appendChild(m);
+    });
+    return frag;
+  }
+
   function renderKpi() {
     var host = document.getElementById('o-kpi');
     if (!host) return;
@@ -51,7 +64,7 @@
     }
     var card3 = el('div');
     if (data && iss && data.issueId === iss.id && layers.length) {
-      card3.appendChild(el('div', 'v', '● 符合 ' + counts.g + '・▲ 超越 ' + counts.b + '・◆ 偏離 ' + counts.r));
+      var v = el('div', 'v', ''); v.appendChild(kpiMarks(counts)); card3.appendChild(v);
       var extra = [];
       if (counts.a) extra.push('觀察 ' + counts.a);
       if (counts.n) extra.push('不判 ' + counts.n);
@@ -81,10 +94,14 @@
       if (iss) bits.push(iss.id);
       bits.push(ruler.v);
       if (data && iss && data.issueId === iss.id && layers.length) {
-        bits.push('● 符合 ' + counts.g + '・▲ 超越 ' + counts.b + '・◆ 偏離 ' + counts.r);
+        bits.push(kpiMarks(counts));
         if (redNames.length) bits.push('偏離：' + redNames.join('、'));
       }
-      compact.textContent = bits.join('　');
+      compact.textContent = '';
+      bits.forEach(function (p, i) {
+        if (i) compact.appendChild(document.createTextNode('　'));
+        compact.appendChild(typeof p === 'string' ? document.createTextNode(p) : p);
+      });
     }
   }
 

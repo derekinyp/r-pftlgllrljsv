@@ -1,4 +1,4 @@
-/* zd-components.css —— 振達設計規範 Workshop 1.2.0 components.css 的站用副本，只在 <body class="zd"> 內生效。定稿 */
+/* zd-components.css —— 振達設計規範 Workshop 1.2.1 components.css 的站用副本，只在 <body class="zd"> 內生效。待振達核准，未核准前勿接線 */
 /* 振達設計規範 Workshop 1.0.0 —— 網站元件（純 CSS，不綁框架）
    引用順序：fonts/fonts.css → tokens/tokens.css → components/components.css
    規則：只用 tokens.css 的 semantic 變數；不得寫死色碼與字級（tools/check.py 會查）。
@@ -65,6 +65,17 @@ body.zd{margin:0;background:var(--color-surface-canvas);color:var(--color-text-d
 .zd-signal--off{color:var(--color-signal-off-text);background:var(--color-signal-off-bg)}    .zd-signal--off::before{content:"◆";content:"◆" / "";color:var(--color-signal-off-solid)}
 .zd-signal--watch{color:var(--color-signal-watch-text);background:var(--color-signal-watch-bg)} .zd-signal--watch::before{content:"◐";content:"◐" / "";color:var(--color-signal-watch-solid)}
 .zd-signal--na{color:var(--color-signal-na-text);background:var(--color-signal-na-bg)}       .zd-signal--na::before{content:"○";content:"○" / "";color:var(--color-signal-na-solid)}
+/* KPI 件數形狀（1.2.1）：形狀各自帶燈號 solid 色、文字維持內文色；形狀用 aria-hidden 的 span，讀屏只讀文字。
+   <span class="zd-kpi-mark zd-kpi-mark--ok"><span class="zd-kpi-mark__shape" aria-hidden="true">●</span> 符合 2</span>
+   修飾：--ok ●（符合／g）、--up ▲（超越／b）、--off ◆（偏離／r）、--watch ◐（觀察／a）、--na ○（不判／n）。不改字級，跟隨所在元素。 */
+.zd-kpi-mark{white-space:nowrap;color:inherit}
+.zd-kpi-mark__shape{display:inline-block;line-height:1} /* 形狀與文字間的空格留在文字節點（" 符合 2"），textContent 與現行字串逐字相同 */
+.zd-kpi-mark--ok .zd-kpi-mark__shape{color:var(--color-signal-ok-solid)}
+.zd-kpi-mark--up .zd-kpi-mark__shape{color:var(--color-signal-up-solid)}
+.zd-kpi-mark--off .zd-kpi-mark__shape{color:var(--color-signal-off-solid)}
+.zd-kpi-mark--watch .zd-kpi-mark__shape{color:var(--color-signal-watch-solid)}
+.zd-kpi-mark--na .zd-kpi-mark__shape{color:var(--color-signal-na-solid)}
+.zd-kpi-mark__sep{color:var(--color-text-muted)}
 .zd-tone-ok{--zd-tone:var(--color-signal-ok-solid)} .zd-tone-up{--zd-tone:var(--color-signal-up-solid)} .zd-tone-off{--zd-tone:var(--color-signal-off-solid)}
 .zd-tone-watch{--zd-tone:var(--color-signal-watch-solid)} .zd-tone-na{--zd-tone:var(--color-signal-na-solid)}
 .zd-legend{display:flex;flex-wrap:wrap;gap:var(--space-2);list-style:none;margin:0 0 var(--space-3);padding:0}
